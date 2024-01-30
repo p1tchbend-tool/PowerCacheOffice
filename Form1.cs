@@ -163,7 +163,7 @@ namespace PowerCacheOffice
                     }
                 }
 
-                await Task.Delay(2000);
+                await Task.Delay(2000); // 更新検知から実際に更新されるまで少し待つ
                 try
                 {
                     Program.CopyAll(cacheRelation.LocalPath, cacheRelation.RemotePath);
@@ -660,7 +660,9 @@ namespace PowerCacheOffice
 
         private bool IsNearlyEqualDateTime(DateTime dateTime1, DateTime dateTime2)
         {
-            return dateTime1.ToString("yyyyMMddHHmm") == dateTime2.ToString("yyyyMMddHHmm");
+            var dt1 = dateTime1.AddTicks(-(dateTime1.Ticks % TimeSpan.TicksPerMinute));
+            var dt2 = dateTime2.AddTicks(-(dateTime2.Ticks % TimeSpan.TicksPerMinute));
+            return dt1 == dt2;
         }
     }
 }

@@ -32,6 +32,45 @@ namespace PowerCacheOffice
             }
             catch { appSettings = new AppSettings(); }
 
+            if (appSettings.ExcelPath == @"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE" ||
+                appSettings.ExcelPath == @"C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE")
+            {
+                if (File.Exists(@"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"))
+                {
+                    appSettings.ExcelPath = @"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE";
+                }
+                else if (File.Exists(@"C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE"))
+                {
+                    appSettings.ExcelPath = @"C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE";
+                }
+            }
+
+            if (appSettings.WordPath == @"C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE" ||
+                appSettings.WordPath == @"C:\Program Files (x86)\Microsoft Office\root\Office16\WINWORD.EXE")
+            {
+                if (File.Exists(@"C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"))
+                {
+                    appSettings.WordPath = @"C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE";
+                }
+                else if (File.Exists(@"C:\Program Files (x86)\Microsoft Office\root\Office16\WINWORD.EXE"))
+                {
+                    appSettings.WordPath = @"C:\Program Files (x86)\Microsoft Office\root\Office16\WINWORD.EXE";
+                }
+            }
+
+            if (appSettings.PowerPointPath == @"C:\Program Files\Microsoft Office\root\Office16\POWERPNT.EXE" ||
+                appSettings.PowerPointPath == @"C:\Program Files (x86)\Microsoft Office\root\Office16\POWERPNT.EXE")
+            {
+                if (File.Exists(@"C:\Program Files\Microsoft Office\root\Office16\POWERPNT.EXE"))
+                {
+                    appSettings.PowerPointPath = @"C:\Program Files\Microsoft Office\root\Office16\POWERPNT.EXE";
+                }
+                else if (File.Exists(@"C:\Program Files (x86)\Microsoft Office\root\Office16\POWERPNT.EXE"))
+                {
+                    appSettings.PowerPointPath = @"C:\Program Files (x86)\Microsoft Office\root\Office16\POWERPNT.EXE";
+                }
+            }
+
             appSettings.CacheTargetDirectories.ForEach(x => { listBox1.Items.Add(x); });
             checkBox1.Checked = appSettings.IsRelatedExcel;
             checkBox2.Checked = appSettings.IsRelatedWord;

@@ -114,7 +114,7 @@ namespace PowerCacheOffice
                 var cacheRelation = cacheSettings.CacheRelations.FirstOrDefault(x => x.LocalPath == fullPath);
                 if (cacheRelation == null) return;
 
-                if (RoundDownMilliseconds(cacheRelation.RemoteLastWriteTime) != RoundDownMilliseconds(File.GetLastWriteTime(cacheRelation.RemotePath)))
+                if (!IsNearlyEqualDateTime(cacheRelation.RemoteLastWriteTime, File.GetLastWriteTime(cacheRelation.RemotePath)))
                 {
                     using (var form2 = new Form2(cacheRelation.RemotePath))
                     {
@@ -163,12 +163,12 @@ namespace PowerCacheOffice
                     }
                 }
 
-                await Task.Delay(1000);
+                await Task.Delay(2000);
                 try
                 {
                     Program.CopyAll(cacheRelation.LocalPath, cacheRelation.RemotePath);
                     cacheSettings.CacheRelations.Remove(cacheRelation);
-                    cacheSettings.CacheRelations.Add(new CacheRelation(cacheRelation.RemotePath, cacheRelation.LocalPath, RoundDownMilliseconds(File.GetLastWriteTime(cacheRelation.RemotePath))));
+                    cacheSettings.CacheRelations.Add(new CacheRelation(cacheRelation.RemotePath, cacheRelation.LocalPath, File.GetLastWriteTime(cacheRelation.RemotePath)));
                     try
                     {
                         File.WriteAllText(Path.Combine(Environment.GetFolderPath(
@@ -253,7 +253,7 @@ namespace PowerCacheOffice
                         try
                         {
                             Program.CopyAll(filePath, cacheFile);
-                            cacheSettings.CacheRelations.Add(new CacheRelation(filePath, cacheFile, RoundDownMilliseconds(File.GetLastWriteTime(filePath))));
+                            cacheSettings.CacheRelations.Add(new CacheRelation(filePath, cacheFile, File.GetLastWriteTime(filePath)));
                             try
                             {
                                 File.WriteAllText(Path.Combine(Environment.GetFolderPath(
@@ -272,8 +272,8 @@ namespace PowerCacheOffice
                     else
                     {
                         // キャッシュ済みの場合
-                        var lastWriteTime = RoundDownMilliseconds(File.GetLastWriteTime(filePath));
-                        if (RoundDownMilliseconds(cacheRelation.RemoteLastWriteTime) != lastWriteTime)
+                        var lastWriteTime = File.GetLastWriteTime(filePath);
+                        if (!IsNearlyEqualDateTime(cacheRelation.RemoteLastWriteTime, lastWriteTime))
                         {
                             var localPath = cacheRelation.LocalPath;
                             try
@@ -631,7 +631,7 @@ namespace PowerCacheOffice
                     var createdCache = item.Split('\t');
                     if (cacheSettings.CacheRelations.Any(x => x.RemotePath == createdCache[0])) continue;
 
-                    cacheSettings.CacheRelations.Add(new CacheRelation(createdCache[0], createdCache[1], RoundDownMilliseconds(DateTime.Parse(createdCache[2]))));
+                    cacheSettings.CacheRelations.Add(new CacheRelation(createdCache[0], createdCache[1], DateTime.Parse(createdCache[2])));
                 }
 
                 File.WriteAllText(Path.Combine(Environment.GetFolderPath(
@@ -658,9 +658,9 @@ namespace PowerCacheOffice
             this.Visible = false;
         }
 
-        private DateTime RoundDownMilliseconds(DateTime dateTime)
+        private bool IsNearlyEqualDateTime(DateTime dateTime1, DateTime dateTime2)
         {
-            return dateTime.AddTicks(-(dateTime.Ticks % TimeSpan.TicksPerSecond));
+            return dateTime1.ToString("yyyyMMddHHmm") == dateTime2.ToString("yyyyMMddHHmm");
         }
     }
 }

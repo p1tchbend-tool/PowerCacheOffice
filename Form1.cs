@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,6 +16,11 @@ namespace PowerCacheOffice
         private AppSettings appSettings = new AppSettings();
         private CacheSettings cacheSettings = new CacheSettings();
         private CreateCacheManager createCacheManager = new CreateCacheManager();
+        private JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
+        {
+            Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+            WriteIndented = true
+        };
 
         public Form1()
         {
@@ -122,7 +129,7 @@ namespace PowerCacheOffice
                     try
                     {
                         File.WriteAllText(Path.Combine(Environment.GetFolderPath(
-                            Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\cacheSettings.json"), JsonSerializer.Serialize(cacheSettings));
+                            Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\cacheSettings.json"), JsonSerializer.Serialize(cacheSettings, jsonSerializerOptions));
                     }
                     catch { }
                 }
@@ -143,7 +150,7 @@ namespace PowerCacheOffice
                     appSettings.CacheTargetDirectories = listBox1.Items.OfType<string>().ToList();
                     try
                     {
-                        File.WriteAllText(Path.Combine(Application.StartupPath, "appSettings.json"), JsonSerializer.Serialize(appSettings));
+                        File.WriteAllText(Path.Combine(Application.StartupPath, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
                     }
                     catch { }
                 }
@@ -217,7 +224,7 @@ namespace PowerCacheOffice
                             try
                             {
                                 File.WriteAllText(Path.Combine(Environment.GetFolderPath(
-                                    Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\cacheSettings.json"), JsonSerializer.Serialize(cacheSettings));
+                                    Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\cacheSettings.json"), JsonSerializer.Serialize(cacheSettings, jsonSerializerOptions));
                             }
                             catch { }
                         }
@@ -240,7 +247,7 @@ namespace PowerCacheOffice
                                 try
                                 {
                                     File.WriteAllText(Path.Combine(Environment.GetFolderPath(
-                                        Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\cacheSettings.json"), JsonSerializer.Serialize(cacheSettings));
+                                        Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\cacheSettings.json"), JsonSerializer.Serialize(cacheSettings, jsonSerializerOptions));
                                 }
                                 catch { }
                             }
@@ -296,7 +303,7 @@ namespace PowerCacheOffice
             appSettings.CacheTargetDirectories = listBox1.Items.OfType<string>().ToList();
             try
             {
-                File.WriteAllText(Path.Combine(Application.StartupPath, "appSettings.json"), JsonSerializer.Serialize(appSettings));
+                File.WriteAllText(Path.Combine(Application.StartupPath, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
             }
             catch { }
         }
@@ -350,7 +357,7 @@ namespace PowerCacheOffice
             appSettings.IsRelatedExcel = checkBox1.Checked;
             try
             {
-                File.WriteAllText(Path.Combine(Application.StartupPath, "appSettings.json"), JsonSerializer.Serialize(appSettings));
+                File.WriteAllText(Path.Combine(Application.StartupPath, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
             }
             catch { }
         }
@@ -389,7 +396,7 @@ namespace PowerCacheOffice
             appSettings.IsRelatedWord = checkBox2.Checked;
             try
             {
-                File.WriteAllText(Path.Combine(Application.StartupPath, "appSettings.json"), JsonSerializer.Serialize(appSettings));
+                File.WriteAllText(Path.Combine(Application.StartupPath, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
             }
             catch { }
         }
@@ -428,7 +435,7 @@ namespace PowerCacheOffice
             appSettings.IsRelatedPowerPoint = checkBox3.Checked;
             try
             {
-                File.WriteAllText(Path.Combine(Application.StartupPath, "appSettings.json"), JsonSerializer.Serialize(appSettings));
+                File.WriteAllText(Path.Combine(Application.StartupPath, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
             }
             catch { }
         }
@@ -456,7 +463,7 @@ namespace PowerCacheOffice
             try
             {
                 File.WriteAllText(Path.Combine(Environment.GetFolderPath(
-                    Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\cacheSettings.json"), JsonSerializer.Serialize(cacheSettings));
+                    Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\cacheSettings.json"), JsonSerializer.Serialize(cacheSettings, jsonSerializerOptions));
             }
             catch { }
 
@@ -489,7 +496,7 @@ namespace PowerCacheOffice
             try
             {
                 File.WriteAllText(Path.Combine(Environment.GetFolderPath(
-                    Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\cacheSettings.json"), JsonSerializer.Serialize(cacheSettings));
+                    Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\cacheSettings.json"), JsonSerializer.Serialize(cacheSettings, jsonSerializerOptions));
             }
             catch { }
 
@@ -524,7 +531,7 @@ namespace PowerCacheOffice
                 appSettings.CacheTargetDirectories = listBox1.Items.OfType<string>().ToList();
                 try
                 {
-                    File.WriteAllText(Path.Combine(Application.StartupPath, "appSettings.json"), JsonSerializer.Serialize(appSettings));
+                    File.WriteAllText(Path.Combine(Application.StartupPath, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
                 }
                 catch { }
             }
@@ -579,7 +586,7 @@ namespace PowerCacheOffice
                 }
 
                 File.WriteAllText(Path.Combine(Environment.GetFolderPath(
-                    Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\cacheSettings.json"), JsonSerializer.Serialize(cacheSettings));
+                    Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\cacheSettings.json"), JsonSerializer.Serialize(cacheSettings, jsonSerializerOptions));
                 File.Delete(
                     Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\.createdCacheList.txt"));
             }

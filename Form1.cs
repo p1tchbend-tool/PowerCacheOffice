@@ -152,7 +152,11 @@ namespace PowerCacheOffice
                                 }
                                 Process.Start(psi);
                             }
-                            catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
+                            catch (Exception ex)
+                            {
+                                EnableForm1();
+                                MessageBox.Show(ex.Message, Program.AppName);
+                            }
 
                             return;
                         }
@@ -172,7 +176,11 @@ namespace PowerCacheOffice
                     }
                     catch { }
                 }
-                catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
+                catch (Exception ex)
+                {
+                    EnableForm1();
+                    MessageBox.Show(ex.Message, Program.AppName);
+                }
             };
 
             listBox1.KeyDown += (s, eventArgs) =>
@@ -202,32 +210,18 @@ namespace PowerCacheOffice
                 if (dr != DialogResult.Yes) eventArgs.Cancel = true;
             };
 
-            this.Shown += (s, eventArgs) =>
-            {
-                this.WindowState = FormWindowState.Minimized;
-                this.ShowInTaskbar = false;
-                this.Visible = false;
-            };
+            this.Shown += (s, eventArgs) => DisableForm1();
 
             this.SizeChanged += async (s, eventArgs) =>
             {
                 if (this.WindowState == FormWindowState.Minimized)
                 {
                     await Task.Delay(500);
-                    this.WindowState = FormWindowState.Minimized;
-                    this.ShowInTaskbar = false;
-                    this.Visible = false;
+                    DisableForm1();
                 }
             };
 
-            notifyIcon1.Click += (s, eventArgs) =>
-            {
-                this.Visible = true;
-                this.WindowState = FormWindowState.Normal;
-                this.Activate();
-                listBox1.Focus();
-                this.ShowInTaskbar = true;
-            };
+            notifyIcon1.Click += (s, eventArgs) => EnableForm1();
 
             timer1.Start();
         }
@@ -267,7 +261,11 @@ namespace PowerCacheOffice
                             }
                             catch { }
                         }
-                        catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
+                        catch (Exception ex)
+                        {
+                            EnableForm1();
+                            MessageBox.Show(ex.Message, Program.AppName);
+                        }
 
                         arguments = cacheFile;
                     }
@@ -290,7 +288,11 @@ namespace PowerCacheOffice
                                 }
                                 catch { }
                             }
-                            catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
+                            catch (Exception ex)
+                            {
+                                EnableForm1();
+                                MessageBox.Show(ex.Message, Program.AppName);
+                            }
 
                             arguments = localPath;
                         }
@@ -327,7 +329,11 @@ namespace PowerCacheOffice
                 {
                     Process.Start(psi);
                 }
-                catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
+                catch (Exception ex)
+                {
+                    EnableForm1();
+                    MessageBox.Show(ex.Message, Program.AppName);
+                }
             }
         }
 
@@ -359,7 +365,11 @@ namespace PowerCacheOffice
             {
                 Process.Start(psi);
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
+            catch (Exception ex)
+            {
+                EnableForm1();
+                MessageBox.Show(ex.Message, Program.AppName);
+            }
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -630,6 +640,22 @@ namespace PowerCacheOffice
                     Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\.createdCacheList.txt"));
             }
             catch { }
+        }
+
+        private void EnableForm1()
+        {
+            this.Visible = true;
+            this.WindowState = FormWindowState.Normal;
+            this.Activate();
+            listBox1.Focus();
+            this.ShowInTaskbar = true;
+        }
+
+        private void DisableForm1()
+        {
+            this.WindowState = FormWindowState.Minimized;
+            this.ShowInTaskbar = false;
+            this.Visible = false;
         }
     }
 }

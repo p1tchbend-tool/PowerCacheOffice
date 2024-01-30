@@ -20,7 +20,8 @@
 チェックを入れた拡張子が「Power Cache Office」で開くように関連付けを行います。  
 特に理由がなければ、すべてチェックを入れてください。  
   
-Officeファイルを開くアプリが「Power Cache Office」のアイコンになっていれば完了です。  
+チェックを入れるとOfficeファイルを開く際「常に使う」アプリに「Power Cache Office」が選択可能になります。  
+常に使うアプリに設定し、アイコンが変更されれば完了です。  
 うまくいかない場合は、PCを一度再起動してみてください。  
 ![picture 1](images/8f19ee306db185dd57d408aac6f2ca82b9c4793caac30b4a2ca09ae12f5c4aa0.png)  
 
@@ -56,6 +57,16 @@ Officeファイルを開くアプリが「Power Cache Office」のアイコンになっていれば完了で
 アプリを実行するとタスクトレイに常駐します。  
 タスクトレイのアイコンをクリックして画面を開き、各種設定を実施してください。  
 設定後は最小化すると、タスクトレイに常駐して動作し続けます。
+
+### Officeアプリの場所
+本アプリは以下どちらかにExcel、Word、PowerPointがインストールされている前提で動作します。
+* C:\Program Files\Microsoft Office\root\Office16
+* C:\Program Files (x86)\Microsoft Office\root\Office16
+  
+それ以外の場所にインストールされている場合、Excel、Word、PowerPointの場所を指定します。
+1. 本アプリと同じフォルダにある「appSettings.json」をメモ帳等で開きます。
+1. ExcelPath、WordPath、PowerPointPathを適切なパスに書き換えます。
+1. 本アプリを再起動します。
 
 ## アンインストール
 1. 「関連付け」のチェックをすべて外します。

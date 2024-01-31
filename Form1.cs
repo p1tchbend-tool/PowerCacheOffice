@@ -163,7 +163,7 @@ namespace PowerCacheOffice
                     }
                 }
 
-                await Task.Delay(2000); // 更新検知から実際に更新されるまで少し待つ
+                await Task.Delay(3000); // 更新検知から実際に更新されるまで少し待つ
                 try
                 {
                     Program.CopyAll(cacheRelation.LocalPath, cacheRelation.RemotePath);
@@ -221,7 +221,29 @@ namespace PowerCacheOffice
                 }
             };
 
-            notifyIcon1.Click += (s, eventArgs) => EnableForm1();
+            notifyIcon1.MouseClick += (s, eventArgs) =>
+            {
+                if (eventArgs.Button != MouseButtons.Left) return;
+                EnableForm1();
+            };
+
+            var item1 = notifyIcon1.ContextMenuStrip.Items.Add("表示");
+            item1.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            item1.Click += (s, eventArgs) => EnableForm1();
+
+            var item2 = notifyIcon1.ContextMenuStrip.Items.Add("再起動");
+            item2.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            item2.Click += (s, eventArgs) =>
+            {
+                var result = MessageBox.Show("再起動しますか？", Program.AppName, MessageBoxButtons.YesNo);
+                if (result != DialogResult.Yes) return;
+
+                Application.Restart();
+            };
+
+            var item3 = notifyIcon1.ContextMenuStrip.Items.Add("終了");
+            item3.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            item3.Click += (s, eventArgs) => this.Close();
 
             timer1.Start();
         }

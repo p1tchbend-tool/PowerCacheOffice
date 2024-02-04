@@ -76,6 +76,12 @@ namespace PowerCacheOffice
             if (!Directory.Exists(cacheFolder)) Directory.CreateDirectory(cacheFolder);
 
             fileSystemWatcher1.Path = cacheFolder;
+            fileSystemWatcher1.Error += (s, eventArgs) =>
+            {
+                EnableForm1();
+                MessageBox.Show("キャッシュの変更の監視を継続できなくなりました。\nアプリケーションを再起動します。", Program.AppName);
+                Application.Restart();
+            };
             fileSystemWatcher1.Renamed += async (s, eventArgs) =>
             {
                 var fullPath = eventArgs.FullPath;

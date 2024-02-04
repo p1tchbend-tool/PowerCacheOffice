@@ -32,7 +32,7 @@ namespace PowerCacheOffice
             }
             catch { appSettings = new AppSettings(); }
 
-            appSettings.UpdateSrttings();
+            appSettings.UpdateSettings();
             try
             {
                 File.WriteAllText(Path.Combine(Application.StartupPath, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
@@ -99,7 +99,7 @@ namespace PowerCacheOffice
                                 if (!Directory.Exists(tempDirectory)) Directory.CreateDirectory(tempDirectory);
 
                                 var tempFile = Path.Combine(tempDirectory, "【差分確認】" + Path.GetFileName(cacheRelation.RemotePath));
-                                Program.CopyAll(cacheRelation.RemotePath, tempFile);
+                                File.Copy(cacheRelation.RemotePath, tempFile, true);
 
                                 ProcessStartInfo psi = new ProcessStartInfo();
                                 psi.UseShellExecute = true;
@@ -118,6 +118,52 @@ namespace PowerCacheOffice
                                 {
                                     psi.FileName = appSettings.PowerPointPath;
                                 }
+                                Process.Start(psi);
+                            }
+                            catch (Exception ex)
+                            {
+                                EnableForm1();
+                                MessageBox.Show(ex.Message, Program.AppName);
+                            }
+
+                            return;
+                        }
+                        else if (form2.Result == Form2.ConfirmDiffTool)
+                        {
+                            try
+                            {
+                                var tempDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\.temp");
+                                if (!Directory.Exists(tempDirectory)) Directory.CreateDirectory(tempDirectory);
+
+                                var tempFileRemote = Path.Combine(tempDirectory, "【リモート】" + Path.GetFileName(cacheRelation.RemotePath));
+                                File.Copy(cacheRelation.RemotePath, tempFileRemote, true);
+
+                                await Task.Delay(1000); // 更新検知から実際に更新されるまで少し待つ
+
+                                var tempFileLocal = Path.Combine(tempDirectory, "【ローカル】" + Path.GetFileName(cacheRelation.LocalPath));
+                                File.Copy(cacheRelation.LocalPath, tempFileLocal, true);
+
+                                ProcessStartInfo psi = new ProcessStartInfo();
+                                psi.UseShellExecute = true;
+                                psi.Arguments = $@"""{tempFileLocal}"" ""{tempFileRemote}""";
+
+                                var extension = Path.GetExtension(tempFileLocal).ToLower();
+                                if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm")
+                                {
+                                    psi.FileName = appSettings.ExcelDiffToolPath;
+                                    psi.Arguments += " " + appSettings.ExcelDiffToolArguments;
+                                }
+                                else if (extension == ".doc" || extension == ".docx" || extension == ".docm")
+                                {
+                                    psi.FileName = appSettings.WordDiffToolPath;
+                                    psi.Arguments += " " + appSettings.WordDiffToolArguments;
+                                }
+                                else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm")
+                                {
+                                    psi.FileName = appSettings.PowerPointDiffToolPath;
+                                    psi.Arguments += " " + appSettings.PowerPointDiffToolArguments;
+                                }
+
                                 Process.Start(psi);
                             }
                             catch (Exception ex)

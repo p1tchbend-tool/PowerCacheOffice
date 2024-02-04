@@ -8,6 +8,7 @@ namespace PowerCacheOffice
         public static readonly int No = 0;
         public static readonly int Yes = 1;
         public static readonly int Confirm = 2;
+        public static readonly int ConfirmDiffTool = 3;
 
         public int Result { get; set; }
 
@@ -38,6 +39,12 @@ namespace PowerCacheOffice
         private void button3_Click(object sender, EventArgs e)
         {
             Result = Confirm;
+            this.Close();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Result = ConfirmDiffTool;
             this.Close();
         }
     }

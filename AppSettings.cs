@@ -43,7 +43,7 @@ namespace PowerCacheOffice
             CacheTargetDirectories = new List<string>();
         }
 
-        public void UpdateSrttings()
+        public void UpdateSettings()
         {
             if (this.Version == "1.0.0")
             {

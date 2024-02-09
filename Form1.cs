@@ -21,6 +21,7 @@ namespace PowerCacheOffice
             Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
             WriteIndented = true
         };
+        private List<string> recentFiles = new List<string>();
 
         public Form1()
         {
@@ -225,6 +226,8 @@ namespace PowerCacheOffice
 
             this.FormClosing += (s, eventArgs) =>
             {
+                if (eventArgs.CloseReason != CloseReason.UserClosing) return;
+
                 var dr = MessageBox.Show(
                     "終了してよろしいですか？\n\n※ローカルの更新はリモートに反映されなくなります。\n※最小化するとタスクトレイに常駐して処理を継続します。", Program.AppName, MessageBoxButtons.YesNo);
                 if (dr != DialogResult.Yes) eventArgs.Cancel = true;
@@ -241,11 +244,7 @@ namespace PowerCacheOffice
                 }
             };
 
-            notifyIcon1.MouseClick += (s, eventArgs) =>
-            {
-                if (eventArgs.Button != MouseButtons.Left) return;
-                EnableForm1();
-            };
+            notifyIcon1.MouseClick += (s, eventArgs) => EnableForm1();
 
             toolStripMenuItem1.Click += (s, eventArgs) => EnableForm1();
             toolStripMenuItem2.Click += (s, eventArgs) =>

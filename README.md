@@ -60,16 +60,16 @@
 
 ### 差分比較ツール
 自分がファイルを編集中に、他の人がそのファイルを更新した場合、差分を「ツールで確認する」ことができます。  
-※単に「開いて確認する」ことも可能なので、好きな方法で確認してください。  
+なお、単に「開いて確認する」ことも可能なので、ツールを使わずOfficeの「ファイルの比較」機能も利用できます。  
 ![picture 2](images/E08F5C40-1AA8-42F1-A4C2-4D838777FAD1.png)  
   
-ここでは例として「WinMerge」を使う方法を解説します。  
+ここでは例として、差分比較ツールに「WinMerge」を使う方法を解説します。  
 1. [公式サイト](https://winmerge.org/downloads/?lang=ja)から、WinMergeをインストールします。  
 1. WinMergeを起動して「プラグイン」を「自動展開」に変更します。  
 ![picture 3](images/7589CB7B-A159-40D0-B9FA-4B4895FBB229.png)  
 1. 本アプリを再起動します。  
   
-差分比較ツールは、WinMerge以外を使うこともできます。  
+差分比較ツールは[方眼Diff](https://hogandiff.hotchpotch.xyz)等、WinMerge以外を使うこともできます。  
 1. 本アプリと同じフォルダにある「appSettings.json」をメモ帳等で開きます。
 1. ExcelDiffToolPath、WordDiffToolPath、PowerPointDiffToolPathを適切なパスに書き換えます。
 1. 本アプリを再起動します。
@@ -79,7 +79,8 @@
 * C:\Program Files\Microsoft Office\root\Office16
 * C:\Program Files (x86)\Microsoft Office\root\Office16
   
-それ以外の場所にインストールされている場合、Excel、Word、PowerPointの場所を指定します。
+それ以外の場所にインストールされている場合、Excel、Word、PowerPointの場所を指定します。  
+[LibreOffice](https://ja.libreoffice.org)等を使用している場合も、同様に場所を指定してください。
 1. 本アプリと同じフォルダにある「appSettings.json」をメモ帳等で開きます。
 1. ExcelPath、WordPath、PowerPointPathを適切なパスに書き換えます。
 1. 本アプリを再起動します。

@@ -27,13 +27,18 @@ namespace PowerCacheOffice
 
         private void Form3_Load(object sender, EventArgs e)
         {
-            listBox1.Click += (s, eventArgs) =>
+            listBox1.MouseMove += (s, eventArgs) =>
             {
-                if (listBox1.SelectedItem != null)
-                {
-                    SelectedFile = listBox1.SelectedItem.ToString();
-                    this.Close();
-                }
+                var index = listBox1.IndexFromPoint(eventArgs.Location);
+                if (index != ListBox.NoMatches) listBox1.SelectedIndex = index;
+            };
+
+            listBox1.MouseClick += (s, eventArgs) =>
+            {
+                if (listBox1.SelectedItem == null) return;
+
+                SelectedFile = listBox1.SelectedItem.ToString();
+                this.Close();
             };
         }
     }

@@ -35,7 +35,7 @@ namespace PowerCacheOffice
 
             listBox1.MouseClick += (s, eventArgs) =>
             {
-                if (listBox1.SelectedItem == null) return;
+                if (listBox1.SelectedItems.Count != 1) return;
 
                 SelectedFile = listBox1.SelectedItem.ToString();
                 this.Close();

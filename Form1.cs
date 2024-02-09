@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
@@ -229,7 +230,11 @@ namespace PowerCacheOffice
                 }
             };
 
-            notifyIcon1.MouseClick += (s, eventArgs) => EnableForm1();
+            notifyIcon1.MouseClick += (s, eventArgs) =>
+            {
+                if (eventArgs.Button == MouseButtons.Right) return;
+                EnableForm1();
+            };
 
             toolStripMenuItem1.Click += (s, eventArgs) => EnableForm1();
             toolStripMenuItem2.Click += (s, eventArgs) =>
@@ -240,6 +245,19 @@ namespace PowerCacheOffice
                 Application.Restart();
             };
             toolStripMenuItem3.Click += (s, eventArgs) => this.Close();
+            toolStripMenuItem4.Click += async (s, eventArgs) =>
+            {
+                var version = string.Empty;
+                try
+                {
+
+                }
+                var httpClient = new HttpClient();
+                var url = "https://raw.githubusercontent.com/p1tchbend-tool/PowerCacheOffice/master/README.md";
+                // GetStringAsyncメソッドでファイルの内容を文字列として取得
+                var content = await httpClient.GetStringAsync(url);
+                MessageBox.Show(content);
+            };
 
             timer1.Start();
         }
@@ -655,6 +673,94 @@ namespace PowerCacheOffice
             var dt1 = dateTime1.AddTicks(-(dateTime1.Ticks % TimeSpan.TicksPerMinute));
             var dt2 = dateTime2.AddTicks(-(dateTime2.Ticks % TimeSpan.TicksPerMinute));
             return dt1 == dt2;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            OpenRecentFile();
+        }
+
+        private void OpenRecentFile()
+        {
+            using (var form3 = new Form3(recentFiles))
+            {
+                form3.ShowDialog();
+                if (string.IsNullOrEmpty(form3.SelectedFile)) return;
+
+                var extension = Path.GetExtension(form3.SelectedFile).ToLower();
+                ProcessStartInfo psi = new ProcessStartInfo();
+                psi.UseShellExecute = true;
+
+                if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm")
+                {
+                    psi.FileName = appSettings.ExcelPath;
+                    psi.Arguments = $@"""{form3.SelectedFile}""";
+                }
+                else if (extension == ".doc" || extension == ".docx" || extension == ".docm")
+                {
+                    psi.FileName = appSettings.WordPath;
+                    psi.Arguments = $@"""{form3.SelectedFile}""";
+                }
+                else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm")
+                {
+                    psi.FileName = appSettings.PowerPointPath;
+                    psi.Arguments = $@"""{form3.SelectedFile}""";
+                }
+                else
+                {
+                    psi.FileName = form3.SelectedFile;
+                }
+
+                try
+                {
+                    Process.Start(psi);
+                }
+                catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
+            }
+        }
+
+        private void OpenClipboardPath()
+        {
+            try
+            {
+                var text = Clipboard.GetText();
+                if (string.IsNullOrEmpty(text)) return;
+                if (!File.Exists(text)) return;
+
+                var extension = Path.GetExtension(text).ToLower();
+                ProcessStartInfo psi = new ProcessStartInfo();
+                psi.UseShellExecute = true;
+
+                if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm")
+                {
+                    psi.FileName = appSettings.ExcelPath;
+                    psi.Arguments = $@"""{text}""";
+                }
+                else if (extension == ".doc" || extension == ".docx" || extension == ".docm")
+                {
+                    psi.FileName = appSettings.WordPath;
+                    psi.Arguments = $@"""{text}""";
+                }
+                else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm")
+                {
+                    psi.FileName = appSettings.PowerPointPath;
+                    psi.Arguments = $@"""{text}""";
+                }
+                else
+                {
+                    psi.FileName = text;
+                }
+
+                try
+                {
+                    Process.Start(psi);
+                }
+                catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
+
+                recentFiles.Add(text);
+                File.WriteAllText(Path.Combine(PowerCacheOfficeDataFolder, "recentFiles.json"), JsonSerializer.Serialize(recentFiles, jsonSerializerOptions));
+            }
+            catch { }
         }
     }
 }

@@ -33,11 +33,26 @@ namespace PowerCacheOffice
                 if (index != ListBox.NoMatches) listBox1.SelectedIndex = index;
             };
 
-            listBox1.MouseClick += (s, eventArgs) =>
+            listBox1.MouseDown += (s, eventArgs) =>
             {
                 if (listBox1.SelectedItems.Count != 1) return;
 
-                SelectedFile = listBox1.SelectedItem.ToString();
+                if (eventArgs.Button == MouseButtons.Right)
+                {
+                    contextMenuStrip1.Show(this.PointToScreen(eventArgs.Location));
+                }
+                else
+                {
+                    SelectedFile = listBox1.SelectedItem.ToString();
+                    this.Close();
+                }
+            };
+
+            toolStripMenuItem1.Click += (s, eventArgs) =>
+            {
+                if (listBox1.SelectedItems.Count != 1) return;
+
+                Clipboard.SetText(listBox1.SelectedItem.ToString());
                 this.Close();
             };
         }

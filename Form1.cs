@@ -14,12 +14,16 @@ namespace PowerCacheOffice
 {
     public partial class Form1 : Form
     {
-        private static readonly string PowerCacheOfficeDataFolder = Path.Combine(
+        private static readonly string powerCacheOfficeDataFolder = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice");
-        private static readonly string PowerCacheOfficeCacheFolder = Path.Combine(
+        private static readonly string powerCacheOfficeCacheFolder = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\.cache");
-        private static readonly string PowerCacheOfficeTempFolder = Path.Combine(
+        private static readonly string powerCacheOfficeTempFolder = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\.temp");
+
+        private static readonly int openClipboardPathId = 1;
+        private static readonly int openRecentFileId = 2;
+        private HotKey hotKey = new HotKey();
 
         private AppSettings appSettings = new AppSettings();
         private CacheSettings cacheSettings = new CacheSettings();
@@ -37,14 +41,14 @@ namespace PowerCacheOffice
 
             try
             {
-                appSettings = JsonSerializer.Deserialize<AppSettings>(File.ReadAllText(Path.Combine(PowerCacheOfficeDataFolder, "appSettings.json")));
+                appSettings = JsonSerializer.Deserialize<AppSettings>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json")));
             }
             catch { appSettings = new AppSettings(); }
 
             appSettings.UpdateSettings();
             try
             {
-                File.WriteAllText(Path.Combine(PowerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
+                File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
             }
             catch { }
 
@@ -52,33 +56,49 @@ namespace PowerCacheOffice
             checkBox1.Checked = appSettings.IsRelatedExcel;
             checkBox2.Checked = appSettings.IsRelatedWord;
             checkBox3.Checked = appSettings.IsRelatedPowerPoint;
+            ChangeHotKeyText(textBox4, appSettings.OpenClipboardPathModKey, appSettings.OpenClipboardPathKey);
+            ChangeHotKeyText(textBox5, appSettings.OpenRecentFileModKey, appSettings.OpenRecentFileKey);
+
+            hotKey.Add(appSettings.OpenClipboardPathModKey, appSettings.OpenClipboardPathKey, openClipboardPathId);
+            hotKey.Add(appSettings.OpenRecentFileModKey, appSettings.OpenRecentFileKey, openRecentFileId);
+            hotKey.OnHotKey += (s, eventArgs) =>
+            {
+                if (((HotKey.HotKeyEventArgs)eventArgs).Id == openClipboardPathId)
+                {
+                    OpenClipboardPath();
+                }
+                else if (((HotKey.HotKeyEventArgs)eventArgs).Id == openRecentFileId)
+                {
+                    OpenRecentFile();
+                }
+            };
 
             try
             {
-                cacheSettings = JsonSerializer.Deserialize<CacheSettings>(File.ReadAllText(Path.Combine(PowerCacheOfficeDataFolder, "cacheSettings.json")));
+                cacheSettings = JsonSerializer.Deserialize<CacheSettings>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "cacheSettings.json")));
             }
             catch { cacheSettings = new CacheSettings(); }
 
-            if (File.Exists(Path.Combine(PowerCacheOfficeDataFolder, ".createdCacheList.txt"))) MargeCreatedCacheToCacheSettings();
+            if (File.Exists(Path.Combine(powerCacheOfficeDataFolder, ".createdCacheList.txt"))) MargeCreatedCacheToCacheSettings();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             try
             {
-                DeleteReadonlyAttribute(new DirectoryInfo(PowerCacheOfficeTempFolder));
+                DeleteReadonlyAttribute(new DirectoryInfo(powerCacheOfficeTempFolder));
             }
             catch { }
             try
             {
-                Directory.Delete(PowerCacheOfficeTempFolder, true);
+                Directory.Delete(powerCacheOfficeTempFolder, true);
             }
             catch { }
-            if (!Directory.Exists(PowerCacheOfficeTempFolder)) Directory.CreateDirectory(PowerCacheOfficeTempFolder);
+            if (!Directory.Exists(powerCacheOfficeTempFolder)) Directory.CreateDirectory(powerCacheOfficeTempFolder);
 
-            if (!Directory.Exists(PowerCacheOfficeCacheFolder)) Directory.CreateDirectory(PowerCacheOfficeCacheFolder);
+            if (!Directory.Exists(powerCacheOfficeCacheFolder)) Directory.CreateDirectory(powerCacheOfficeCacheFolder);
 
-            fileSystemWatcher1.Path = PowerCacheOfficeCacheFolder;
+            fileSystemWatcher1.Path = powerCacheOfficeCacheFolder;
             fileSystemWatcher1.Error += (s, eventArgs) =>
             {
                 MessageBox.Show("キャッシュの変更の監視を継続できなくなりました。\nアプリケーションを再起動します。", Program.AppName);
@@ -103,9 +123,9 @@ namespace PowerCacheOffice
                         {
                             try
                             {
-                                if (!Directory.Exists(PowerCacheOfficeTempFolder)) Directory.CreateDirectory(PowerCacheOfficeTempFolder);
+                                if (!Directory.Exists(powerCacheOfficeTempFolder)) Directory.CreateDirectory(powerCacheOfficeTempFolder);
 
-                                var tempFile = Path.Combine(PowerCacheOfficeTempFolder, "【差分確認】" + Path.GetFileName(cacheRelation.RemotePath));
+                                var tempFile = Path.Combine(powerCacheOfficeTempFolder, "【差分確認】" + Path.GetFileName(cacheRelation.RemotePath));
                                 File.Copy(cacheRelation.RemotePath, tempFile, true);
 
                                 ProcessStartInfo psi = new ProcessStartInfo();
@@ -135,14 +155,14 @@ namespace PowerCacheOffice
                         {
                             try
                             {
-                                if (!Directory.Exists(PowerCacheOfficeTempFolder)) Directory.CreateDirectory(PowerCacheOfficeTempFolder);
+                                if (!Directory.Exists(powerCacheOfficeTempFolder)) Directory.CreateDirectory(powerCacheOfficeTempFolder);
 
-                                var tempFileRemote = Path.Combine(PowerCacheOfficeTempFolder, "【リモート】" + Path.GetFileName(cacheRelation.RemotePath));
+                                var tempFileRemote = Path.Combine(powerCacheOfficeTempFolder, "【リモート】" + Path.GetFileName(cacheRelation.RemotePath));
                                 File.Copy(cacheRelation.RemotePath, tempFileRemote, true);
 
                                 await Task.Delay(1000); // 更新検知から実際に更新されるまで少し待つ
 
-                                var tempFileLocal = Path.Combine(PowerCacheOfficeTempFolder, "【ローカル】" + Path.GetFileName(cacheRelation.LocalPath));
+                                var tempFileLocal = Path.Combine(powerCacheOfficeTempFolder, "【ローカル】" + Path.GetFileName(cacheRelation.LocalPath));
                                 File.Copy(cacheRelation.LocalPath, tempFileLocal, true);
 
                                 ProcessStartInfo psi = new ProcessStartInfo();
@@ -183,7 +203,7 @@ namespace PowerCacheOffice
                     cacheSettings.CacheRelations.Add(new CacheRelation(cacheRelation.RemotePath, cacheRelation.LocalPath, File.GetLastWriteTime(cacheRelation.RemotePath)));
                     try
                     {
-                        File.WriteAllText(Path.Combine(PowerCacheOfficeDataFolder, "cacheSettings.json"), JsonSerializer.Serialize(cacheSettings, jsonSerializerOptions));
+                        File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "cacheSettings.json"), JsonSerializer.Serialize(cacheSettings, jsonSerializerOptions));
                     }
                     catch { }
                 }
@@ -204,7 +224,7 @@ namespace PowerCacheOffice
                     appSettings.CacheTargetDirectories = listBox1.Items.OfType<string>().ToList();
                     try
                     {
-                        File.WriteAllText(Path.Combine(PowerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
+                        File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
                     }
                     catch { }
                 }
@@ -230,7 +250,7 @@ namespace PowerCacheOffice
                 }
             };
 
-            notifyIcon1.MouseClick += (s, eventArgs) =>
+            notifyIcon1.MouseDown += (s, eventArgs) =>
             {
                 if (eventArgs.Button == MouseButtons.Right) return;
                 EnableForm1();
@@ -250,16 +270,69 @@ namespace PowerCacheOffice
                 var version = string.Empty;
                 try
                 {
-
+                    var httpClient = new HttpClient();
+                    version = await httpClient.GetStringAsync("https://raw.githubusercontent.com/p1tchbend-tool/PowerCacheOffice/master/App/VERSION.txt");
                 }
-                var httpClient = new HttpClient();
-                var url = "https://raw.githubusercontent.com/p1tchbend-tool/PowerCacheOffice/master/README.md";
-                // GetStringAsyncメソッドでファイルの内容を文字列として取得
-                var content = await httpClient.GetStringAsync(url);
-                MessageBox.Show(content);
+                catch { }
+
+                if (string.IsNullOrEmpty(version))
+                {
+                    MessageBox.Show("バージョン  " + Program.AppVersion + "\n\n最新のバージョンです。", Program.AppName);
+                }
+                else
+                {
+                    if (version == Program.AppVersion)
+                    {
+                        MessageBox.Show("バージョン  " + Program.AppVersion + "\n\n最新のバージョンです。", Program.AppName);
+                    }
+                    else
+                    {
+
+                    }
+                }
             };
 
+            textBox4.Enter += (s, eventArgs) => label6.Text = "登録するにはキーを押してください。";
+            textBox4.Leave += (s, eventArgs) => label6.Text = "クリップボードのパスを開く";
+            textBox4.KeyDown += (s, eventArgs) => RegisterHotKey(eventArgs.KeyCode, openClipboardPathId, textBox4, label6);
+
+            textBox5.Enter += (s, eventArgs) => label5.Text = "登録するにはキーを押してください。";
+            textBox5.Leave += (s, eventArgs) => label5.Text = "最近開いたファイルを表示";
+            textBox5.KeyDown += (s, eventArgs) => RegisterHotKey(eventArgs.KeyCode, openRecentFileId, textBox5, label5);
+
             timer1.Start();
+        }
+
+        private void RegisterHotKey(Keys key, int id, TextBox textBox, Label label)
+        {
+            int modkey = 0;
+            if ((Control.ModifierKeys & Keys.Control) == Keys.Control) modkey += HotKey.MOD_KEY_CONTROL;
+            if ((Control.ModifierKeys & Keys.Alt) == Keys.Alt) modkey += HotKey.MOD_KEY_ALT;
+            if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift) modkey += HotKey.MOD_KEY_SHIFT;
+
+            if (modkey == HotKey.MOD_KEY_NONE)
+            {
+                label.Text = "先に修飾子キーを押してください。";
+            }
+            else if (key == Keys.ControlKey || key == Keys.Menu || key == Keys.ShiftKey)
+            {
+                label.Text = "修飾子以外のキーも押してください。";
+            }
+            else
+            {
+                ChangeHotKeyText(textBox, modkey, key);
+
+                if (hotKey.Add(modkey, key, id))
+                {
+                    hotKey.Remove(id);
+                    hotKey.Add(modkey, key, id);
+                    label.Text = "登録に成功しました。";
+                }
+                else
+                {
+                    label.Text = "登録に失敗しました。";
+                }
+            }
         }
 
         public void OpenFile(string[] args)
@@ -281,7 +354,7 @@ namespace PowerCacheOffice
                     if (cacheRelation == null)
                     {
                         // キャッシュ済みでない場合
-                        var itemCacheFolder = Path.Combine(PowerCacheOfficeCacheFolder, Guid.NewGuid().ToString());
+                        var itemCacheFolder = Path.Combine(powerCacheOfficeCacheFolder, Guid.NewGuid().ToString());
                         if (!Directory.Exists(itemCacheFolder)) Directory.CreateDirectory(itemCacheFolder);
 
                         var cacheFile = Path.Combine(itemCacheFolder, Path.GetFileName(filePath));
@@ -291,7 +364,7 @@ namespace PowerCacheOffice
                             cacheSettings.CacheRelations.Add(new CacheRelation(filePath, cacheFile, File.GetLastWriteTime(filePath)));
                             try
                             {
-                                File.WriteAllText(Path.Combine(PowerCacheOfficeDataFolder, "cacheSettings.json"), JsonSerializer.Serialize(cacheSettings, jsonSerializerOptions));
+                                File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "cacheSettings.json"), JsonSerializer.Serialize(cacheSettings, jsonSerializerOptions));
                             }
                             catch { }
                         }
@@ -313,7 +386,7 @@ namespace PowerCacheOffice
                                 cacheSettings.CacheRelations.Add(new CacheRelation(filePath, localPath, lastWriteTime));
                                 try
                                 {
-                                    File.WriteAllText(Path.Combine(PowerCacheOfficeDataFolder, "cacheSettings.json"), JsonSerializer.Serialize(cacheSettings, jsonSerializerOptions));
+                                    File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "cacheSettings.json"), JsonSerializer.Serialize(cacheSettings, jsonSerializerOptions));
                                 }
                                 catch { }
                             }
@@ -369,7 +442,7 @@ namespace PowerCacheOffice
             appSettings.CacheTargetDirectories = listBox1.Items.OfType<string>().ToList();
             try
             {
-                File.WriteAllText(Path.Combine(PowerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
+                File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
             }
             catch { }
         }
@@ -377,7 +450,7 @@ namespace PowerCacheOffice
         private void button2_Click(object sender, EventArgs e)
         {
             var keyword = textBox2.Text;
-            var queryString = $@"search-ms:query={keyword} NOT kind:folder&crumb=location:{PowerCacheOfficeCacheFolder}";
+            var queryString = $@"search-ms:query={keyword} NOT kind:folder&crumb=location:{powerCacheOfficeCacheFolder}";
 
             var psi = new ProcessStartInfo(queryString);
             psi.UseShellExecute = true;
@@ -422,7 +495,7 @@ namespace PowerCacheOffice
             appSettings.IsRelatedExcel = checkBox1.Checked;
             try
             {
-                File.WriteAllText(Path.Combine(PowerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
+                File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
             }
             catch { }
         }
@@ -461,7 +534,7 @@ namespace PowerCacheOffice
             appSettings.IsRelatedWord = checkBox2.Checked;
             try
             {
-                File.WriteAllText(Path.Combine(PowerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
+                File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
             }
             catch { }
         }
@@ -500,7 +573,7 @@ namespace PowerCacheOffice
             appSettings.IsRelatedPowerPoint = checkBox3.Checked;
             try
             {
-                File.WriteAllText(Path.Combine(PowerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
+                File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
             }
             catch { }
         }
@@ -513,20 +586,20 @@ namespace PowerCacheOffice
 
             try
             {
-                DeleteReadonlyAttribute(new DirectoryInfo(PowerCacheOfficeCacheFolder));
+                DeleteReadonlyAttribute(new DirectoryInfo(powerCacheOfficeCacheFolder));
             }
             catch { }
             try
             {
-                Directory.Delete(PowerCacheOfficeCacheFolder, true);
+                Directory.Delete(powerCacheOfficeCacheFolder, true);
             }
             catch { }
-            if (!Directory.Exists(PowerCacheOfficeCacheFolder)) Directory.CreateDirectory(PowerCacheOfficeCacheFolder);
+            if (!Directory.Exists(powerCacheOfficeCacheFolder)) Directory.CreateDirectory(powerCacheOfficeCacheFolder);
 
             cacheSettings = new CacheSettings();
             try
             {
-                File.WriteAllText(Path.Combine(PowerCacheOfficeDataFolder, "cacheSettings.json"), JsonSerializer.Serialize(cacheSettings, jsonSerializerOptions));
+                File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "cacheSettings.json"), JsonSerializer.Serialize(cacheSettings, jsonSerializerOptions));
             }
             catch { }
 
@@ -558,7 +631,7 @@ namespace PowerCacheOffice
             cacheSettings.CacheRelations.RemoveAll(x => !File.Exists(x.LocalPath));
             try
             {
-                File.WriteAllText(Path.Combine(PowerCacheOfficeDataFolder, "cacheSettings.json"), JsonSerializer.Serialize(cacheSettings, jsonSerializerOptions));
+                File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "cacheSettings.json"), JsonSerializer.Serialize(cacheSettings, jsonSerializerOptions));
             }
             catch { }
 
@@ -593,7 +666,7 @@ namespace PowerCacheOffice
                 appSettings.CacheTargetDirectories = listBox1.Items.OfType<string>().ToList();
                 try
                 {
-                    File.WriteAllText(Path.Combine(PowerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
+                    File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
                 }
                 catch { }
             }
@@ -633,7 +706,7 @@ namespace PowerCacheOffice
         {
             try
             {
-                var text = File.ReadAllText(Path.Combine(PowerCacheOfficeDataFolder, ".createdCacheList.txt"));
+                var text = File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, ".createdCacheList.txt"));
                 var createdCacheList = text.Split('\n');
 
                 foreach (var item in createdCacheList)
@@ -646,8 +719,8 @@ namespace PowerCacheOffice
                     cacheSettings.CacheRelations.Add(new CacheRelation(createdCache[0], createdCache[1], DateTime.Parse(createdCache[2])));
                 }
 
-                File.WriteAllText(Path.Combine(PowerCacheOfficeDataFolder, "cacheSettings.json"), JsonSerializer.Serialize(cacheSettings, jsonSerializerOptions));
-                File.Delete(Path.Combine(PowerCacheOfficeDataFolder, ".createdCacheList.txt"));
+                File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "cacheSettings.json"), JsonSerializer.Serialize(cacheSettings, jsonSerializerOptions));
+                File.Delete(Path.Combine(powerCacheOfficeDataFolder, ".createdCacheList.txt"));
             }
             catch { }
         }
@@ -725,6 +798,8 @@ namespace PowerCacheOffice
             {
                 var text = Clipboard.GetText();
                 if (string.IsNullOrEmpty(text)) return;
+
+                text = text.Replace(@"""", "");
                 if (!File.Exists(text)) return;
 
                 var extension = Path.GetExtension(text).ToLower();
@@ -758,9 +833,22 @@ namespace PowerCacheOffice
                 catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
 
                 recentFiles.Add(text);
-                File.WriteAllText(Path.Combine(PowerCacheOfficeDataFolder, "recentFiles.json"), JsonSerializer.Serialize(recentFiles, jsonSerializerOptions));
+                File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json"), JsonSerializer.Serialize(recentFiles, jsonSerializerOptions));
             }
             catch { }
+        }
+
+        private void ChangeHotKeyText(TextBox textBox, int modkey, Keys key)
+        {
+            textBox.Text = string.Empty;
+
+            if ((modkey & HotKey.MOD_KEY_CONTROL) == HotKey.MOD_KEY_CONTROL) textBox.Text = "Control + ";
+            if ((modkey & HotKey.MOD_KEY_ALT) == HotKey.MOD_KEY_ALT) textBox.Text += "Alt + ";
+            if ((modkey & HotKey.MOD_KEY_SHIFT) == HotKey.MOD_KEY_SHIFT) textBox.Text += "Shift + ";
+
+            var kc = new KeysConverter();
+            textBox.Text += kc.ConvertToString(key);
+            textBox.Text = " " + textBox.Text;
         }
     }
 }

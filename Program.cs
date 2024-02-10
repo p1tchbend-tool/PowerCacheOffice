@@ -7,6 +7,7 @@ namespace PowerCacheOffice
     internal static class Program
     {
         public static readonly string AppName = "Power Cache Office";
+        public static readonly string AppVersion = "1.2.0.0";
 
         /// <summary>
         /// アプリケーションのメイン エントリ ポイントです。

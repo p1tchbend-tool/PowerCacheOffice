@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace PowerCacheOffice
 {
@@ -23,9 +24,14 @@ namespace PowerCacheOffice
         public bool IsRelatedPowerPoint { get; set; }
         public List<string> CacheTargetDirectories { get; set; }
 
+        public Keys OpenClipboardPathKey { get; set; }
+        public int OpenClipboardPathModKey {  get; set; }
+        public Keys OpenRecentFileKey { get; set; }
+        public int OpenRecentFileModKey {  get; set; }
+
         public AppSettings()
         {
-            Version = "1.1.0";
+            Version = "1.2.0";
             ExcelPath = @"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE";
             WordPath = @"C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE";
             PowerPointPath = @"C:\Program Files\Microsoft Office\root\Office16\POWERPNT.EXE";
@@ -41,6 +47,11 @@ namespace PowerCacheOffice
             IsRelatedWord = false;
             IsRelatedPowerPoint = false;
             CacheTargetDirectories = new List<string>();
+
+            OpenClipboardPathKey = Keys.R;
+            OpenClipboardPathModKey = HotKey.MOD_KEY_ALT;
+            OpenRecentFileKey = Keys.R;
+            OpenRecentFileModKey = HotKey.MOD_KEY_ALT + HotKey.MOD_KEY_SHIFT;
         }
 
         public void UpdateSettings()
@@ -55,6 +66,16 @@ namespace PowerCacheOffice
                 this.PowerPointDiffToolArguments = @"/u /dl ""ローカル"" /dr ""リモート""";
 
                 this.Version = "1.1.0";
+            }
+
+            if (this.Version == "1.1.0")
+            {
+                this.OpenClipboardPathKey = Keys.R;
+                this.OpenClipboardPathModKey = HotKey.MOD_KEY_ALT;
+                this.OpenRecentFileKey = Keys.R;
+                this.OpenRecentFileModKey = HotKey.MOD_KEY_ALT + HotKey.MOD_KEY_SHIFT;
+
+                this.Version = "1.2.0";
             }
 
             if (this.ExcelPath == @"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE" ||

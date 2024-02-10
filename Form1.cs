@@ -34,6 +34,7 @@ namespace PowerCacheOffice
             Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
             WriteIndented = true
         };
+        private HttpClient httpClient = new HttpClient();
 
         public Form1()
         {
@@ -276,7 +277,6 @@ namespace PowerCacheOffice
                 var version = string.Empty;
                 try
                 {
-                    var httpClient = new HttpClient();
                     version = await httpClient.GetStringAsync("https://raw.githubusercontent.com/p1tchbend-tool/PowerCacheOffice/master/App/VERSION.txt");
                 }
                 catch { }
@@ -293,7 +293,26 @@ namespace PowerCacheOffice
                     }
                     else
                     {
+                        try
+                        {
+                            var result = MessageBox.Show("新しいバージョンがあります。\n\nダウンロードしますか？", Program.AppName, MessageBoxButtons.YesNo);
+                            if (result != DialogResult.Yes) return;
 
+                            var response = await httpClient.GetAsync("https://raw.githubusercontent.com/p1tchbend-tool/PowerCacheOffice/master/App/PowerCacheOfficeSetup.msi");
+                            using (var stream = await response.Content.ReadAsStreamAsync())
+                            {
+                                using (var outStream = File.Create(
+                                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"Downloads\PowerCacheOfficeSetup.msi")))
+                                {
+                                    stream.CopyTo(outStream);
+                                }
+                            }
+
+                            var psi = new ProcessStartInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads"));
+                            psi.UseShellExecute = true;
+                            Process.Start(psi);
+                        }
+                        catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
                     }
                 }
             };

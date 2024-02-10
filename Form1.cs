@@ -27,13 +27,13 @@ namespace PowerCacheOffice
 
         private AppSettings appSettings = new AppSettings();
         private CacheSettings cacheSettings = new CacheSettings();
+        private List<string> recentFiles = new List<string>();
         private CreateCacheManager createCacheManager = new CreateCacheManager();
         private JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
         {
             Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
             WriteIndented = true
         };
-        private List<string> recentFiles = new List<string>();
 
         public Form1()
         {
@@ -78,6 +78,12 @@ namespace PowerCacheOffice
                 cacheSettings = JsonSerializer.Deserialize<CacheSettings>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "cacheSettings.json")));
             }
             catch { cacheSettings = new CacheSettings(); }
+
+            try
+            {
+                recentFiles = JsonSerializer.Deserialize<List<string>>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json")));
+            }
+            catch { recentFiles = new List<string>(); }
 
             if (File.Exists(Path.Combine(powerCacheOfficeDataFolder, ".createdCacheList.txt"))) MargeCreatedCacheToCacheSettings();
         }

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCacheOffice", "PowerCacheOffice.csproj", "{5EE5D83F-78AC-4590-8784-58316C3D4777}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PowerCacheOfficeSetup", "PowerCacheOfficeSetup\PowerCacheOfficeSetup.vdproj", "{4A9855D1-45FE-4FB2-8860-0132B45E24BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{5EE5D83F-78AC-4590-8784-58316C3D4777}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EE5D83F-78AC-4590-8784-58316C3D4777}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EE5D83F-78AC-4590-8784-58316C3D4777}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A9855D1-45FE-4FB2-8860-0132B45E24BB}.Debug|Any CPU.ActiveCfg = Debug
+		{4A9855D1-45FE-4FB2-8860-0132B45E24BB}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

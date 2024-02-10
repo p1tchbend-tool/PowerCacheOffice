@@ -43,9 +43,9 @@ namespace PowerCacheOffice
             PowerPointDiffToolPath = @"C:\Program Files\WinMerge\WinMergeU.exe";
             PowerPointDiffToolArguments = @"/u /dl ""ローカル"" /dr ""リモート""";
 
-            IsRelatedExcel = false;
-            IsRelatedWord = false;
-            IsRelatedPowerPoint = false;
+            IsRelatedExcel = true;
+            IsRelatedWord = true;
+            IsRelatedPowerPoint = true;
             CacheTargetDirectories = new List<string>();
 
             OpenClipboardPathKey = Keys.R;

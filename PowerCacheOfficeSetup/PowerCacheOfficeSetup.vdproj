@@ -968,7 +968,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PowerCacheOffice"
         "ProductCode" = "8:{CAFB3E28-23F6-4937-9CE6-9E8218EE1DDA}"
-        "PackageCode" = "8:{99262621-0CC5-4981-9DB3-A4160E02BF2D}"
+        "PackageCode" = "8:{1418FA67-82F8-4AF7-A9E6-7BA96C9FDB95}"
         "UpgradeCode" = "8:{7FAC1AD7-C50E-4C4E-8156-B4888E91910E}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -1144,6 +1144,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_344B23E62343434590D67404559050E6"
+            {
+            "Name" = "8:PowerCacheOffice"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_302CFD52B94847CEBC37BE59459FAF5A"
+            "Folder" = "8:_2C9E1CF5205649C78DD89627575073A6"
+            "WorkingFolder" = "8:_BF11B1AB8E3947F89BBA7969170BCC20"
+            "Icon" = "8:_BCF99F150A0949B6ADFC069864A9BFD7"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {

@@ -7,7 +7,10 @@ namespace PowerCacheOffice
     internal static class Program
     {
         public static readonly string AppName = "Power Cache Office";
-        public static readonly string AppVersion = "1.2.0.0";
+        public static readonly string AppVersion = "1.2.1";
+
+        private static readonly string powerCacheOfficeLogFolder = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\log");
 
         /// <summary>
         /// アプリケーションのメイン エントリ ポイントです。
@@ -31,12 +34,11 @@ namespace PowerCacheOffice
         {
             try
             {
-                var errLogFolder = Path.Combine(Application.StartupPath, "log");
-                if (!Directory.Exists(errLogFolder)) Directory.CreateDirectory(errLogFolder);
+                if (!Directory.Exists(powerCacheOfficeLogFolder)) Directory.CreateDirectory(powerCacheOfficeLogFolder);
                 File.WriteAllText(
-                    Path.Combine(errLogFolder, DateTime.Now.ToString("yyyyMMdd") + "-" + Guid.NewGuid().ToString("N") + ".log"), exception.ToString());
+                    Path.Combine(powerCacheOfficeLogFolder, DateTime.Now.ToString("yyyyMMdd") + "-" + Guid.NewGuid().ToString("N") + ".log"), exception.ToString());
 
-                MessageBox.Show(exception.ToString(), AppName);
+                MessageBox.Show(exception.Message, AppName);
             }
             finally { Environment.Exit(1); }
         }

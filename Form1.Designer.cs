@@ -66,6 +66,7 @@
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.button6 = new System.Windows.Forms.Button();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -150,7 +151,7 @@
             this.toolStripMenuItem3,
             this.toolStripMenuItem4});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 114);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(137, 92);
             // 
             // toolStripMenuItem1
             // 
@@ -189,7 +190,7 @@
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button2.ForeColor = System.Drawing.Color.Black;
-            this.button2.Location = new System.Drawing.Point(437, 519);
+            this.button2.Location = new System.Drawing.Point(437, 539);
             this.button2.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(200, 24);
@@ -204,7 +205,7 @@
             this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox2.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.textBox2.ForeColor = System.Drawing.Color.Black;
-            this.textBox2.Location = new System.Drawing.Point(105, 518);
+            this.textBox2.Location = new System.Drawing.Point(101, 538);
             this.textBox2.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(328, 25);
@@ -214,7 +215,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(28, 522);
+            this.label2.Location = new System.Drawing.Point(24, 542);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(73, 18);
@@ -227,7 +228,7 @@
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button4.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button4.ForeColor = System.Drawing.Color.Black;
-            this.button4.Location = new System.Drawing.Point(437, 487);
+            this.button4.Location = new System.Drawing.Point(437, 507);
             this.button4.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(200, 24);
@@ -242,7 +243,7 @@
             this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button5.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button5.ForeColor = System.Drawing.Color.Black;
-            this.button5.Location = new System.Drawing.Point(233, 487);
+            this.button5.Location = new System.Drawing.Point(229, 507);
             this.button5.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(200, 24);
@@ -348,7 +349,7 @@
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button3.ForeColor = System.Drawing.Color.Black;
-            this.button3.Location = new System.Drawing.Point(437, 551);
+            this.button3.Location = new System.Drawing.Point(437, 571);
             this.button3.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(200, 24);
@@ -363,7 +364,7 @@
             this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox3.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.textBox3.ForeColor = System.Drawing.Color.Black;
-            this.textBox3.Location = new System.Drawing.Point(105, 550);
+            this.textBox3.Location = new System.Drawing.Point(101, 570);
             this.textBox3.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(328, 25);
@@ -373,7 +374,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(16, 554);
+            this.label3.Location = new System.Drawing.Point(12, 574);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(85, 18);
@@ -382,7 +383,7 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(20, 582);
+            this.progressBar1.Location = new System.Drawing.Point(20, 602);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(617, 23);
             this.progressBar1.TabIndex = 18;
@@ -395,7 +396,7 @@
             // 
             this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.label4.Location = new System.Drawing.Point(28, 585);
+            this.label4.Location = new System.Drawing.Point(28, 605);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(402, 19);
@@ -447,7 +448,7 @@
             this.textBox5.Name = "textBox5";
             this.textBox5.ReadOnly = true;
             this.textBox5.Size = new System.Drawing.Size(200, 25);
-            this.textBox5.TabIndex = 1;
+            this.textBox5.TabIndex = 2;
             // 
             // textBox4
             // 
@@ -457,7 +458,7 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.ReadOnly = true;
             this.textBox4.Size = new System.Drawing.Size(200, 25);
-            this.textBox4.TabIndex = 0;
+            this.textBox4.TabIndex = 1;
             // 
             // button6
             // 
@@ -465,7 +466,7 @@
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button6.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button6.ForeColor = System.Drawing.Color.Black;
-            this.button6.Location = new System.Drawing.Point(29, 487);
+            this.button6.Location = new System.Drawing.Point(20, 507);
             this.button6.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(200, 24);
@@ -474,16 +475,27 @@
             this.button6.UseVisualStyleBackColor = false;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(20, 478);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(171, 22);
+            this.checkBox4.TabIndex = 22;
+            this.checkBox4.Text = "スタートアップに登録する";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(243)))));
-            this.ClientSize = new System.Drawing.Size(664, 616);
+            this.ClientSize = new System.Drawing.Size(664, 636);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.checkBox4);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.button3);
@@ -494,6 +506,7 @@
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.progressBar1);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -555,6 +568,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        private System.Windows.Forms.CheckBox checkBox4;
     }
 }
 

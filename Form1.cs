@@ -40,6 +40,10 @@ namespace PowerCacheOffice
         {
             InitializeComponent();
 
+            if (!Directory.Exists(powerCacheOfficeDataFolder)) Directory.CreateDirectory(powerCacheOfficeDataFolder);
+            if (!Directory.Exists(powerCacheOfficeCacheFolder)) Directory.CreateDirectory(powerCacheOfficeCacheFolder);
+            if (!Directory.Exists(powerCacheOfficeTempFolder)) Directory.CreateDirectory(powerCacheOfficeTempFolder);
+
             try
             {
                 appSettings = JsonSerializer.Deserialize<AppSettings>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json")));
@@ -57,6 +61,7 @@ namespace PowerCacheOffice
             checkBox1.Checked = appSettings.IsRelatedExcel;
             checkBox2.Checked = appSettings.IsRelatedWord;
             checkBox3.Checked = appSettings.IsRelatedPowerPoint;
+            checkBox4.Checked = appSettings.IsStartUp;
             ChangeHotKeyText(textBox4, appSettings.OpenClipboardPathModKey, appSettings.OpenClipboardPathKey);
             ChangeHotKeyText(textBox5, appSettings.OpenRecentFileModKey, appSettings.OpenRecentFileKey);
 
@@ -102,8 +107,6 @@ namespace PowerCacheOffice
             }
             catch { }
             if (!Directory.Exists(powerCacheOfficeTempFolder)) Directory.CreateDirectory(powerCacheOfficeTempFolder);
-
-            if (!Directory.Exists(powerCacheOfficeCacheFolder)) Directory.CreateDirectory(powerCacheOfficeCacheFolder);
 
             fileSystemWatcher1.Path = powerCacheOfficeCacheFolder;
             fileSystemWatcher1.Error += (s, eventArgs) =>
@@ -330,7 +333,7 @@ namespace PowerCacheOffice
 
         private void RegisterHotKey(Keys key, int id, TextBox textBox, Label label)
         {
-            int modkey = 0;
+            int modkey = HotKey.MOD_KEY_NONE;
             if ((Control.ModifierKeys & Keys.Control) == Keys.Control) modkey += HotKey.MOD_KEY_CONTROL;
             if ((Control.ModifierKeys & Keys.Alt) == Keys.Alt) modkey += HotKey.MOD_KEY_ALT;
             if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift) modkey += HotKey.MOD_KEY_SHIFT;
@@ -352,6 +355,27 @@ namespace PowerCacheOffice
                     hotKey.Remove(id);
                     hotKey.Add(modkey, key, id);
                     label.Text = "登録に成功しました。";
+
+                    if (id == openClipboardPathId)
+                    {
+                        appSettings.OpenClipboardPathModKey = modkey;
+                        appSettings.OpenClipboardPathKey = key;
+                        try
+                        {
+                            File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
+                        }
+                        catch { }
+                    }
+                    else if (id == openRecentFileId)
+                    {
+                        appSettings.OpenRecentFileModKey = modkey;
+                        appSettings.OpenRecentFileKey = key;
+                        try
+                        {
+                            File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
+                        }
+                        catch { }
+                    }
                 }
                 else
                 {
@@ -370,6 +394,15 @@ namespace PowerCacheOffice
                 if (extension != ".xls" && extension != ".xlsx" && extension != ".xlsm" &&
                     extension != ".doc" && extension != ".docx" && extension != ".docm" &&
                     extension != ".ppt" && extension != ".pptx" && extension != ".pptm") continue;
+
+                recentFiles.RemoveAll(x => x == filePath);
+                recentFiles.Add(filePath);
+                if (recentFiles.Count > 100) recentFiles.RemoveAt(0);
+                try
+                {
+                    File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json"), JsonSerializer.Serialize(recentFiles, jsonSerializerOptions));
+                }
+                catch { }
 
                 string arguments = string.Empty;
                 if (listBox1.Items.OfType<string>().Any(x => filePath.ToLower().StartsWith(x.ToLower())))
@@ -603,6 +636,26 @@ namespace PowerCacheOffice
             catch { }
         }
 
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            var startUpKey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+            if (checkBox4.Checked)
+            {
+                startUpKey.SetValue(Application.ProductName, $@"""{Application.ExecutablePath}""");
+            }
+            else
+            {
+                startUpKey.DeleteValue(Application.ProductName, false);
+            }
+
+            appSettings.IsStartUp = checkBox4.Checked;
+            try
+            {
+                File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
+            }
+            catch { }
+        }
+
         private void button4_Click(object sender, EventArgs e)
         {
             var dr = MessageBox.Show(
@@ -698,6 +751,7 @@ namespace PowerCacheOffice
 
             button3.Enabled = false;
             textBox3.Enabled = false;
+            listBox1.Focus();
             try
             {
                 var caches = new List<string>();
@@ -785,9 +839,9 @@ namespace PowerCacheOffice
                 form3.ShowDialog();
                 if (string.IsNullOrEmpty(form3.SelectedFile)) return;
 
-                var extension = Path.GetExtension(form3.SelectedFile).ToLower();
                 ProcessStartInfo psi = new ProcessStartInfo();
                 psi.UseShellExecute = true;
+                var extension = Path.GetExtension(form3.SelectedFile).ToLower();
 
                 if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm")
                 {
@@ -827,9 +881,9 @@ namespace PowerCacheOffice
                 text = text.Replace(@"""", "");
                 if (!File.Exists(text)) return;
 
-                var extension = Path.GetExtension(text).ToLower();
                 ProcessStartInfo psi = new ProcessStartInfo();
                 psi.UseShellExecute = true;
+                var extension = Path.GetExtension(text).ToLower();
 
                 if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm")
                 {
@@ -857,7 +911,9 @@ namespace PowerCacheOffice
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
 
+                recentFiles.RemoveAll(x => x == text);
                 recentFiles.Add(text);
+                if (recentFiles.Count > 100) recentFiles.RemoveAt(0);
                 File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json"), JsonSerializer.Serialize(recentFiles, jsonSerializerOptions));
             }
             catch { }

@@ -22,6 +22,7 @@ namespace PowerCacheOffice
         public bool IsRelatedExcel { get; set; }
         public bool IsRelatedWord { get; set; }
         public bool IsRelatedPowerPoint { get; set; }
+        public bool IsStartUp { get; set; }
         public List<string> CacheTargetDirectories { get; set; }
 
         public Keys OpenClipboardPathKey { get; set; }
@@ -31,7 +32,7 @@ namespace PowerCacheOffice
 
         public AppSettings()
         {
-            Version = "1.2.0";
+            Version = "1.2.1";
             ExcelPath = @"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE";
             WordPath = @"C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE";
             PowerPointPath = @"C:\Program Files\Microsoft Office\root\Office16\POWERPNT.EXE";
@@ -46,6 +47,7 @@ namespace PowerCacheOffice
             IsRelatedExcel = true;
             IsRelatedWord = true;
             IsRelatedPowerPoint = true;
+            IsStartUp = true;
             CacheTargetDirectories = new List<string>();
 
             OpenClipboardPathKey = Keys.R;
@@ -76,6 +78,13 @@ namespace PowerCacheOffice
                 this.OpenRecentFileModKey = HotKey.MOD_KEY_ALT + HotKey.MOD_KEY_SHIFT;
 
                 this.Version = "1.2.0";
+            }
+
+            if (this.Version == "1.2.0")
+            {
+                this.IsStartUp = true;
+
+                this.Version = "1.2.1";
             }
 
             if (this.ExcelPath == @"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE" ||

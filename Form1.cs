@@ -113,17 +113,7 @@ namespace PowerCacheOffice
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            try
-            {
-                DeleteReadonlyAttribute(new DirectoryInfo(powerCacheOfficeTempFolder));
-            }
-            catch { }
-            try
-            {
-                Directory.Delete(powerCacheOfficeTempFolder, true);
-            }
-            catch { }
-            if (!Directory.Exists(powerCacheOfficeTempFolder)) Directory.CreateDirectory(powerCacheOfficeTempFolder);
+            DeleteSubFolder(powerCacheOfficeTempFolder);
 
             fileSystemWatcher1.Path = powerCacheOfficeCacheFolder;
             fileSystemWatcher1.Error += (s, eventArgs) =>
@@ -695,17 +685,7 @@ namespace PowerCacheOffice
 
         private void DeleteAllCache()
         {
-            try
-            {
-                DeleteReadonlyAttribute(new DirectoryInfo(powerCacheOfficeCacheFolder));
-            }
-            catch { }
-            try
-            {
-                Directory.Delete(powerCacheOfficeCacheFolder, true);
-            }
-            catch { }
-            if (!Directory.Exists(powerCacheOfficeCacheFolder)) Directory.CreateDirectory(powerCacheOfficeCacheFolder);
+            DeleteSubFolder(powerCacheOfficeCacheFolder);
 
             cacheSettings = new CacheSettings();
             try
@@ -715,24 +695,46 @@ namespace PowerCacheOffice
             catch { }
         }
 
+        private void DeleteSubFolder(string path)
+        {
+            var di = new DirectoryInfo(path);
+            DeleteReadonlyAttribute(di);
+
+            foreach (var file in di.GetFiles())
+            {
+                try
+                {
+                    file.Delete();
+                }
+                catch { }
+            }
+            foreach (var folder in di.GetDirectories())
+            {
+                try
+                {
+                    folder.Delete(true);
+                }
+                catch { }
+            }
+        }
+
         private void DeleteReadonlyAttribute(DirectoryInfo di)
         {
             try
             {
                 if ((di.Attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly) di.Attributes = FileAttributes.Normal;
                 foreach (FileInfo fi in di.GetFiles())
-                    if ((fi.Attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly) fi.Attributes = FileAttributes.Normal;
+                {
+                    try
+                    {
+                        if ((fi.Attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly) fi.Attributes = FileAttributes.Normal;
+                    }
+                    catch { }
+                }
             }
             catch { }
             
-            foreach (DirectoryInfo d in di.GetDirectories())
-            {
-                try
-                {
-                    DeleteReadonlyAttribute(d);
-                }
-                catch { }
-            }
+            foreach (DirectoryInfo d in di.GetDirectories()) DeleteReadonlyAttribute(d);
         }
 
         private void button5_Click(object sender, EventArgs e)

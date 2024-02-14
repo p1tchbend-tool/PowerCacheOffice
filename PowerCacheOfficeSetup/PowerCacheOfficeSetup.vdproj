@@ -332,6 +332,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -991,15 +999,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PowerCacheOffice"
-        "ProductCode" = "8:{F0B1E960-0E8D-4F41-9232-0235A79E80B0}"
-        "PackageCode" = "8:{E984E499-73E0-4844-830D-AC5441B2674D}"
+        "ProductCode" = "8:{F25568BB-D6BD-4676-95FD-BFA876EA0262}"
+        "PackageCode" = "8:{2D17F127-C0A8-4AB9-844C-A0642BE2DF4A}"
         "UpgradeCode" = "8:{7FAC1AD7-C50E-4C4E-8156-B4888E91910E}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.2.2"
+        "ProductVersion" = "8:2.0.1"
         "Manufacturer" = "8:P1tchBend"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

@@ -496,6 +496,7 @@
             this.checkBox5.TabIndex = 23;
             this.checkBox5.Text = "再起動時にキャッシュを削除する";
             this.checkBox5.UseVisualStyleBackColor = true;
+            this.checkBox5.CheckedChanged += new System.EventHandler(this.checkBox5_CheckedChanged);
             // 
             // Form1
             // 

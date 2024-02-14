@@ -62,6 +62,7 @@ namespace PowerCacheOffice
             checkBox2.Checked = appSettings.IsRelatedWord;
             checkBox3.Checked = appSettings.IsRelatedPowerPoint;
             checkBox4.Checked = appSettings.IsStartUp;
+            checkBox5.Checked = appSettings.IsDeleteCacheAtStartUp;
             ChangeHotKeyText(textBox4, appSettings.OpenClipboardPathModKey, appSettings.OpenClipboardPathKey);
             ChangeHotKeyText(textBox5, appSettings.OpenRecentFileModKey, appSettings.OpenRecentFileKey);
 
@@ -91,7 +92,23 @@ namespace PowerCacheOffice
             }
             catch { recentFiles = new List<string>(); }
 
-            if (File.Exists(Path.Combine(powerCacheOfficeDataFolder, ".createdCacheList.txt"))) MargeCreatedCacheToCacheSettings();
+            if (File.Exists(Path.Combine(powerCacheOfficeDataFolder, ".createdCacheList.txt")))
+            {
+                if (!checkBox5.Checked)
+                {
+                    MargeCreatedCacheToCacheSettings();
+                }
+                else
+                {
+                    try
+                    {
+                        File.Delete(Path.Combine(powerCacheOfficeDataFolder, ".createdCacheList.txt"));
+                    }
+                    catch { }
+                }
+            }
+
+            if (checkBox5.Checked) DeleteAllCache();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -656,12 +673,28 @@ namespace PowerCacheOffice
             catch { }
         }
 
+        private void checkBox5_CheckedChanged(object sender, EventArgs e)
+        {
+            appSettings.IsStartUp = checkBox5.Checked;
+            try
+            {
+                File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
+            }
+            catch { }
+        }
+
         private void button4_Click(object sender, EventArgs e)
         {
             var dr = MessageBox.Show(
                 "すべてのキャッシュを削除してよろしいですか？", Program.AppName, MessageBoxButtons.YesNo);
             if (dr != DialogResult.Yes) return;
 
+            DeleteAllCache();
+            MessageBox.Show("キャッシュの削除が完了しました。", Program.AppName);
+        }
+
+        private void DeleteAllCache()
+        {
             try
             {
                 DeleteReadonlyAttribute(new DirectoryInfo(powerCacheOfficeCacheFolder));
@@ -680,8 +713,6 @@ namespace PowerCacheOffice
                 File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "cacheSettings.json"), JsonSerializer.Serialize(cacheSettings, jsonSerializerOptions));
             }
             catch { }
-
-            MessageBox.Show("キャッシュの削除が完了しました。", Program.AppName);
         }
 
         private void DeleteReadonlyAttribute(DirectoryInfo di)

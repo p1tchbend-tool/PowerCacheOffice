@@ -23,6 +23,7 @@ namespace PowerCacheOffice
         public bool IsRelatedWord { get; set; }
         public bool IsRelatedPowerPoint { get; set; }
         public bool IsStartUp { get; set; }
+        public bool IsDeleteCacheAtStartUp { get; set; }
         public List<string> CacheTargetDirectories { get; set; }
 
         public Keys OpenClipboardPathKey { get; set; }
@@ -32,7 +33,7 @@ namespace PowerCacheOffice
 
         public AppSettings()
         {
-            Version = "1.2.1";
+            Version = "1.2.2";
             ExcelPath = @"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE";
             WordPath = @"C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE";
             PowerPointPath = @"C:\Program Files\Microsoft Office\root\Office16\POWERPNT.EXE";
@@ -48,6 +49,7 @@ namespace PowerCacheOffice
             IsRelatedWord = true;
             IsRelatedPowerPoint = true;
             IsStartUp = true;
+            IsDeleteCacheAtStartUp = false;
             CacheTargetDirectories = new List<string>();
 
             OpenClipboardPathKey = Keys.R;
@@ -85,6 +87,13 @@ namespace PowerCacheOffice
                 this.IsStartUp = true;
 
                 this.Version = "1.2.1";
+            }
+
+            if (this.Version == "1.2.1")
+            {
+                this.IsDeleteCacheAtStartUp = false;
+
+                this.Version = "1.2.2";
             }
 
             if (this.ExcelPath == @"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE" ||

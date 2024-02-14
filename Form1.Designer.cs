@@ -67,6 +67,7 @@
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.button6 = new System.Windows.Forms.Button();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -478,13 +479,23 @@
             // checkBox4
             // 
             this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(20, 478);
+            this.checkBox4.Location = new System.Drawing.Point(229, 478);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(171, 22);
             this.checkBox4.TabIndex = 22;
             this.checkBox4.Text = "スタートアップに登録する";
             this.checkBox4.UseVisualStyleBackColor = true;
             this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
+            // 
+            // checkBox5
+            // 
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.Location = new System.Drawing.Point(437, 478);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(207, 22);
+            this.checkBox5.TabIndex = 23;
+            this.checkBox5.Text = "再起動時にキャッシュを削除する";
+            this.checkBox5.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -493,6 +504,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(243)))));
             this.ClientSize = new System.Drawing.Size(664, 636);
             this.Controls.Add(this.label4);
+            this.Controls.Add(this.checkBox5);
             this.Controls.Add(this.checkBox4);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.groupBox3);
@@ -569,6 +581,7 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBox5;
     }
 }
 

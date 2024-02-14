@@ -7,7 +7,7 @@ namespace PowerCacheOffice
     internal static class Program
     {
         public static readonly string AppName = "Power Cache Office";
-        public static readonly string AppVersion = "1.2.2";
+        public static readonly string AppVersion = "1.3.0";
 
         private static readonly string powerCacheOfficeLogFolder = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\log");

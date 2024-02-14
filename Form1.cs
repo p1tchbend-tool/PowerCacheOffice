@@ -675,7 +675,7 @@ namespace PowerCacheOffice
 
         private void checkBox5_CheckedChanged(object sender, EventArgs e)
         {
-            appSettings.IsStartUp = checkBox5.Checked;
+            appSettings.IsDeleteCacheAtStartUp = checkBox5.Checked;
             try
             {
                 File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));

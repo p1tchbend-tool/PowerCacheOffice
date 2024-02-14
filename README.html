@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="power-cache-office">Power Cache Office</h1>
+<p>共有フォルダのOfficeファイルが、重くてなかなか開けなかった経験はありませんか？<br>
+やっとの思いで開いたファイルが、使用中で更新できなかったことは？<br>
+検索に時間がかかり、探しているファイルが見つからなかったことは？</p>
+<p>「Power Cache Office」はこれらの問題を解決します。</p>
+<ul>
+<li>リモートのOfficeファイルを開くと、自動でローカルにコピーを作成します。
+<ul>
+<li>ローカルPCにあるファイルとして、軽快に操作することができます。
+<ul>
+<li>検索も高速に実行できます。</li>
+</ul>
+</li>
+<li>リモートのファイルをロックしないため、他の人との共同作業を邪魔しません。</li>
+</ul>
+</li>
+<li>ローカルのコピーを更新すると、自動でリモートへアップロードします。
+<ul>
+<li>リモートのタイムスタンプが変わっていた場合、差分を確認してからアップロードすることもできます。</li>
+</ul>
+</li>
+</ul>
+<h2 id="%E7%94%BB%E9%9D%A2%E6%A7%8B%E6%88%90">画面構成</h2>
+<p>以下が「Power Cache Office」の画面構成です。<br>
+各機能の使い方を説明していきます。<br>
+<img src="images/8af06b861739dec3815c14fb133d4ff1de4ca30f55fbffd9df43c4185de4a61f.png" alt="picture 0"></p>
+<h3 id="%E9%96%A2%E9%80%A3%E4%BB%98%E3%81%91">関連付け</h3>
+<p>チェックを入れた拡張子が「Power Cache Office」で開くように関連付けを行います。<br>
+特に理由がなければ、すべてチェックを入れてください。</p>
+<p>チェックを入れるとOfficeファイルを開く際「常に使う」アプリに「Power Cache Office」が選択可能になります。<br>
+常に使うアプリに設定し、アイコンが変更されれば完了です。<br>
+うまくいかない場合は、PCを一度再起動してみてください。<br>
+<img src="images/8f19ee306db185dd57d408aac6f2ca82b9c4793caac30b4a2ca09ae12f5c4aa0.png" alt="picture 1"></p>
+<h3 id="%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%A5%E5%AF%BE%E8%B1%A1%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80">キャッシュ対象フォルダ</h3>
+<p>キャッシュ作成する（ローカルPCにコピーを作成する）フォルダを指定します。<br>
+共有フォルダや、外付けハードディスクのパスを指定してください。</p>
+<p>テキストボックスにパスを入力し「＋」ボタンを押すと追加されます。<br>
+追加したパスを削除する場合、選択して「Delete」キーを押してください。</p>
+<h3 id="%E3%83%9B%E3%83%83%E3%83%88%E3%82%AD%E3%83%BC">ホットキー</h3>
+<p>以下の機能をホットキーに登録します。</p>
+<ul>
+<li>クリップボードのパスを開く
+<ul>
+<li>クリップボードにパスがコピーされている場合、そのパスを開きます。</li>
+</ul>
+</li>
+<li>最近開いたファイルを表示
+<ul>
+<li>本アプリで最近開いたファイルを表示します。<br>
+表示されたファイルを開いたり、パスをコピーすることができます。</li>
+</ul>
+</li>
+</ul>
+<p>ホットキーを変更するには、テキストボックス上で登録したいキーを押してください。</p>
+<h3 id="%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%88%E3%82%A2%E3%83%83%E3%83%97%E3%81%AB%E7%99%BB%E9%8C%B2%E3%81%99%E3%82%8B">スタートアップに登録する</h3>
+<p>チェックを入れると、PC起動時に本アプリを起動します。</p>
+<h3 id="%E5%86%8D%E8%B5%B7%E5%8B%95%E6%99%82%E3%81%AB%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%A5%E3%82%92%E5%89%8A%E9%99%A4%E3%81%99%E3%82%8B">再起動時にキャッシュを削除する</h3>
+<p>チェックを入れると、PC起動時にローカルのコピーをすべて削除します。<br>
+検索等はできなくなりますが、ローカルにファイルを残したくない場合、チェックを入れてください。</p>
+<h3 id="%E6%9C%80%E8%BF%91%E9%96%8B%E3%81%84%E3%81%9F%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E8%A1%A8%E7%A4%BA">最近開いたファイルを表示</h3>
+<p>ホットキーの「最近開いたファイルを表示」と同じ機能です。</p>
+<h3 id="%E3%82%A4%E3%83%B3%E3%83%87%E3%83%83%E3%82%AF%E3%82%B9%E3%82%92%E5%86%8D%E4%BD%9C%E6%88%90">インデックスを再作成</h3>
+<p>ローカルのコピーとリモートの関係を再作成します。<br>
+リモートのOfficeファイルが、うまく開けなくなった場合に実施してください。</p>
+<h3 id="%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%A5%E3%82%92%E5%89%8A%E9%99%A4">キャッシュを削除</h3>
+<p>ローカルのコピーをすべて削除します。<br>
+インデックスを再作成しても、リモートのOfficeファイルがうまく開けない場合や、PCの容量が不足した場合に実施してください。</p>
+<h3 id="%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%A5%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%82%92%E6%A4%9C%E7%B4%A2">キャッシュフォルダを検索</h3>
+<p>キーワードを入力してボタンを押すと、ローカルのコピーを対象に検索を実施します。</p>
+<h3 id="%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%A5%E3%82%92%E4%BA%8B%E5%89%8D%E4%BD%9C%E6%88%90">キャッシュを事前作成</h3>
+<p>対象フォルダを入力してボタンを押すと、フォルダにあるOfficeファイルをローカルにコピーします。<br>
+以下の2点に注意して実施してください。</p>
+<ul>
+<li>処理に時間がかかる可能性があります。</li>
+<li>大量のファイルをキャッシュすると、PCの容量が不足する可能性があります。</li>
+</ul>
+<h2 id="%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">インストール</h2>
+<p><a href="https://github.com/p1tchbend-tool/PowerCacheOffice/tree/master/App">PowerCacheOfficeSetup.msi</a> を実行してインストールします。</p>
+<h2 id="%E3%82%BB%E3%83%83%E3%83%88%E3%82%A2%E3%83%83%E3%83%97">セットアップ</h2>
+<p>アプリを実行するとタスクトレイに常駐します。<br>
+タスクトレイのアイコンをクリックして画面を開き、各種設定を実施してください。<br>
+設定後は最小化すると、タスクトレイに常駐して動作し続けます。</p>
+<h3 id="%E5%B7%AE%E5%88%86%E6%AF%94%E8%BC%83%E3%83%84%E3%83%BC%E3%83%AB">差分比較ツール</h3>
+<p>自分がファイルを編集中に、他の人がそのファイルを更新した場合、差分を「ツールで確認する」ことができます。<br>
+なお、単に「開いて確認する」ことも可能なので、ツールを使わずOfficeの「ファイルの比較」機能も利用できます。<br>
+<img src="images/E08F5C40-1AA8-42F1-A4C2-4D838777FAD1.png" alt="picture 2"></p>
+<p>ここでは例として、差分比較ツールに「WinMerge」を使う方法を解説します。</p>
+<ol>
+<li><a href="https://winmerge.org/downloads/?lang=ja">公式サイト</a>から、WinMergeをインストールします。</li>
+<li>WinMergeを起動して「プラグイン」を「自動展開」に変更します。<br>
+<img src="images/7589CB7B-A159-40D0-B9FA-4B4895FBB229.png" alt="picture 3"></li>
+<li>本アプリを再起動します。</li>
+</ol>
+<p>差分比較ツールは<a href="https://hogandiff.hotchpotch.xyz">方眼Diff</a>等、WinMerge以外を使うこともできます。</p>
+<ol>
+<li>本アプリと同じフォルダにある「appSettings.json」をメモ帳等で開きます。</li>
+<li>ExcelDiffToolPath、WordDiffToolPath、PowerPointDiffToolPathを適切なパスに書き換えます。</li>
+<li>本アプリを再起動します。</li>
+</ol>
+<h3 id="office%E3%82%A2%E3%83%97%E3%83%AA%E3%81%AE%E5%A0%B4%E6%89%80">Officeアプリの場所</h3>
+<p>本アプリは以下どちらかにExcel、Word、PowerPointがインストールされている前提で動作します。</p>
+<ul>
+<li>C:\Program Files\Microsoft Office\root\Office16</li>
+<li>C:\Program Files (x86)\Microsoft Office\root\Office16</li>
+</ul>
+<p>それ以外の場所にインストールされている場合、Excel、Word、PowerPointの場所を指定します。<br>
+<a href="https://ja.libreoffice.org">LibreOffice</a>等を使用している場合も、同様に場所を指定してください。</p>
+<ol>
+<li>本アプリと同じフォルダにある「appSettings.json」をメモ帳等で開きます。</li>
+<li>ExcelPath、WordPath、PowerPointPathを適切なパスに書き換えます。</li>
+<li>本アプリを再起動します。</li>
+</ol>
+<h2 id="%E3%82%A2%E3%83%B3%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">アンインストール</h2>
+<p>Windowsの設定からアンインストールします。<br>
+また以下のフォルダを必要に応じて削除します。</p>
+<p>%LOCALAPPDATA%\PowerCacheOffice</p>
+<p>上記フォルダにはキャッシュと、本アプリの設定が保存されています。<br>
+アンインストール後に再インストールする場合は、削除しないでください。</p>
+<h2 id="%E3%83%A9%E3%82%A4%E3%82%BB%E3%83%B3%E3%82%B9">ライセンス</h2>
+<p>本アプリは、<a href="https://licenses.opensource.jp/MIT/MIT.html">MIT ライセンス</a>で提供されます。</p>
+<h2 id="%E9%80%A3%E7%B5%A1%E5%85%88">連絡先</h2>
+<p>本アプリに関するご連絡は、<a href="mailto:p1tchbend.tool@gmail.com">こちら</a>までお願いいたします。</p>
+
+</body>
+</html>

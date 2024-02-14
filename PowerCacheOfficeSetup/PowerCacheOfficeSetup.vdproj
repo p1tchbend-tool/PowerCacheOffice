@@ -177,6 +177,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_8B9A35732AA648E485EFEA8E4524C975"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_9314F33F2D4241C7A8D8FC4E63CFE611"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -332,6 +338,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -742,6 +756,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8B9A35732AA648E485EFEA8E4524C975"
+            {
+            "SourcePath" = "8:..\\README.html"
+            "TargetName" = "8:README.html"
+            "Tag" = "8:"
+            "Folder" = "8:_BF11B1AB8E3947F89BBA7969170BCC20"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9314F33F2D4241C7A8D8FC4E63CFE611"
             {
             "SourcePath" = "8:..\\README.md"
@@ -991,15 +1025,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PowerCacheOffice"
-        "ProductCode" = "8:{F0B1E960-0E8D-4F41-9232-0235A79E80B0}"
-        "PackageCode" = "8:{E984E499-73E0-4844-830D-AC5441B2674D}"
+        "ProductCode" = "8:{C2F69DA8-D259-4DB1-8862-40E6A7BAA3F0}"
+        "PackageCode" = "8:{32758A6E-0A54-49D4-B2A5-1A1655F85A21}"
         "UpgradeCode" = "8:{7FAC1AD7-C50E-4C4E-8156-B4888E91910E}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.2.2"
+        "ProductVersion" = "8:1.3.0"
         "Manufacturer" = "8:P1tchBend"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

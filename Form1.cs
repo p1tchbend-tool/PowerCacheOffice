@@ -229,23 +229,22 @@ namespace PowerCacheOffice
 
             listBox1.KeyDown += (s, eventArgs) =>
             {
-                if (eventArgs.KeyData == Keys.Delete)
-                {
-                    if (listBox1.SelectedItems.Count != 1) return;
-                    var dr = MessageBox.Show(
-                        "選択したアイテムを削除してよろしいですか？", Program.AppName, MessageBoxButtons.YesNo);
-                    if (dr != DialogResult.Yes) return;
-
-                    listBox1.Items.Remove(listBox1.SelectedItem);
-
-                    appSettings.CacheTargetDirectories = listBox1.Items.OfType<string>().ToList();
-                    try
-                    {
-                        File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
-                    }
-                    catch { }
-                }
+                if (eventArgs.KeyData == Keys.Delete) RemoveSelectedItemFromListBox1();
             };
+
+            listBox1.MouseDown += (s, eventArgs) =>
+            {
+                if (eventArgs.Button != MouseButtons.Right) return;
+                if (listBox1.SelectedItems.Count != 1) return;
+
+                contextMenuStrip2.Show(listBox1.PointToScreen(eventArgs.Location));
+            };
+            toolStripMenuItem5.Click += (s, eventArgs) =>
+            {
+                if (listBox1.SelectedItems.Count != 1) return;
+                Clipboard.SetText(listBox1.SelectedItem.ToString());
+            };
+            toolStripMenuItem6.Click += (s, eventArgs) => RemoveSelectedItemFromListBox1();
 
             this.FormClosing += (s, eventArgs) =>
             {
@@ -293,13 +292,13 @@ namespace PowerCacheOffice
 
                 if (string.IsNullOrEmpty(version))
                 {
-                    MessageBox.Show("バージョン  " + Program.AppVersion + "\n\n最新のバージョンです。", Program.AppName);
+                    MessageBox.Show("バージョン  " + FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion + "\n\n最新のバージョンです。", Program.AppName);
                 }
                 else
                 {
-                    if (version == Program.AppVersion)
+                    if (version == FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion)
                     {
-                        MessageBox.Show("バージョン  " + Program.AppVersion + "\n\n最新のバージョンです。", Program.AppName);
+                        MessageBox.Show("バージョン  " + FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion + "\n\n最新のバージョンです。", Program.AppName);
                     }
                     else
                     {
@@ -336,6 +335,23 @@ namespace PowerCacheOffice
             textBox5.KeyDown += (s, eventArgs) => RegisterHotKey(eventArgs.KeyCode, openRecentFileId, textBox5, label5);
 
             timer1.Start();
+        }
+
+        private void RemoveSelectedItemFromListBox1()
+        {
+            if (listBox1.SelectedItems.Count != 1) return;
+            var dr = MessageBox.Show(
+                "選択したアイテムを削除してよろしいですか？", Program.AppName, MessageBoxButtons.YesNo);
+            if (dr != DialogResult.Yes) return;
+
+            listBox1.Items.Remove(listBox1.SelectedItem);
+
+            appSettings.CacheTargetDirectories = listBox1.Items.OfType<string>().ToList();
+            try
+            {
+                File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
+            }
+            catch { }
         }
 
         private void RegisterHotKey(Keys key, int id, TextBox textBox, Label label)

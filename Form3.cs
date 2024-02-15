@@ -39,7 +39,7 @@ namespace PowerCacheOffice
 
                 if (eventArgs.Button == MouseButtons.Right)
                 {
-                    contextMenuStrip1.Show(this.PointToScreen(eventArgs.Location));
+                    contextMenuStrip1.Show(listBox1.PointToScreen(eventArgs.Location));
                 }
                 else
                 {

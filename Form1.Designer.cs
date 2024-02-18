@@ -277,9 +277,9 @@
             this.checkBox3.AutoSize = true;
             this.checkBox3.Location = new System.Drawing.Point(42, 96);
             this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(332, 22);
+            this.checkBox3.Size = new System.Drawing.Size(361, 22);
             this.checkBox3.TabIndex = 5;
-            this.checkBox3.Text = "PowerPoint ファイル（ppt, pptx, pptm）を関連付ける";
+            this.checkBox3.Text = "PowerPoint ファイル（ppt, pptx, pptm, odp）を関連付ける";
             this.checkBox3.UseVisualStyleBackColor = true;
             this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             // 
@@ -288,9 +288,9 @@
             this.checkBox2.AutoSize = true;
             this.checkBox2.Location = new System.Drawing.Point(42, 60);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(300, 22);
+            this.checkBox2.Size = new System.Drawing.Size(327, 22);
             this.checkBox2.TabIndex = 4;
-            this.checkBox2.Text = "Word ファイル（doc, docx, docm）を関連付ける";
+            this.checkBox2.Text = "Word ファイル（doc, docx, docm, odt）を関連付ける";
             this.checkBox2.UseVisualStyleBackColor = true;
             this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
@@ -299,9 +299,9 @@
             this.checkBox1.AutoSize = true;
             this.checkBox1.Location = new System.Drawing.Point(42, 24);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(288, 22);
+            this.checkBox1.Size = new System.Drawing.Size(316, 22);
             this.checkBox1.TabIndex = 3;
-            this.checkBox1.Text = "Excel ファイル（xls, xlsx, xlsm）を関連付ける";
+            this.checkBox1.Text = "Excel ファイル（xls, xlsx, xlsm, ods）を関連付ける";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
@@ -511,18 +511,18 @@
             this.toolStripMenuItem5,
             this.toolStripMenuItem6});
             this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(181, 70);
+            this.contextMenuStrip2.Size = new System.Drawing.Size(149, 48);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuItem5.Text = "パスのコピー";
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuItem6.Text = "削除";
             // 
             // Form1

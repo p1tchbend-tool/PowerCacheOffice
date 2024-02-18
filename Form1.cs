@@ -35,6 +35,7 @@ namespace PowerCacheOffice
             WriteIndented = true
         };
         private HttpClient httpClient = new HttpClient();
+        private static string diffFilePath = string.Empty;
 
         public Form1()
         {
@@ -150,15 +151,15 @@ namespace PowerCacheOffice
                                 psi.Arguments = $@"""{tempFile}""";
 
                                 var extension = Path.GetExtension(tempFile).ToLower();
-                                if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm")
+                                if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm" || extension == ".ods")
                                 {
                                     psi.FileName = appSettings.ExcelPath;
                                 }
-                                else if (extension == ".doc" || extension == ".docx" || extension == ".docm")
+                                else if (extension == ".doc" || extension == ".docx" || extension == ".docm" || extension == ".odt")
                                 {
                                     psi.FileName = appSettings.WordPath;
                                 }
-                                else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm")
+                                else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm" || extension == ".odp")
                                 {
                                     psi.FileName = appSettings.PowerPointPath;
                                 }
@@ -187,17 +188,17 @@ namespace PowerCacheOffice
                                 psi.Arguments = $@"""{tempFileLocal}"" ""{tempFileRemote}""";
 
                                 var extension = Path.GetExtension(tempFileLocal).ToLower();
-                                if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm")
+                                if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm" || extension == ".ods")
                                 {
                                     psi.FileName = appSettings.ExcelDiffToolPath;
                                     psi.Arguments += " " + appSettings.ExcelDiffToolArguments;
                                 }
-                                else if (extension == ".doc" || extension == ".docx" || extension == ".docm")
+                                else if (extension == ".doc" || extension == ".docx" || extension == ".docm" || extension == ".odt")
                                 {
                                     psi.FileName = appSettings.WordDiffToolPath;
                                     psi.Arguments += " " + appSettings.WordDiffToolArguments;
                                 }
-                                else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm")
+                                else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm" || extension == ".odp")
                                 {
                                     psi.FileName = appSettings.PowerPointDiffToolPath;
                                     psi.Arguments += " " + appSettings.PowerPointDiffToolArguments;
@@ -409,14 +410,27 @@ namespace PowerCacheOffice
 
         public void OpenFile(string[] args)
         {
-            if (args == null || args.Length == 0) return;
+            if (args == null || args.Length == 0)
+            {
+                return;
+            }
+            else if (args[0] == "--check")
+            {
+                CheckFile(args);
+                return;
+            }
+            else if (args[0] == "--diff")
+            {
+                DiffFile(args);
+                return;
+            }
 
             foreach (var filePath in args)
             {
                 var extension = Path.GetExtension(filePath).ToLower();
-                if (extension != ".xls" && extension != ".xlsx" && extension != ".xlsm" &&
-                    extension != ".doc" && extension != ".docx" && extension != ".docm" &&
-                    extension != ".ppt" && extension != ".pptx" && extension != ".pptm") continue;
+                if (extension != ".xls" && extension != ".xlsx" && extension != ".xlsm" && extension != ".ods" &&
+                    extension != ".doc" && extension != ".docx" && extension != ".docm" && extension != ".odt" &&
+                    extension != ".ppt" && extension != ".pptx" && extension != ".pptm" && extension != ".odp") continue;
 
                 recentFiles.RemoveAll(x => x == filePath);
                 recentFiles.Add(filePath);
@@ -491,15 +505,15 @@ namespace PowerCacheOffice
                 psi.UseShellExecute = true;
                 psi.Arguments = $@"""{arguments}""";
 
-                if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm")
+                if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm" || extension == ".ods")
                 {
                     psi.FileName = appSettings.ExcelPath;
                 }
-                else if (extension == ".doc" || extension == ".docx" || extension == ".docm")
+                else if (extension == ".doc" || extension == ".docx" || extension == ".docm" || extension == ".odt")
                 {
                     psi.FileName = appSettings.WordPath;
                 }
-                else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm")
+                else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm" || extension == ".odp")
                 {
                     psi.FileName = appSettings.PowerPointPath;
                 }
@@ -510,6 +524,68 @@ namespace PowerCacheOffice
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
             }
+        }
+
+        private void CheckFile(string[] args)
+        {
+            if (args.Length != 2 || string.IsNullOrEmpty(args[1])) return;
+
+            var cacheRelation = cacheSettings.CacheRelations.FirstOrDefault(x => x.RemotePath == args[1]);
+            if (cacheRelation != null)
+            {
+                MessageBox.Show("ファイルはキャッシュされています。\n\n" +
+                    "リモートのパス:\n" + cacheRelation.RemotePath + "\n\n" +
+                    "ローカルのパス:\n" + cacheRelation.LocalPath, Program.AppName);
+                return;
+            }
+
+            cacheRelation = cacheSettings.CacheRelations.FirstOrDefault(x => x.LocalPath == args[1]);
+            if (cacheRelation != null)
+            {
+                MessageBox.Show("ファイルはキャッシュされています。\n\n" +
+                    "リモートのパス:\n" + cacheRelation.RemotePath + "\n\n" +
+                    "ローカルのパス:\n" + cacheRelation.LocalPath, Program.AppName);
+                return;
+            }
+
+            MessageBox.Show("ファイルはキャッシュされていません。", Program.AppName);
+        }
+
+        private async void DiffFile(string[] args)
+        {
+            if (args.Length != 2 || string.IsNullOrEmpty(args[1]) || args[1] == diffFilePath) return;
+
+            if (string.IsNullOrEmpty(diffFilePath))
+            {
+                diffFilePath = args[1];
+                await Task.Delay(500);
+                diffFilePath = string.Empty;
+                return;
+            }
+
+            var psi = new ProcessStartInfo();
+            psi.UseShellExecute = true;
+            psi.Arguments = $@"""{diffFilePath}"" ""{args[1]}""";
+
+            var extension = Path.GetExtension(args[1]).ToLower();
+            if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm" || extension == ".ods")
+            {
+                psi.FileName = appSettings.ExcelDiffToolPath;
+            }
+            else if (extension == ".doc" || extension == ".docx" || extension == ".docm" || extension == ".odt")
+            {
+                psi.FileName = appSettings.WordDiffToolPath;
+            }
+            else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm" || extension == ".odp")
+            {
+                psi.FileName = appSettings.PowerPointDiffToolPath;
+            }
+
+            try
+            {
+                Process.Start(psi);
+            }
+            catch { }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -544,33 +620,13 @@ namespace PowerCacheOffice
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            var fileType = Application.ProductName + ".x";
             if (checkBox1.Checked)
             {
-                Microsoft.Win32.RegistryKey currentUserKey = Microsoft.Win32.Registry.CurrentUser;
-
-                Microsoft.Win32.RegistryKey cmdkey = currentUserKey.CreateSubKey("Software\\Classes\\" + fileType + "\\shell\\open\\command");
-                cmdkey.SetValue("", "\"" + Application.ExecutablePath + "\" \"%1\"");
-                cmdkey.Close();
-
-                Microsoft.Win32.RegistryKey iconkey = currentUserKey.CreateSubKey("Software\\Classes\\" + fileType + "\\DefaultIcon");
-                iconkey.SetValue("", "\"" + Application.StartupPath + "\\x.ico\",0");
-                iconkey.Close();
-
-                Microsoft.Win32.RegistryKey regkey1 = currentUserKey.CreateSubKey("Software\\Classes\\.xls");
-                regkey1.SetValue("", fileType);
-                regkey1.Close();
-                Microsoft.Win32.RegistryKey regkey2 = currentUserKey.CreateSubKey("Software\\Classes\\.xlsx");
-                regkey2.SetValue("", fileType);
-                regkey2.Close();
-                Microsoft.Win32.RegistryKey regkey3 = currentUserKey.CreateSubKey("Software\\Classes\\.xlsm");
-                regkey3.SetValue("", fileType);
-                regkey3.Close();
+                RegisterFileType("PowerCacheOffice.x", "x.ico", ".xls", ".xlsx", ".xlsm", ".ods");
             }
             else
             {
-                Microsoft.Win32.RegistryKey currentUserKey = Microsoft.Win32.Registry.CurrentUser;
-                currentUserKey.DeleteSubKeyTree("Software\\Classes\\" + fileType);
+                UnregisterFileType("PowerCacheOffice.x");
             }
 
             appSettings.IsRelatedExcel = checkBox1.Checked;
@@ -583,33 +639,13 @@ namespace PowerCacheOffice
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            var fileType = Application.ProductName + ".d";
             if (checkBox2.Checked)
             {
-                Microsoft.Win32.RegistryKey currentUserKey = Microsoft.Win32.Registry.CurrentUser;
-
-                Microsoft.Win32.RegistryKey cmdkey = currentUserKey.CreateSubKey("Software\\Classes\\" + fileType + "\\shell\\open\\command");
-                cmdkey.SetValue("", "\"" + Application.ExecutablePath + "\" \"%1\"");
-                cmdkey.Close();
-
-                Microsoft.Win32.RegistryKey iconkey = currentUserKey.CreateSubKey("Software\\Classes\\" + fileType + "\\DefaultIcon");
-                iconkey.SetValue("", "\"" + Application.StartupPath + "\\d.ico\",0");
-                iconkey.Close();
-
-                Microsoft.Win32.RegistryKey regkey1 = currentUserKey.CreateSubKey("Software\\Classes\\.doc");
-                regkey1.SetValue("", fileType);
-                regkey1.Close();
-                Microsoft.Win32.RegistryKey regkey2 = currentUserKey.CreateSubKey("Software\\Classes\\.docx");
-                regkey2.SetValue("", fileType);
-                regkey2.Close();
-                Microsoft.Win32.RegistryKey regkey3 = currentUserKey.CreateSubKey("Software\\Classes\\.docm");
-                regkey3.SetValue("", fileType);
-                regkey3.Close();
+                RegisterFileType("PowerCacheOffice.d", "d.ico", ".doc", ".docx", ".docm", ".odt");
             }
             else
             {
-                Microsoft.Win32.RegistryKey currentUserKey = Microsoft.Win32.Registry.CurrentUser;
-                currentUserKey.DeleteSubKeyTree("Software\\Classes\\" + fileType);
+                UnregisterFileType("PowerCacheOffice.d");
             }
 
             appSettings.IsRelatedWord = checkBox2.Checked;
@@ -622,33 +658,13 @@ namespace PowerCacheOffice
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
-            var fileType = Application.ProductName + ".p";
             if (checkBox3.Checked)
             {
-                Microsoft.Win32.RegistryKey currentUserKey = Microsoft.Win32.Registry.CurrentUser;
-
-                Microsoft.Win32.RegistryKey cmdkey = currentUserKey.CreateSubKey("Software\\Classes\\" + fileType + "\\shell\\open\\command");
-                cmdkey.SetValue("", "\"" + Application.ExecutablePath + "\" \"%1\"");
-                cmdkey.Close();
-
-                Microsoft.Win32.RegistryKey iconkey = currentUserKey.CreateSubKey("Software\\Classes\\" + fileType + "\\DefaultIcon");
-                iconkey.SetValue("", "\"" + Application.StartupPath + "\\p.ico\",0");
-                iconkey.Close();
-
-                Microsoft.Win32.RegistryKey regkey1 = currentUserKey.CreateSubKey("Software\\Classes\\.ppt");
-                regkey1.SetValue("", fileType);
-                regkey1.Close();
-                Microsoft.Win32.RegistryKey regkey2 = currentUserKey.CreateSubKey("Software\\Classes\\.pptx");
-                regkey2.SetValue("", fileType);
-                regkey2.Close();
-                Microsoft.Win32.RegistryKey regkey3 = currentUserKey.CreateSubKey("Software\\Classes\\.pptm");
-                regkey3.SetValue("", fileType);
-                regkey3.Close();
+                RegisterFileType("PowerCacheOffice.p", "p.ico", ".ppt", ".pptx", ".pptm", ".odp");
             }
             else
             {
-                Microsoft.Win32.RegistryKey currentUserKey = Microsoft.Win32.Registry.CurrentUser;
-                currentUserKey.DeleteSubKeyTree("Software\\Classes\\" + fileType);
+                UnregisterFileType("PowerCacheOffice.p");
             }
 
             appSettings.IsRelatedPowerPoint = checkBox3.Checked;
@@ -657,6 +673,53 @@ namespace PowerCacheOffice
                 File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
             }
             catch { }
+        }
+
+        private void RegisterFileType(string fileType, string iconName, params string[] extensions)
+        {
+            var currentUserKey = Microsoft.Win32.Registry.CurrentUser;
+
+            var iconKey = currentUserKey.CreateSubKey($@"Software\Classes\{fileType}\DefaultIcon");
+            iconKey.SetValue("", $@"""{Application.StartupPath}\{iconName}"",0");
+            iconKey.Close();
+
+            var openCmdKey = currentUserKey.CreateSubKey($@"Software\Classes\{fileType}\shell\open\command");
+            openCmdKey.SetValue("", $@"""{Application.ExecutablePath}"" ""%1""");
+            openCmdKey.Close();
+
+            var menuKey = currentUserKey.CreateSubKey($@"Software\Classes\{fileType}\shell\menu");
+            menuKey.SetValue("MUIVerb", "Power Cache Office");
+            menuKey.SetValue("SubCommands", "");
+            menuKey.Close();
+
+            var checkKey = currentUserKey.CreateSubKey($@"Software\Classes\{fileType}\shell\menu\shell\check");
+            checkKey.SetValue("", "キャッシュ状況を確認");
+            checkKey.Close();
+
+            var checkCmdKey = currentUserKey.CreateSubKey($@"Software\Classes\{fileType}\shell\menu\shell\check\command");
+            checkCmdKey.SetValue("", $@"""{Application.ExecutablePath}"" --check ""%1""");
+            checkCmdKey.Close();
+
+            var diffKey = currentUserKey.CreateSubKey($@"Software\Classes\{fileType}\shell\menu\shell\diff");
+            diffKey.SetValue("", "差分比較");
+            diffKey.Close();
+
+            var diffCmdKey = currentUserKey.CreateSubKey($@"Software\Classes\{fileType}\shell\menu\shell\diff\command");
+            diffCmdKey.SetValue("", $@"""{Application.ExecutablePath}"" --diff ""%1""");
+            diffCmdKey.Close();
+
+            foreach (var extension in extensions)
+            {
+                var regkey = currentUserKey.CreateSubKey($@"Software\Classes\{extension}");
+                regkey.SetValue("", fileType);
+                regkey.Close();
+            }
+        }
+
+        private void UnregisterFileType(string fileType)
+        {
+            var currentUserKey = Microsoft.Win32.Registry.CurrentUser;
+            currentUserKey.DeleteSubKeyTree($@"Software\Classes\{fileType}");
         }
 
         private void checkBox4_CheckedChanged(object sender, EventArgs e)
@@ -892,17 +955,17 @@ namespace PowerCacheOffice
                 psi.UseShellExecute = true;
                 var extension = Path.GetExtension(form3.SelectedFile).ToLower();
 
-                if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm")
+                if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm" || extension == ".ods")
                 {
                     psi.FileName = appSettings.ExcelPath;
                     psi.Arguments = $@"""{form3.SelectedFile}""";
                 }
-                else if (extension == ".doc" || extension == ".docx" || extension == ".docm")
+                else if (extension == ".doc" || extension == ".docx" || extension == ".docm" || extension == ".odt")
                 {
                     psi.FileName = appSettings.WordPath;
                     psi.Arguments = $@"""{form3.SelectedFile}""";
                 }
-                else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm")
+                else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm" || extension == ".odp")
                 {
                     psi.FileName = appSettings.PowerPointPath;
                     psi.Arguments = $@"""{form3.SelectedFile}""";
@@ -934,17 +997,17 @@ namespace PowerCacheOffice
                 psi.UseShellExecute = true;
                 var extension = Path.GetExtension(text).ToLower();
 
-                if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm")
+                if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm" || extension == ".ods")
                 {
                     psi.FileName = appSettings.ExcelPath;
                     psi.Arguments = $@"""{text}""";
                 }
-                else if (extension == ".doc" || extension == ".docx" || extension == ".docm")
+                else if (extension == ".doc" || extension == ".docx" || extension == ".docm" || extension == ".odt")
                 {
                     psi.FileName = appSettings.WordPath;
                     psi.Arguments = $@"""{text}""";
                 }
-                else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm")
+                else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm" || extension == ".odp")
                 {
                     psi.FileName = appSettings.PowerPointPath;
                     psi.Arguments = $@"""{text}""";

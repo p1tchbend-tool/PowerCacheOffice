@@ -933,6 +933,13 @@ namespace PowerCacheOffice
             }
             catch { }
 
+            backupSettings.BackupRelations.RemoveAll(x => !File.Exists(x.BackupFilePath));
+            try
+            {
+                File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "backupSettings.json"), JsonSerializer.Serialize(backupSettings, jsonSerializerOptions));
+            }
+            catch { }
+
             MessageBox.Show("インデックスの再作成が完了しました。", Program.AppName);
         }
 
@@ -1101,7 +1108,7 @@ namespace PowerCacheOffice
                 if (string.IsNullOrEmpty(text)) return;
 
                 text = text.Replace(@"""", "");
-                if (!File.Exists(text)) return;
+                if (!File.Exists(text) && !Directory.Exists(text)) return;
 
                 ProcessStartInfo psi = new ProcessStartInfo();
                 psi.UseShellExecute = true;

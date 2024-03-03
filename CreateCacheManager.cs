@@ -86,7 +86,7 @@ namespace PowerCacheOffice
                         if (!Directory.Exists(itemCacheFolder)) Directory.CreateDirectory(itemCacheFolder);
 
                         var cacheFile = Path.Combine(itemCacheFolder, Path.GetFileName(x));
-                        Program.CopyAll(x, cacheFile);
+                        Program.CopyFileAndAttributes(x, cacheFile);
 
                         File.AppendAllText(
                             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\.createdCacheList.txt"),

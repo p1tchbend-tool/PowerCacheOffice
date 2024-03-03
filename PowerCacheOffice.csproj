@@ -117,6 +117,8 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="AppSettings.cs" />
+    <Compile Include="BackupRelation.cs" />
+    <Compile Include="BackupSettings.cs" />
     <Compile Include="CacheRelation.cs" />
     <Compile Include="CacheSettings.cs" />
     <Compile Include="CreateCacheManager.cs" />
@@ -196,6 +198,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\update_white.png" />
+    <None Include="Resources\update.png" />
+    <None Include="Resources\moon.png" />
+    <None Include="Resources\sun.png" />
     <None Include="Resources\p.png" />
     <None Include="Resources\w.png" />
     <None Include="Resources\x.png" />

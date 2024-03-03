@@ -10,11 +10,13 @@ namespace PowerCacheOffice
     {
         public string SelectedFile {  get; set; }
 
-        public Form3(List<string> recentFiles)
+        public Form3(List<string> recentFiles, bool isDarkMode)
         {
             SelectedFile = string.Empty;
 
             InitializeComponent();
+            Program.SortTabIndex(this);
+            Program.ChangeDarkMode(this, isDarkMode);
 
             listBox1.BeginUpdate();
             listBox1.Items.Clear();

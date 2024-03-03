@@ -20,6 +20,8 @@ namespace PowerCacheOffice
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\.cache");
         private static readonly string powerCacheOfficeTempFolder = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\.temp");
+        private static readonly string powerCacheOfficeBackupFolder = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\.backup");
 
         private static readonly int openClipboardPathId = 1;
         private static readonly int openRecentFileId = 2;
@@ -27,6 +29,7 @@ namespace PowerCacheOffice
 
         private AppSettings appSettings = new AppSettings();
         private CacheSettings cacheSettings = new CacheSettings();
+        private BackupSettings backupSettings = new BackupSettings();
         private List<string> recentFiles = new List<string>();
         private CreateCacheManager createCacheManager = new CreateCacheManager();
         private JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
@@ -44,6 +47,7 @@ namespace PowerCacheOffice
             if (!Directory.Exists(powerCacheOfficeDataFolder)) Directory.CreateDirectory(powerCacheOfficeDataFolder);
             if (!Directory.Exists(powerCacheOfficeCacheFolder)) Directory.CreateDirectory(powerCacheOfficeCacheFolder);
             if (!Directory.Exists(powerCacheOfficeTempFolder)) Directory.CreateDirectory(powerCacheOfficeTempFolder);
+            if (!Directory.Exists(powerCacheOfficeBackupFolder)) Directory.CreateDirectory(powerCacheOfficeBackupFolder);
 
             try
             {
@@ -64,6 +68,7 @@ namespace PowerCacheOffice
             checkBox3.Checked = appSettings.IsRelatedPowerPoint;
             checkBox4.Checked = appSettings.IsStartUp;
             checkBox5.Checked = appSettings.IsDeleteCacheAtStartUp;
+            checkBox6.Checked = appSettings.IsBackup;
             ChangeHotKeyText(textBox4, appSettings.OpenClipboardPathModKey, appSettings.OpenClipboardPathKey);
             ChangeHotKeyText(textBox5, appSettings.OpenRecentFileModKey, appSettings.OpenRecentFileKey);
 
@@ -86,6 +91,12 @@ namespace PowerCacheOffice
                 cacheSettings = JsonSerializer.Deserialize<CacheSettings>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "cacheSettings.json")));
             }
             catch { cacheSettings = new CacheSettings(); }
+
+            try
+            {
+                backupSettings = JsonSerializer.Deserialize<BackupSettings>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "backupSettings.json")));
+            }
+            catch { backupSettings = new BackupSettings(); }
 
             try
             {
@@ -116,6 +127,30 @@ namespace PowerCacheOffice
         {
             DeleteSubFolder(powerCacheOfficeTempFolder);
 
+            label7.Click += (s, eventArgs) =>
+            {
+                appSettings.IsDarkMode = !appSettings.IsDarkMode;
+                ChangeDarkModeForm1(appSettings.IsDarkMode);
+                try
+                {
+                    File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
+                }
+                catch { }
+            };
+            panel4.Click += (s, eventArgs) =>
+            {
+                appSettings.IsDarkMode = !appSettings.IsDarkMode;
+                ChangeDarkModeForm1(appSettings.IsDarkMode);
+                try
+                {
+                    File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
+                }
+                catch { }
+            };
+
+            label8.Click += (s, eventArgs) => CheckUpdate();
+            panel5.Click += (s, eventArgs) => CheckUpdate();
+
             fileSystemWatcher1.Path = powerCacheOfficeCacheFolder;
             fileSystemWatcher1.Error += (s, eventArgs) =>
             {
@@ -130,7 +165,7 @@ namespace PowerCacheOffice
 
                 if (!IsNearlyEqualDateTime(cacheRelation.RemoteLastWriteTime, File.GetLastWriteTime(cacheRelation.RemotePath)))
                 {
-                    using (var form2 = new Form2(cacheRelation.RemotePath))
+                    using (var form2 = new Form2(cacheRelation.RemotePath, appSettings.IsDarkMode))
                     {
                         form2.ShowDialog();
                         if (form2.Result == Form2.No)
@@ -216,7 +251,7 @@ namespace PowerCacheOffice
                 await Task.Delay(3000); // 更新検知から実際に更新されるまで少し待つ
                 try
                 {
-                    Program.CopyAll(cacheRelation.LocalPath, cacheRelation.RemotePath);
+                    Program.CopyFileAndAttributes(cacheRelation.LocalPath, cacheRelation.RemotePath);
                     cacheSettings.CacheRelations.Remove(cacheRelation);
                     cacheSettings.CacheRelations.Add(new CacheRelation(cacheRelation.RemotePath, cacheRelation.LocalPath, File.GetLastWriteTime(cacheRelation.RemotePath)));
                     try
@@ -256,7 +291,12 @@ namespace PowerCacheOffice
                 if (dr != DialogResult.Yes) eventArgs.Cancel = true;
             };
 
-            this.Shown += (s, eventArgs) => DisableForm1();
+            this.Shown += (s, eventArgs) =>
+            {
+                Program.SortTabIndex(this);
+                ChangeDarkModeForm1(appSettings.IsDarkMode);
+                DisableForm1();
+            };
 
             this.SizeChanged += async (s, eventArgs) =>
             {
@@ -282,50 +322,7 @@ namespace PowerCacheOffice
                 Application.Restart();
             };
             toolStripMenuItem3.Click += (s, eventArgs) => this.Close();
-            toolStripMenuItem4.Click += async (s, eventArgs) =>
-            {
-                var version = string.Empty;
-                try
-                {
-                    version = await httpClient.GetStringAsync("https://raw.githubusercontent.com/p1tchbend-tool/PowerCacheOffice/master/App/VERSION.txt");
-                }
-                catch { }
-
-                if (string.IsNullOrEmpty(version))
-                {
-                    MessageBox.Show("バージョン  " + FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion + "\n\n最新のバージョンです。", Program.AppName);
-                }
-                else
-                {
-                    if (version == FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion)
-                    {
-                        MessageBox.Show("バージョン  " + FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion + "\n\n最新のバージョンです。", Program.AppName);
-                    }
-                    else
-                    {
-                        try
-                        {
-                            var result = MessageBox.Show("新しいバージョンがあります。\n\nダウンロードしますか？", Program.AppName, MessageBoxButtons.YesNo);
-                            if (result != DialogResult.Yes) return;
-
-                            var response = await httpClient.GetAsync("https://raw.githubusercontent.com/p1tchbend-tool/PowerCacheOffice/master/App/PowerCacheOfficeSetup.msi");
-                            using (var stream = await response.Content.ReadAsStreamAsync())
-                            {
-                                using (var outStream = File.Create(
-                                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"Downloads\PowerCacheOfficeSetup.msi")))
-                                {
-                                    stream.CopyTo(outStream);
-                                }
-                            }
-
-                            var psi = new ProcessStartInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads"));
-                            psi.UseShellExecute = true;
-                            Process.Start(psi);
-                        }
-                        catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
-                    }
-                }
-            };
+            toolStripMenuItem4.Click += (s, eventArgs) => CheckUpdate();
 
             textBox4.Enter += (s, eventArgs) => label6.Text = "登録するにはキーを押してください。";
             textBox4.Leave += (s, eventArgs) => label6.Text = "クリップボードのパスを開く";
@@ -336,6 +333,68 @@ namespace PowerCacheOffice
             textBox5.KeyDown += (s, eventArgs) => RegisterHotKey(eventArgs.KeyCode, openRecentFileId, textBox5, label5);
 
             timer1.Start();
+        }
+
+        private async void CheckUpdate()
+        {
+            var version = string.Empty;
+            try
+            {
+                version = await httpClient.GetStringAsync("https://raw.githubusercontent.com/p1tchbend-tool/PowerCacheOffice/master/App/VERSION.txt");
+            }
+            catch { }
+
+            if (string.IsNullOrEmpty(version))
+            {
+                MessageBox.Show("バージョン  " + FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion + "\n\n最新のバージョンです。", Program.AppName);
+            }
+            else
+            {
+                if (version == FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion)
+                {
+                    MessageBox.Show("バージョン  " + FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion + "\n\n最新のバージョンです。", Program.AppName);
+                }
+                else
+                {
+                    try
+                    {
+                        var result = MessageBox.Show("新しいバージョンがあります。\n\nダウンロードしますか？", Program.AppName, MessageBoxButtons.YesNo);
+                        if (result != DialogResult.Yes) return;
+
+                        var response = await httpClient.GetAsync("https://raw.githubusercontent.com/p1tchbend-tool/PowerCacheOffice/master/App/PowerCacheOfficeSetup.msi");
+                        using (var stream = await response.Content.ReadAsStreamAsync())
+                        {
+                            using (var outStream = File.Create(
+                                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"Downloads\PowerCacheOfficeSetup.msi")))
+                            {
+                                stream.CopyTo(outStream);
+                            }
+                        }
+
+                        var psi = new ProcessStartInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads"));
+                        psi.UseShellExecute = true;
+                        Process.Start(psi);
+                    }
+                    catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
+                }
+            }
+        }
+
+        private void ChangeDarkModeForm1(bool enabled)
+        {
+            if (enabled)
+            {
+                label7.Text = " Light";
+                panel4.BackgroundImage = Properties.Resources.sun;
+                panel5.BackgroundImage = Properties.Resources.update_white;
+            }
+            else
+            {
+                label7.Text = " Dark";
+                panel4.BackgroundImage = Properties.Resources.moon;
+                panel5.BackgroundImage = Properties.Resources.update;
+            }
+            Program.ChangeDarkMode(this, enabled);
         }
 
         private void RemoveSelectedItemFromListBox1()
@@ -455,7 +514,7 @@ namespace PowerCacheOffice
                         var cacheFile = Path.Combine(itemCacheFolder, Path.GetFileName(filePath));
                         try
                         {
-                            Program.CopyAll(filePath, cacheFile);
+                            Program.CopyFileAndAttributes(filePath, cacheFile);
                             cacheSettings.CacheRelations.Add(new CacheRelation(filePath, cacheFile, File.GetLastWriteTime(filePath)));
                             try
                             {
@@ -476,7 +535,9 @@ namespace PowerCacheOffice
                             var localPath = cacheRelation.LocalPath;
                             try
                             {
-                                Program.CopyAll(filePath, localPath);
+                                BackupFile(localPath);  // ローカルキャッシュを上書き前にバックアップ
+
+                                Program.CopyFileAndAttributes(filePath, localPath);
                                 cacheSettings.CacheRelations.Remove(cacheRelation);
                                 cacheSettings.CacheRelations.Add(new CacheRelation(filePath, localPath, lastWriteTime));
                                 try
@@ -500,6 +561,8 @@ namespace PowerCacheOffice
                     // キャッシュ対象でない場合
                     arguments = filePath;
                 }
+
+                BackupFile(arguments);  // ローカルキャッシュとは別にバックアップを保持
 
                 ProcessStartInfo psi = new ProcessStartInfo();
                 psi.UseShellExecute = true;
@@ -606,8 +669,17 @@ namespace PowerCacheOffice
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var keyword = textBox2.Text;
-            var queryString = $@"search-ms:query={keyword} NOT kind:folder&crumb=location:{powerCacheOfficeCacheFolder}";
+            SearchFolderInExplorer(powerCacheOfficeCacheFolder, textBox2.Text);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            SearchFolderInExplorer(powerCacheOfficeBackupFolder, textBox2.Text);
+        }
+
+        private void SearchFolderInExplorer(string folder, string keyword)
+        {
+            var queryString = $@"search-ms:query={keyword} NOT kind:folder&crumb=location:{folder}";
 
             var psi = new ProcessStartInfo(queryString);
             psi.UseShellExecute = true;
@@ -752,6 +824,16 @@ namespace PowerCacheOffice
             catch { }
         }
 
+        private void checkBox6_CheckedChanged(object sender, EventArgs e)
+        {
+            appSettings.IsBackup = checkBox6.Checked;
+            try
+            {
+                File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
+            }
+            catch { }
+        }
+
         private void button4_Click(object sender, EventArgs e)
         {
             var dr = MessageBox.Show(
@@ -762,6 +844,16 @@ namespace PowerCacheOffice
             MessageBox.Show("キャッシュの削除が完了しました。", Program.AppName);
         }
 
+        private void button8_Click(object sender, EventArgs e)
+        {
+            var dr = MessageBox.Show(
+                "すべてのバックアップを削除してよろしいですか？", Program.AppName, MessageBoxButtons.YesNo);
+            if (dr != DialogResult.Yes) return;
+
+            DeleteAllBackup();
+            MessageBox.Show("バックアップの削除が完了しました。", Program.AppName);
+        }
+
         private void DeleteAllCache()
         {
             DeleteSubFolder(powerCacheOfficeCacheFolder);
@@ -770,6 +862,18 @@ namespace PowerCacheOffice
             try
             {
                 File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "cacheSettings.json"), JsonSerializer.Serialize(cacheSettings, jsonSerializerOptions));
+            }
+            catch { }
+        }
+
+        private void DeleteAllBackup()
+        {
+            DeleteSubFolder(powerCacheOfficeBackupFolder);
+
+            backupSettings = new BackupSettings();
+            try
+            {
+                File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "backupSettings.json"), JsonSerializer.Serialize(backupSettings, jsonSerializerOptions));
             }
             catch { }
         }
@@ -891,6 +995,7 @@ namespace PowerCacheOffice
         {
             progressBar1.Maximum = createCacheManager.CacheTargetCount;
             progressBar1.Value = createCacheManager.CreatedCacheCount;
+            ChangeDarkModeForm1(appSettings.IsDarkMode);
         }
 
         private void MargeCreatedCacheToCacheSettings()
@@ -946,7 +1051,7 @@ namespace PowerCacheOffice
 
         private void OpenRecentFile()
         {
-            using (var form3 = new Form3(recentFiles))
+            using (var form3 = new Form3(recentFiles, appSettings.IsDarkMode))
             {
                 form3.ShowDialog();
                 if (string.IsNullOrEmpty(form3.SelectedFile)) return;
@@ -975,6 +1080,7 @@ namespace PowerCacheOffice
                     psi.FileName = form3.SelectedFile;
                 }
 
+                BackupFile(form3.SelectedFile);
                 try
                 {
                     Process.Start(psi);
@@ -1017,6 +1123,7 @@ namespace PowerCacheOffice
                     psi.FileName = text;
                 }
 
+                BackupFile(text);
                 try
                 {
                     Process.Start(psi);
@@ -1042,6 +1149,31 @@ namespace PowerCacheOffice
             var kc = new KeysConverter();
             textBox.Text += kc.ConvertToString(key);
             textBox.Text = " " + textBox.Text;
+        }
+
+        private void BackupFile(string filePath)
+        {
+            if (!appSettings.IsBackup) return;
+            try
+            {
+                var extension = Path.GetExtension(filePath).ToLower();
+                if (extension != ".xls" && extension != ".xlsx" && extension != ".xlsm" && extension != ".ods" &&
+                    extension != ".doc" && extension != ".docx" && extension != ".docm" && extension != ".odt" &&
+                    extension != ".ppt" && extension != ".pptx" && extension != ".pptm" && extension != ".odp") return;
+
+                var lastWriteTime = File.GetLastWriteTime(filePath);
+                if (backupSettings.BackupRelations
+                    .Where(x => x.OriginalFilePath == filePath)
+                    .Any(x => IsNearlyEqualDateTime(x.LastWriteTime, lastWriteTime))) return;
+
+                var backupFilePath = Path.Combine(powerCacheOfficeBackupFolder,
+                    Path.GetFileNameWithoutExtension(filePath) + "-" + lastWriteTime.ToString("yyyyMMddHHmm") + "-" + Guid.NewGuid().ToString("N") + extension);
+                Program.CopyFileAndAttributes(filePath, backupFilePath);
+
+                backupSettings.BackupRelations.Add(new BackupRelation(filePath, backupFilePath, lastWriteTime));
+                File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "backupSettings.json"), JsonSerializer.Serialize(backupSettings, jsonSerializerOptions));
+            }
+            catch { }
         }
     }
 }

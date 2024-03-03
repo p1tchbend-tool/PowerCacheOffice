@@ -12,9 +12,12 @@ namespace PowerCacheOffice
 
         public int Result { get; set; }
 
-        public Form2(string filePath)
+        public Form2(string filePath, bool isDarkMode)
         {
             InitializeComponent();
+            Program.SortTabIndex(this);
+            Program.ChangeDarkMode(this, isDarkMode);
+
             Result = No;
             label1.Text = "このファイルは更新中に変更された可能性があります。\n上書きしてよろしいですか？\n\n" + filePath;
         }

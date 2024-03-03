@@ -1025,8 +1025,8 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PowerCacheOffice"
-        "ProductCode" = "8:{C81EC5AE-C4CC-4F50-80B6-E75196FC1EEB}"
-        "PackageCode" = "8:{4D72C84B-ABD5-497C-B45B-D4C03B8503C4}"
+        "ProductCode" = "8:{35CE8B9F-E3A2-442F-AFC3-A6DC7A69ECE0}"
+        "PackageCode" = "8:{E2BC2BF0-93D4-4511-8484-59D95F92E807}"
         "UpgradeCode" = "8:{7FAC1AD7-C50E-4C4E-8156-B4888E91910E}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"

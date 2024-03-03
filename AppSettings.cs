@@ -35,7 +35,7 @@ namespace PowerCacheOffice
 
         public AppSettings()
         {
-            Version = "1.3.0";
+            Version = "2.0.0";
             ExcelPath = @"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE";
             WordPath = @"C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE";
             PowerPointPath = @"C:\Program Files\Microsoft Office\root\Office16\POWERPNT.EXE";
@@ -105,7 +105,7 @@ namespace PowerCacheOffice
                 IsDarkMode = false;
                 IsBackup = true;
 
-                this.Version = "1.3.0";
+                this.Version = "2.0.0";
             }
 
             if (this.ExcelPath == @"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE" ||

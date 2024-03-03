@@ -620,10 +620,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(243)))));
             this.ClientSize = new System.Drawing.Size(694, 579);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.checkBox6);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.label7);

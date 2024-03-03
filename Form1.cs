@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -394,7 +395,10 @@ namespace PowerCacheOffice
                 panel4.BackgroundImage = Properties.Resources.moon;
                 panel5.BackgroundImage = Properties.Resources.update;
             }
+
             Program.ChangeDarkMode(this, enabled);
+            label4.BackColor = Color.FromArgb(230, 230, 230);
+            label4.ForeColor = Color.FromArgb(0, 0, 0);
         }
 
         private void RemoveSelectedItemFromListBox1()

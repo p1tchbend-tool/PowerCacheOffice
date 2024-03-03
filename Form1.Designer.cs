@@ -50,9 +50,6 @@
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button3 = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
@@ -78,7 +75,9 @@
             this.label8 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -99,7 +98,7 @@
             this.listBox1.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.listBox1.Name = "listBox1";
             this.listBox1.ScrollAlwaysVisible = true;
-            this.listBox1.Size = new System.Drawing.Size(652, 94);
+            this.listBox1.Size = new System.Drawing.Size(652, 112);
             this.listBox1.TabIndex = 0;
             // 
             // textBox1
@@ -312,36 +311,6 @@
             this.checkBox1.Text = "Excel ファイル（xls, xlsx, xlsm, ods）を関連付ける";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
-            // panel3
-            // 
-            this.panel3.BackColor = System.Drawing.Color.Transparent;
-            this.panel3.BackgroundImage = global::PowerCacheOffice.Properties.Resources.p;
-            this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel3.Location = new System.Drawing.Point(6, 96);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(30, 30);
-            this.panel3.TabIndex = 2;
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.Transparent;
-            this.panel2.BackgroundImage = global::PowerCacheOffice.Properties.Resources.w;
-            this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel2.Location = new System.Drawing.Point(6, 60);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(30, 30);
-            this.panel2.TabIndex = 1;
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.BackgroundImage = global::PowerCacheOffice.Properties.Resources.x;
-            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel1.Location = new System.Drawing.Point(6, 24);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(30, 30);
-            this.panel1.TabIndex = 0;
             // 
             // groupBox2
             // 
@@ -615,10 +584,35 @@
             this.panel4.Size = new System.Drawing.Size(30, 30);
             this.panel4.TabIndex = 25;
             // 
-            // timer2
+            // panel3
             // 
-            this.timer2.Interval = 6000;
-            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            this.panel3.BackColor = System.Drawing.Color.Transparent;
+            this.panel3.BackgroundImage = global::PowerCacheOffice.Properties.Resources.p;
+            this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.panel3.Location = new System.Drawing.Point(6, 96);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(30, 30);
+            this.panel3.TabIndex = 2;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.Transparent;
+            this.panel2.BackgroundImage = global::PowerCacheOffice.Properties.Resources.w;
+            this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.panel2.Location = new System.Drawing.Point(6, 60);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(30, 30);
+            this.panel2.TabIndex = 1;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.BackgroundImage = global::PowerCacheOffice.Properties.Resources.x;
+            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.panel1.Location = new System.Drawing.Point(6, 24);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(30, 30);
+            this.panel1.TabIndex = 0;
             // 
             // Form1
             // 
@@ -723,7 +717,6 @@
         private System.Windows.Forms.CheckBox checkBox6;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Timer timer2;
     }
 }
 

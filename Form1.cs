@@ -73,6 +73,20 @@ namespace PowerCacheOffice
             ChangeHotKeyText(textBox4, appSettings.OpenClipboardPathModKey, appSettings.OpenClipboardPathKey);
             ChangeHotKeyText(textBox5, appSettings.OpenRecentFileModKey, appSettings.OpenRecentFileKey);
 
+            hotKey.Add(appSettings.OpenClipboardPathModKey, appSettings.OpenClipboardPathKey, openClipboardPathId);
+            hotKey.Add(appSettings.OpenRecentFileModKey, appSettings.OpenRecentFileKey, openRecentFileId);
+            hotKey.OnHotKey += (s, eventArgs) =>
+            {
+                if (((HotKey.HotKeyEventArgs)eventArgs).Id == openClipboardPathId)
+                {
+                    OpenClipboardPath();
+                }
+                else if (((HotKey.HotKeyEventArgs)eventArgs).Id == openRecentFileId)
+                {
+                    OpenRecentFile();
+                }
+            };
+
             try
             {
                 cacheSettings = JsonSerializer.Deserialize<CacheSettings>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "cacheSettings.json")));
@@ -320,7 +334,6 @@ namespace PowerCacheOffice
             textBox5.KeyDown += (s, eventArgs) => RegisterHotKey(eventArgs.KeyCode, openRecentFileId, textBox5, label5);
 
             timer1.Start();
-            timer2.Start();
         }
 
         private async void CheckUpdate()
@@ -920,13 +933,6 @@ namespace PowerCacheOffice
             }
             catch { }
 
-            backupSettings.BackupRelations.RemoveAll(x => !File.Exists(x.BackupFilePath));
-            try
-            {
-                File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "backupSettings.json"), JsonSerializer.Serialize(backupSettings, jsonSerializerOptions));
-            }
-            catch { }
-
             MessageBox.Show("インデックスの再作成が完了しました。", Program.AppName);
         }
 
@@ -994,23 +1000,6 @@ namespace PowerCacheOffice
             progressBar1.Maximum = createCacheManager.CacheTargetCount;
             progressBar1.Value = createCacheManager.CreatedCacheCount;
             ChangeDarkModeForm1(appSettings.IsDarkMode);
-        }
-
-        private void timer2_Tick(object sender, EventArgs e)
-        {
-            hotKey.Add(appSettings.OpenClipboardPathModKey, appSettings.OpenClipboardPathKey, openClipboardPathId);
-            hotKey.Add(appSettings.OpenRecentFileModKey, appSettings.OpenRecentFileKey, openRecentFileId);
-            hotKey.OnHotKey += (s, eventArgs) =>
-            {
-                if (((HotKey.HotKeyEventArgs)eventArgs).Id == openClipboardPathId)
-                {
-                    OpenClipboardPath();
-                }
-                else if (((HotKey.HotKeyEventArgs)eventArgs).Id == openRecentFileId)
-                {
-                    OpenRecentFile();
-                }
-            };
         }
 
         private void MargeCreatedCacheToCacheSettings()

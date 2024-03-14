@@ -1195,7 +1195,7 @@ namespace PowerCacheOffice
                 IntPtr hWnd = IntPtr.Zero;
                 for (int i = 0; i < 10; i++)
                 {
-                    hWnd = process.MainWindowHandle;
+                    if (process != null) hWnd = process.MainWindowHandle;
                     if (hWnd != IntPtr.Zero) break;
 
                     await Task.Delay(500);

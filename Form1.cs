@@ -199,7 +199,7 @@ namespace PowerCacheOffice
                                 {
                                     psi.FileName = appSettings.PowerPointPath;
                                 }
-                                Process.Start(psi);
+                                StartProcessAsForegroundWindow(psi);
                             }
                             catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
 
@@ -240,7 +240,7 @@ namespace PowerCacheOffice
                                     psi.Arguments += " " + appSettings.PowerPointDiffToolArguments;
                                 }
 
-                                Process.Start(psi);
+                                StartProcessAsForegroundWindow(psi);
                             }
                             catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
 
@@ -374,7 +374,7 @@ namespace PowerCacheOffice
 
                         var psi = new ProcessStartInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads"));
                         psi.UseShellExecute = true;
-                        Process.Start(psi);
+                        StartProcessAsForegroundWindow(psi);
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
                 }
@@ -587,7 +587,7 @@ namespace PowerCacheOffice
 
                 try
                 {
-                    Process.Start(psi);
+                    StartProcessAsForegroundWindow(psi);
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
             }
@@ -650,7 +650,7 @@ namespace PowerCacheOffice
 
             try
             {
-                Process.Start(psi);
+                StartProcessAsForegroundWindow(psi);
             }
             catch { }
         }
@@ -689,7 +689,7 @@ namespace PowerCacheOffice
             psi.UseShellExecute = true;
             try
             {
-                Process.Start(psi);
+                StartProcessAsForegroundWindow(psi);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
         }
@@ -1094,7 +1094,7 @@ namespace PowerCacheOffice
                 BackupFile(form3.SelectedFile);
                 try
                 {
-                    Process.Start(psi);
+                    StartProcessAsForegroundWindow(psi);
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
             }
@@ -1137,7 +1137,7 @@ namespace PowerCacheOffice
                 BackupFile(text);
                 try
                 {
-                    Process.Start(psi);
+                    StartProcessAsForegroundWindow(psi);
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
 
@@ -1185,6 +1185,15 @@ namespace PowerCacheOffice
                 File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "backupSettings.json"), JsonSerializer.Serialize(backupSettings, jsonSerializerOptions));
             }
             catch { }
+        }
+
+        private void StartProcessAsForegroundWindow(ProcessStartInfo processStartInfo)
+        {
+            var process = Process.Start(processStartInfo);
+            process.WaitForInputIdle();
+
+            if (NativeMethods.IsIconic(process.MainWindowHandle)) NativeMethods.ShowWindowAsync(process.MainWindowHandle, NativeMethods.SW_RESTORE);
+            NativeMethods.SetForegroundWindow(process.MainWindowHandle);
         }
     }
 }

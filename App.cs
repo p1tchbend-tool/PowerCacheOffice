@@ -14,6 +14,7 @@ namespace PowerCacheOffice
             this.MainForm = new Form1();
             this.StartupNextInstance += (s, e) =>
             {
+                e.BringToForeground = false;
                 try
                 {
                     ((Form1)this.MainForm).OpenFile(e.CommandLine.ToArray());

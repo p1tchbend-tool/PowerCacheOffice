@@ -1187,13 +1187,27 @@ namespace PowerCacheOffice
             catch { }
         }
 
-        private void StartProcessAsForegroundWindow(ProcessStartInfo processStartInfo)
+        private async void StartProcessAsForegroundWindow(ProcessStartInfo processStartInfo)
         {
             var process = Process.Start(processStartInfo);
-            process.WaitForInputIdle();
+            try
+            {
+                IntPtr hWnd = IntPtr.Zero;
+                for (int i = 0; i < 10; i++)
+                {
+                    hWnd = process.MainWindowHandle;
+                    if (hWnd != IntPtr.Zero) break;
 
-            if (NativeMethods.IsIconic(process.MainWindowHandle)) NativeMethods.ShowWindowAsync(process.MainWindowHandle, NativeMethods.SW_RESTORE);
-            NativeMethods.SetForegroundWindow(process.MainWindowHandle);
+                    await Task.Delay(500);
+                }
+
+                if (hWnd != IntPtr.Zero)
+                {
+                    NativeMethods.ShowWindow(hWnd, NativeMethods.SW_RESTORE);
+                    NativeMethods.SetForegroundWindow(hWnd);
+                }
+            }
+            catch { }
         }
     }
 }

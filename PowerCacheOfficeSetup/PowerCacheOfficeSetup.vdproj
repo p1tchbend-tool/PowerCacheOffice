@@ -1025,15 +1025,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PowerCacheOffice"
-        "ProductCode" = "8:{6301AEE6-1F2A-4EF1-A255-F63208196B22}"
-        "PackageCode" = "8:{70762967-3966-47D6-98F4-1B545A5D397A}"
+        "ProductCode" = "8:{DF28DF6C-643E-4773-914D-A797A63E2E5D}"
+        "PackageCode" = "8:{29D64F24-0774-413F-9CE0-45165EA2D70D}"
         "UpgradeCode" = "8:{7FAC1AD7-C50E-4C4E-8156-B4888E91910E}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.0.1"
+        "ProductVersion" = "8:2.0.2"
         "Manufacturer" = "8:P1tchBend"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1681,7 +1681,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_302CFD52B94847CEBC37BE59459FAF5A"
             {
-            "SourcePath" = "8:..\\obj\\Release\\PowerCacheOffice.exe"
+            "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_BF11B1AB8E3947F89BBA7969170BCC20"

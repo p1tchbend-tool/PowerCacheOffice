@@ -1075,23 +1075,25 @@ namespace PowerCacheOffice
                 {
                     psi.FileName = appSettings.ExcelPath;
                     psi.Arguments = $@"""{form3.SelectedFile}""";
+                    BackupFile(form3.SelectedFile);
                 }
                 else if (extension == ".doc" || extension == ".docx" || extension == ".docm" || extension == ".odt")
                 {
                     psi.FileName = appSettings.WordPath;
                     psi.Arguments = $@"""{form3.SelectedFile}""";
+                    BackupFile(form3.SelectedFile);
                 }
                 else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm" || extension == ".odp")
                 {
                     psi.FileName = appSettings.PowerPointPath;
                     psi.Arguments = $@"""{form3.SelectedFile}""";
+                    BackupFile(form3.SelectedFile);
                 }
                 else
                 {
                     psi.FileName = form3.SelectedFile;
                 }
 
-                BackupFile(form3.SelectedFile);
                 try
                 {
                     StartProcessAsForegroundWindow(psi);
@@ -1118,23 +1120,25 @@ namespace PowerCacheOffice
                 {
                     psi.FileName = appSettings.ExcelPath;
                     psi.Arguments = $@"""{text}""";
+                    BackupFile(text);
                 }
                 else if (extension == ".doc" || extension == ".docx" || extension == ".docm" || extension == ".odt")
                 {
                     psi.FileName = appSettings.WordPath;
                     psi.Arguments = $@"""{text}""";
+                    BackupFile(text);
                 }
                 else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm" || extension == ".odp")
                 {
                     psi.FileName = appSettings.PowerPointPath;
                     psi.Arguments = $@"""{text}""";
+                    BackupFile(text);
                 }
                 else
                 {
                     psi.FileName = text;
                 }
 
-                BackupFile(text);
                 try
                 {
                     StartProcessAsForegroundWindow(psi);

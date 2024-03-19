@@ -43,10 +43,7 @@ namespace PowerCacheOffice
             toolStripMenuItem1.Font = new Font("メイリオ", 9);
             toolStripMenuItem1.Click += (s, eventArgs) =>
             {
-                var point = this.PointToClient(Cursor.Position);
-                var selectedItem = this.GetItemAt(point.X, point.Y);
-
-                if (selectedItem != null) Clipboard.SetText(selectedItem.Tag.ToString());
+                if (this.SelectedItems.Count == 1) Clipboard.SetText(this.SelectedItems[0].Tag.ToString());
             };
             contextMenuStrip.Items.Add(toolStripMenuItem1);
 
@@ -54,10 +51,7 @@ namespace PowerCacheOffice
             toolStripMenuItem2.Font = new Font("メイリオ", 9);
             toolStripMenuItem2.Click += (s, eventArgs) =>
             {
-                var point = this.PointToClient(Cursor.Position);
-                var selectedItem = this.GetItemAt(point.X, point.Y);
-
-                if (selectedItem != null)
+                if (this.SelectedItems.Count == 1)
                 {
                     var path = string.Empty;
                     try
@@ -74,11 +68,10 @@ namespace PowerCacheOffice
             toolStripMenuItem3.Font = new Font("メイリオ", 9);
             toolStripMenuItem3.Click += (s, eventArgs) =>
             {
-                var point = this.PointToClient(Cursor.Position);
-                var selectedItem = this.GetItemAt(point.X, point.Y);
-
-                if (selectedItem != null)
+                if (this.SelectedItems.Count == 1)
                 {
+                    var selectedItem = this.SelectedItems[0];
+
                     var result = MessageBox.Show("選択したアイテムを削除しますか？", Program.AppName, MessageBoxButtons.YesNo);
                     if (result != DialogResult.Yes) return;
 

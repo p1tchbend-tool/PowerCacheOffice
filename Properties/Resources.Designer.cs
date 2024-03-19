@@ -81,6 +81,26 @@ namespace PowerCacheOffice.Properties {
         }
         
         /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Icon PowerCacheOfficeLaunchBlack {
+            get {
+                object obj = ResourceManager.GetObject("PowerCacheOfficeLaunchBlack", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Icon PowerCacheOfficeLaunchWhite {
+            get {
+                object obj = ResourceManager.GetObject("PowerCacheOfficeLaunchWhite", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap sun {

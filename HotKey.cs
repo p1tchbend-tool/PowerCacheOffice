@@ -10,7 +10,7 @@ namespace PowerCacheOffice
         public static readonly int MOD_KEY_ALT = 1;
         public static readonly int MOD_KEY_CONTROL = 2;
         public static readonly int MOD_KEY_SHIFT = 4;
-        public event EventHandler OnHotKey;
+        public event EventHandler OnHotKey = delegate { };
 
         private readonly int WM_HOTKEY = 0x0312;
         private List<int> ids = new List<int>();
@@ -72,6 +72,12 @@ namespace PowerCacheOffice
         private void HotKey_Load(object sender, EventArgs e)
         {
             this.Visible = false;
+
+            this.FormClosing += (s, eventArgs) =>
+            {
+                this.Visible = false;
+                eventArgs.Cancel = true;
+            };
         }
     }
 }

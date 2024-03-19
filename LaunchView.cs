@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -9,10 +11,28 @@ namespace PowerCacheOffice
 {
     public class LaunchView : ListView
     {
+        public event EventHandler OnItemChanged = delegate { };
+        public event EventHandler OnLaunch = delegate { };
+        public class LaunchEventArgs : EventArgs
+        {
+            public string Path;
+            public LaunchEventArgs(string path)
+            {
+                Path = path;
+            }
+        }
+
         private static ListViewItem dragItem = null;
+        private static LaunchView dragItemParent = null;
         private ContextMenuStrip contextMenuStrip = new ContextMenuStrip();
         private ImageList imageList = new ImageList();
         private bool isLeave = false;
+
+        protected override void OnNotifyMessage(Message m)
+        {
+            const int WM_ERASEBKGND = 0x14;
+            if (m.Msg != WM_ERASEBKGND) base.OnNotifyMessage(m);
+        }
 
         public LaunchView() 
         {
@@ -21,8 +41,38 @@ namespace PowerCacheOffice
 
             var toolStripMenuItem1 = new ToolStripMenuItem("パスのコピー");
             toolStripMenuItem1.Font = new Font("メイリオ", 9);
-            toolStripMenuItem1.Click += (s, eventArgs) => { };
+            toolStripMenuItem1.Click += (s, eventArgs) =>
+            {
+                var point = this.PointToClient(Cursor.Position);
+                var selectedItem = this.GetItemAt(point.X, point.Y);
+
+                if (selectedItem != null) Clipboard.SetText(selectedItem.Tag.ToString());
+            };
             contextMenuStrip.Items.Add(toolStripMenuItem1);
+
+            var toolStripMenuItem2 = new ToolStripMenuItem("削除");
+            toolStripMenuItem2.Font = new Font("メイリオ", 9);
+            toolStripMenuItem2.Click += (s, eventArgs) =>
+            {
+                var point = this.PointToClient(Cursor.Position);
+                var selectedItem = this.GetItemAt(point.X, point.Y);
+
+                if (selectedItem != null)
+                {
+                    var result = MessageBox.Show("選択したアイテムを削除しますか？", Program.AppName, MessageBoxButtons.YesNo);
+                    if (result != DialogResult.Yes) return;
+
+                    imageList.Images.RemoveAt(selectedItem.Index);
+                    this.Items.Remove(selectedItem);
+                    for (int i = 0; i < this.Items.Count; i++) this.Items[i].ImageIndex = i;
+
+                    OnItemChanged(this, EventArgs.Empty);
+                }
+            };
+            contextMenuStrip.Items.Add(toolStripMenuItem2);
+
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+            this.SetStyle(ControlStyles.EnableNotifyMessage, true);
 
             this.Font = new Font("メイリオ", 9);
             this.MultiSelect = false;
@@ -37,9 +87,14 @@ namespace PowerCacheOffice
             this.ItemDrag += (s, eventArgs) =>
             {
                 dragItem = (ListViewItem)eventArgs.Item;
+                dragItemParent = this;
+
                 string[] files = { dragItem.Tag.ToString() };
                 var dataObject = new DataObject(DataFormats.FileDrop, files);
                 this.DoDragDrop(dataObject, DragDropEffects.Copy);
+
+                dragItem = null;
+                dragItemParent = null;
             };
 
             this.DragEnter += (s, eventArgs) => eventArgs.Effect = DragDropEffects.All;
@@ -49,7 +104,11 @@ namespace PowerCacheOffice
                 if (!this.ClientRectangle.Contains(point)) isLeave = true;
 
                 var item = this.GetItemAt(point.X, point.Y);
-                if (item != null && !item.Selected) item.Selected = true;
+                if (item != null && !item.Selected)
+                {
+                    item.Selected = true;
+                    item.Focused = true;
+                }
             };
 
             this.DragDrop += (s, eventArgs) =>
@@ -68,17 +127,17 @@ namespace PowerCacheOffice
 
                 if (selectedItem == null)
                 {
-                    imageList.Images.Add(GetIconImageFromPath(files[0]));
+                    imageList.Images.Add(ResizeBitmap(GetIconImageFromPath(files[0]), 48, 48));
                     this.Items.Add(item);
                 }
                 else
                 {
                     var index = selectedItem.Index;
-                    if (dragItem != null && index > dragItem.Index) index++;
+                    if (dragItem != null && dragItemParent == this && index > dragItem.Index) index++;
 
                     var bitmaps = new List<Bitmap>();
                     foreach (var bitmap in imageList.Images) bitmaps.Add((Bitmap)bitmap);
-                    bitmaps.Insert(index, GetIconImageFromPath(files[0]));
+                    bitmaps.Insert(index, ResizeBitmap(GetIconImageFromPath(files[0]), 48, 48));
                     imageList.Images.Clear();
                     imageList.Images.AddRange(bitmaps.ToArray());
 
@@ -91,18 +150,24 @@ namespace PowerCacheOffice
 
                 if (dragItem != null)
                 {
-                    imageList.Images.RemoveAt(dragItem.Index);
-                    this.Items.Remove(dragItem);
+                    dragItemParent.LargeImageList.Images.RemoveAt(dragItem.Index);
+                    dragItemParent.Items.Remove(dragItem);
+                    dragItemParent = null;
                     dragItem = null;
                 }
 
                 for (int i = 0; i < this.Items.Count; i++) this.Items[i].ImageIndex = i;
+                OnItemChanged(this, EventArgs.Empty);
             };
 
             this.MouseMove += (s, eventArgs) =>
             {
                 var item = this.GetItemAt(eventArgs.Location.X, eventArgs.Location.Y);
-                if (item != null && item.Selected == false) item.Selected = true;
+                if (item != null && item.Selected == false)
+                {
+                    item.Selected = true;
+                    item.Focused = true;
+                }
             };
 
             this.MouseClick += (s, eventArgs) =>
@@ -117,10 +182,66 @@ namespace PowerCacheOffice
                 }
                 else
                 {
-                    //SelectedFile = this.SelectedItems[0].Tag.ToString();
-                    //this.Close();
+                    OnLaunch(this, new LaunchEventArgs(this.SelectedItems[0].Tag.ToString()));
                 }
             };
+        }
+
+        public void SetItems(List<string> largeImageListAsBase64Strings, List<string> paths)
+        {
+            this.Items.Clear();
+            imageList.Images.Clear();
+
+            paths.ForEach(path =>
+            {
+                var item = new ListViewItem(Path.GetFileName(path));
+                item.Tag = path;
+                this.Items.Add(item);
+            });
+
+            largeImageListAsBase64Strings.ForEach(base64String =>
+            {
+                imageList.Images.Add(GetBitmapFromtBase64String(base64String));
+            });
+
+            for (int i = 0; i < this.Items.Count; i++) this.Items[i].ImageIndex = i;
+        }
+
+        public List<string> GetLargeImageListAsBase64Strings()
+        {
+            var list = new List<string>();
+            foreach (var bitmap in imageList.Images) list.Add(GetBase64String((Bitmap)bitmap));
+            return list;
+        }
+
+        public List<string> GetPaths()
+        {
+            var list = new List<string>();
+            foreach (var item in this.Items) list.Add(((ListViewItem)item).Tag.ToString());
+            return list;
+        }
+
+        private string GetBase64String(Bitmap bitmap)
+        {
+            if (bitmap == null) return string.Empty;
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitmap.Save(ms, ImageFormat.Png);
+                byte[] bites = ms.ToArray();
+                return Convert.ToBase64String(bites);
+            }
+        }
+
+        private Bitmap GetBitmapFromtBase64String(string str)
+        {
+            if (string.IsNullOrEmpty(str)) return new Bitmap(1, 1);
+
+            byte[] bytes = Convert.FromBase64String(str);
+            using (MemoryStream ms = new MemoryStream(bytes))
+            {
+                return new Bitmap(ms);
+            }
         }
 
         private Bitmap GetIconImageFromPath(string str)
@@ -141,6 +262,26 @@ namespace PowerCacheOffice
             }
             catch { }
             return bmp;
+        }
+
+        private Bitmap ResizeBitmap(Bitmap original, int width, int height)
+        {
+            if (original == null) return null;
+
+            float scale = Math.Min((float)width / original.Width, (float)height / original.Height);
+            int scaleWidth = (int)(original.Width * scale);
+            int scaleHeight = (int)(original.Height * scale);
+
+            Bitmap result = new Bitmap(width, height);
+            using (Graphics graphics = Graphics.FromImage(result))
+            {
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                graphics.Clear(Color.Transparent);
+                graphics.DrawImage(original, new Rectangle((width - scaleWidth) / 2, (height - scaleHeight) / 2, scaleWidth, scaleHeight));
+            }
+            return result;
         }
     }
 }

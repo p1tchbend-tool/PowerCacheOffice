@@ -146,6 +146,7 @@
     <Compile Include="HotKey.Designer.cs">
       <DependentUpon>HotKey.cs</DependentUpon>
     </Compile>
+    <Compile Include="LaunchSettings.cs" />
     <Compile Include="LaunchView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -201,6 +202,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\PowerCacheOfficeLaunchWhite.ico" />
+    <None Include="Resources\PowerCacheOfficeLaunchBlack.ico" />
     <None Include="Resources\update_white.png" />
     <None Include="Resources\update.png" />
     <None Include="Resources\moon.png" />

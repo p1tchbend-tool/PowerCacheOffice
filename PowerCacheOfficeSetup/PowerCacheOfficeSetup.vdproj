@@ -1681,7 +1681,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_302CFD52B94847CEBC37BE59459FAF5A"
             {
-            "SourcePath" = "8:..\\obj\\Release\\PowerCacheOffice.exe"
+            "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_BF11B1AB8E3947F89BBA7969170BCC20"

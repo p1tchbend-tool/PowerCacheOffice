@@ -26,8 +26,9 @@ namespace PowerCacheOffice
 
         private static readonly int openClipboardPathId = 1;
         private static readonly int openRecentFileId = 2;
-        private HotKey hotKey = new HotKey();
+        private static HotKey hotKey = new HotKey();
 
+        private static string diffFilePath = string.Empty;
         private AppSettings appSettings = new AppSettings();
         private CacheSettings cacheSettings = new CacheSettings();
         private BackupSettings backupSettings = new BackupSettings();
@@ -39,7 +40,8 @@ namespace PowerCacheOffice
             WriteIndented = true
         };
         private HttpClient httpClient = new HttpClient();
-        private static string diffFilePath = string.Empty;
+        private bool isUpdating = false;
+        private bool isLaunchFormShowing = false;
 
         public Form1()
         {
@@ -338,47 +340,53 @@ namespace PowerCacheOffice
 
         private async void CheckUpdate()
         {
-            var version = string.Empty;
+            if (isUpdating) return;
+            isUpdating = true;
             try
             {
-                version = await httpClient.GetStringAsync("https://raw.githubusercontent.com/p1tchbend-tool/PowerCacheOffice/master/App/VERSION.txt");
-            }
-            catch { }
+                var version = string.Empty;
+                try
+                {
+                    version = await httpClient.GetStringAsync("https://raw.githubusercontent.com/p1tchbend-tool/PowerCacheOffice/master/App/VERSION.txt");
+                }
+                catch { }
 
-            if (string.IsNullOrEmpty(version))
-            {
-                MessageBox.Show("バージョン  " + FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion + "\n\n最新のバージョンです。", Program.AppName);
-            }
-            else
-            {
-                if (version == FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion)
+                if (string.IsNullOrEmpty(version))
                 {
                     MessageBox.Show("バージョン  " + FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion + "\n\n最新のバージョンです。", Program.AppName);
                 }
                 else
                 {
-                    try
+                    if (version == FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion)
                     {
-                        var result = MessageBox.Show("新しいバージョンがあります。\n\nダウンロードしますか？", Program.AppName, MessageBoxButtons.YesNo);
-                        if (result != DialogResult.Yes) return;
-
-                        var response = await httpClient.GetAsync("https://raw.githubusercontent.com/p1tchbend-tool/PowerCacheOffice/master/App/PowerCacheOfficeSetup.msi");
-                        using (var stream = await response.Content.ReadAsStreamAsync())
-                        {
-                            using (var outStream = File.Create(
-                                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"Downloads\PowerCacheOfficeSetup.msi")))
-                            {
-                                stream.CopyTo(outStream);
-                            }
-                        }
-
-                        var psi = new ProcessStartInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads"));
-                        psi.UseShellExecute = true;
-                        StartProcessAsForegroundWindow(psi);
+                        MessageBox.Show("バージョン  " + FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion + "\n\n最新のバージョンです。", Program.AppName);
                     }
-                    catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
+                    else
+                    {
+                        try
+                        {
+                            var result = MessageBox.Show("新しいバージョンがあります。\n\nダウンロードしますか？", Program.AppName, MessageBoxButtons.YesNo);
+                            if (result != DialogResult.Yes) return;
+
+                            var response = await httpClient.GetAsync("https://raw.githubusercontent.com/p1tchbend-tool/PowerCacheOffice/master/App/PowerCacheOfficeSetup.msi");
+                            using (var stream = await response.Content.ReadAsStreamAsync())
+                            {
+                                using (var outStream = File.Create(
+                                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"Downloads\PowerCacheOfficeSetup.msi")))
+                                {
+                                    stream.CopyTo(outStream);
+                                }
+                            }
+
+                            var psi = new ProcessStartInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads"));
+                            psi.UseShellExecute = true;
+                            StartProcessAsForegroundWindow(psi);
+                        }
+                        catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
+                    }
                 }
             }
+            finally { isUpdating = false; }
         }
 
         private void ChangeDarkModeForm1(bool enabled)
@@ -1062,44 +1070,59 @@ namespace PowerCacheOffice
 
         private void OpenRecentFile()
         {
-            using (var form3 = new Form3(recentFiles, appSettings.IsDarkMode))
+            if (isLaunchFormShowing) return;
+            isLaunchFormShowing = true;
+            try
             {
-                form3.ShowDialog();
-                if (string.IsNullOrEmpty(form3.SelectedFile)) return;
+                using (var launchForm = new Form3(recentFiles, appSettings.IsDarkMode))
+                {
+                    launchForm.ShowDialog();
 
-                ProcessStartInfo psi = new ProcessStartInfo();
-                psi.UseShellExecute = true;
-                var extension = Path.GetExtension(form3.SelectedFile).ToLower();
+                    if (!string.IsNullOrEmpty(launchForm.SelectedFile))
+                    {
+                        ProcessStartInfo psi = new ProcessStartInfo();
+                        psi.UseShellExecute = true;
+                        var extension = Path.GetExtension(launchForm.SelectedFile).ToLower();
 
-                if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm" || extension == ".ods")
-                {
-                    psi.FileName = appSettings.ExcelPath;
-                    psi.Arguments = $@"""{form3.SelectedFile}""";
-                    BackupFile(form3.SelectedFile);
-                }
-                else if (extension == ".doc" || extension == ".docx" || extension == ".docm" || extension == ".odt")
-                {
-                    psi.FileName = appSettings.WordPath;
-                    psi.Arguments = $@"""{form3.SelectedFile}""";
-                    BackupFile(form3.SelectedFile);
-                }
-                else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm" || extension == ".odp")
-                {
-                    psi.FileName = appSettings.PowerPointPath;
-                    psi.Arguments = $@"""{form3.SelectedFile}""";
-                    BackupFile(form3.SelectedFile);
-                }
-                else
-                {
-                    psi.FileName = form3.SelectedFile;
-                }
+                        if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm" || extension == ".ods")
+                        {
+                            psi.FileName = appSettings.ExcelPath;
+                            psi.Arguments = $@"""{launchForm.SelectedFile}""";
+                            BackupFile(launchForm.SelectedFile);
+                        }
+                        else if (extension == ".doc" || extension == ".docx" || extension == ".docm" || extension == ".odt")
+                        {
+                            psi.FileName = appSettings.WordPath;
+                            psi.Arguments = $@"""{launchForm.SelectedFile}""";
+                            BackupFile(launchForm.SelectedFile);
+                        }
+                        else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm" || extension == ".odp")
+                        {
+                            psi.FileName = appSettings.PowerPointPath;
+                            psi.Arguments = $@"""{launchForm.SelectedFile}""";
+                            BackupFile(launchForm.SelectedFile);
+                        }
+                        else
+                        {
+                            psi.FileName = launchForm.SelectedFile;
+                        }
 
-                try
-                {
-                    StartProcessAsForegroundWindow(psi);
+                        try
+                        {
+                            StartProcessAsForegroundWindow(psi);
+                        }
+                        catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
+                    }
+
+                    recentFiles = launchForm.GetRecentFiles();
+                    try
+                    {
+                        File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json"), JsonSerializer.Serialize(recentFiles, jsonSerializerOptions));
+                    }
+                    catch { }
                 }
-                catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
             }
+            finally { isLaunchFormShowing = false; }
         }
 
         private void OpenClipboardPath()

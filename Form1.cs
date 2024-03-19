@@ -15,6 +15,16 @@ namespace PowerCacheOffice
 {
     public partial class Form1 : Form
     {
+        public event EventHandler OnRecentFilesAdded = delegate { };
+        public class RecentFilesAddedEventArgs : EventArgs
+        {
+            public string RecentFile;
+            public RecentFilesAddedEventArgs(string recentFile)
+            {
+                RecentFile = recentFile;
+            }
+        }
+
         private static readonly string powerCacheOfficeDataFolder = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice");
         private static readonly string powerCacheOfficeCacheFolder = Path.Combine(
@@ -510,12 +520,13 @@ namespace PowerCacheOffice
 
                 recentFiles.RemoveAll(x => x == filePath);
                 recentFiles.Add(filePath);
-                if (recentFiles.Count > 100) recentFiles.RemoveAt(0);
+                if (recentFiles.Count > 100) recentFiles.RemoveRange(100, recentFiles.Count - 100);
                 try
                 {
                     File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json"), JsonSerializer.Serialize(recentFiles, jsonSerializerOptions));
                 }
                 catch { }
+                OnRecentFilesAdded(this, new RecentFilesAddedEventArgs(filePath));
 
                 string arguments = string.Empty;
                 if (listBox1.Items.OfType<string>().Any(x => filePath.ToLower().StartsWith(x.ToLower())))
@@ -1090,7 +1101,7 @@ namespace PowerCacheOffice
             {
                 using (var launchForm = new Form3(recentFiles, appSettings.IsDarkMode))
                 {
-                    launchForm.ShowDialog();
+                    launchForm.ShowDialog(this);
 
                     if (!string.IsNullOrEmpty(launchForm.SelectedFile))
                     {
@@ -1130,6 +1141,7 @@ namespace PowerCacheOffice
                     }
 
                     recentFiles = launchForm.GetRecentFiles();
+                    if (recentFiles.Count > 100) recentFiles.RemoveRange(100, recentFiles.Count - 100);
                     try
                     {
                         File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json"), JsonSerializer.Serialize(recentFiles, jsonSerializerOptions));
@@ -1186,8 +1198,9 @@ namespace PowerCacheOffice
 
                 recentFiles.RemoveAll(x => x == text);
                 recentFiles.Add(text);
-                if (recentFiles.Count > 100) recentFiles.RemoveAt(0);
+                if (recentFiles.Count > 100) recentFiles.RemoveRange(100, recentFiles.Count - 100);
                 File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json"), JsonSerializer.Serialize(recentFiles, jsonSerializerOptions));
+                OnRecentFilesAdded(this, new RecentFilesAddedEventArgs(text));
             }
             catch { }
         }

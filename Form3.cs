@@ -111,6 +111,20 @@ namespace PowerCacheOffice
 
             this.Shown += (s, e) =>
             {
+                ((Form1)this.Owner).OnRecentFilesAdded += (sender, eventArgs) =>
+                {
+                    var recentFile = ((Form1.RecentFilesAddedEventArgs)eventArgs).RecentFile;
+                    foreach (var item in listBox1.Items)
+                    {
+                        if (item.ToString() == recentFile)
+                        {
+                            listBox1.Items.Remove(item);
+                            break;
+                        }
+                    }
+                    listBox1.Items.Insert(0, recentFile);
+                };
+
                 listBox1.Focus();
                 NativeMethods.SetForegroundWindow(this.Handle);
             };

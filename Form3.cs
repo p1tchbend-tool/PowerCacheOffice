@@ -23,6 +23,7 @@ namespace PowerCacheOffice
             Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
             WriteIndented = true
         };
+        private Point mousePosition = new Point();
 
         private LaunchView launchView1 = new LaunchView();
         private LaunchView launchView2 = new LaunchView();
@@ -112,6 +113,16 @@ namespace PowerCacheOffice
             {
                 listBox1.Focus();
                 NativeMethods.SetForegroundWindow(this.Handle);
+            };
+
+            this.MouseDown += (s, e) =>
+            {
+                if ((e.Button & MouseButtons.Left) == MouseButtons.Left) mousePosition = new Point(e.X, e.Y);
+            };
+            this.MouseMove += (s, e) =>
+            {
+                if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+                    this.Location = new Point(this.Location.X + e.X - mousePosition.X, this.Location.Y + e.Y - mousePosition.Y);
             };
 
             listBox1.BeginUpdate();

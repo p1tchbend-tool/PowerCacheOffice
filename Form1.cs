@@ -42,6 +42,7 @@ namespace PowerCacheOffice
         private HttpClient httpClient = new HttpClient();
         private bool isUpdating = false;
         private bool isLaunchFormShowing = false;
+        private bool isCacheCreating = false;
 
         public Form1()
         {
@@ -201,7 +202,9 @@ namespace PowerCacheOffice
                                 {
                                     psi.FileName = appSettings.PowerPointPath;
                                 }
-                                StartProcessAsForegroundWindow(psi);
+
+                                var process = Process.Start(psi);
+                                SetProcessWindowAsForeground(process);
                             }
                             catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
 
@@ -242,7 +245,8 @@ namespace PowerCacheOffice
                                     psi.Arguments += " " + appSettings.PowerPointDiffToolArguments;
                                 }
 
-                                StartProcessAsForegroundWindow(psi);
+                                var process = Process.Start(psi);
+                                SetProcessWindowAsForeground(process);
                             }
                             catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
 
@@ -380,7 +384,8 @@ namespace PowerCacheOffice
 
                             var psi = new ProcessStartInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads"));
                             psi.UseShellExecute = true;
-                            StartProcessAsForegroundWindow(psi);
+                            var process = Process.Start(psi);
+                            SetProcessWindowAsForeground(process);
                         }
                         catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
                     }
@@ -595,7 +600,8 @@ namespace PowerCacheOffice
 
                 try
                 {
-                    StartProcessAsForegroundWindow(psi);
+                    var process = Process.Start(psi);
+                    SetProcessWindowAsForeground(process);
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
             }
@@ -658,7 +664,8 @@ namespace PowerCacheOffice
 
             try
             {
-                StartProcessAsForegroundWindow(psi);
+                var process = Process.Start(psi);
+                SetProcessWindowAsForeground(process);
             }
             catch { }
         }
@@ -697,7 +704,8 @@ namespace PowerCacheOffice
             psi.UseShellExecute = true;
             try
             {
-                StartProcessAsForegroundWindow(psi);
+                var process = Process.Start(psi);
+                SetProcessWindowAsForeground(process);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
         }
@@ -973,41 +981,47 @@ namespace PowerCacheOffice
 実行してよろしいですか？", Program.AppName, MessageBoxButtons.YesNo);
             if (dr != DialogResult.Yes) return;
 
-            if (!listBox1.Items.OfType<string>().Any(x => textBox3.Text.ToLower().StartsWith(x.ToLower())))
-            {
-                listBox1.Items.Add(textBox3.Text);
-                appSettings.CacheTargetDirectories = listBox1.Items.OfType<string>().ToList();
-                try
-                {
-                    File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
-                }
-                catch { }
-            }
-
-            button3.Enabled = false;
-            textBox3.Enabled = false;
-            listBox1.Focus();
+            if (isCacheCreating) return;
+            isCacheCreating = true;
             try
             {
-                var caches = new List<string>();
-                cacheSettings.CacheRelations.ForEach(x => caches.Add(x.RemotePath));
+                if (!listBox1.Items.OfType<string>().Any(x => textBox3.Text.ToLower().StartsWith(x.ToLower())))
+                {
+                    listBox1.Items.Add(textBox3.Text);
+                    appSettings.CacheTargetDirectories = listBox1.Items.OfType<string>().ToList();
+                    try
+                    {
+                        File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "appSettings.json"), JsonSerializer.Serialize(appSettings, jsonSerializerOptions));
+                    }
+                    catch { }
+                }
 
-                createCacheManager = new CreateCacheManager();
+                button3.Enabled = false;
+                textBox3.Enabled = false;
+                listBox1.Focus();
+                try
+                {
+                    var caches = new List<string>();
+                    cacheSettings.CacheRelations.ForEach(x => caches.Add(x.RemotePath));
 
-                label4.Visible = true;
-                await createCacheManager.CountCacheTargetAsync(textBox3.Text);
-                label4.Visible = false;
-                await createCacheManager.CreateCacheAsync(textBox3.Text, caches);
+                    createCacheManager = new CreateCacheManager();
 
-                MargeCreatedCacheToCacheSettings();
+                    label4.Visible = true;
+                    await createCacheManager.CountCacheTargetAsync(textBox3.Text);
+                    label4.Visible = false;
+                    await createCacheManager.CreateCacheAsync(textBox3.Text, caches);
+
+                    MargeCreatedCacheToCacheSettings();
+                }
+                finally
+                {
+                    textBox3.Enabled = true;
+                    button3.Enabled = true;
+                    label4.Visible = false;
+                    createCacheManager = new CreateCacheManager();
+                }
             }
-            finally
-            {
-                textBox3.Enabled = true;
-                button3.Enabled = true;
-                label4.Visible = false;
-                createCacheManager = new CreateCacheManager();
-            }
+            finally { isCacheCreating = false; }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -1109,7 +1123,8 @@ namespace PowerCacheOffice
 
                         try
                         {
-                            StartProcessAsForegroundWindow(psi);
+                            var process = Process.Start(psi);
+                            SetProcessWindowAsForeground(process);
                         }
                         catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
                     }
@@ -1164,7 +1179,8 @@ namespace PowerCacheOffice
 
                 try
                 {
-                    StartProcessAsForegroundWindow(psi);
+                    var process = Process.Start(psi);
+                    SetProcessWindowAsForeground(process);
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
 
@@ -1214,9 +1230,8 @@ namespace PowerCacheOffice
             catch { }
         }
 
-        private async void StartProcessAsForegroundWindow(ProcessStartInfo processStartInfo)
+        private async void SetProcessWindowAsForeground(Process process)
         {
-            var process = Process.Start(processStartInfo);
             try
             {
                 IntPtr hWnd = IntPtr.Zero;

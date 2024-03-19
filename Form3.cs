@@ -91,7 +91,11 @@ namespace PowerCacheOffice
             launchView5.OnItemChanged += (s, e) => SaveLaunchViews();
             tabPage5.Controls.Add(launchView5);
 
-            LoadLaunchViewsAsync();
+            try
+            {
+                LoadLaunchViewsAsync();
+            }
+            catch { }
 
             Program.SortTabIndex(this);
             Program.ChangeDarkMode(this, isDarkMode);
@@ -161,6 +165,17 @@ namespace PowerCacheOffice
             toolStripMenuItem2.Click += (s, eventArgs) =>
             {
                 if (listBox1.SelectedItems.Count != 1) return;
+                try
+                {
+                    SelectedFile = Path.GetDirectoryName(listBox1.SelectedItem.ToString());
+                }
+                catch { }
+                this.Close();
+            };
+
+            toolStripMenuItem3.Click += (s, eventArgs) =>
+            {
+                if (listBox1.SelectedItems.Count != 1) return;
                 var item = listBox1.SelectedItem;
 
                 var result = MessageBox.Show("選択したアイテムを削除しますか？", Program.AppName, MessageBoxButtons.YesNo);
@@ -208,9 +223,9 @@ namespace PowerCacheOffice
             catch { }
         }
 
-        private void LoadLaunchViewsAsync()
+        private Task LoadLaunchViewsAsync()
         {
-            Task.Run(() =>
+            return Task.Run(() =>
             {
                 try
                 {
@@ -233,6 +248,12 @@ namespace PowerCacheOffice
                     path = Path.Combine(powerCacheOfficeLaunchDataFolder, launchView5.Name + ".json");
                     launchSettings = JsonSerializer.Deserialize<LaunchSettings>(File.ReadAllText(path));
                     launchView5.SetItems(launchSettings.LaunchViewBase64Images, launchSettings.LaunchViewPaths);
+
+                    launchView1.Update();
+                    launchView2.Update();
+                    launchView3.Update();
+                    launchView4.Update();
+                    launchView5.Update();
                 }
                 catch { }
             });

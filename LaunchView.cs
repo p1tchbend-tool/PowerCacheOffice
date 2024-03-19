@@ -50,9 +50,29 @@ namespace PowerCacheOffice
             };
             contextMenuStrip.Items.Add(toolStripMenuItem1);
 
-            var toolStripMenuItem2 = new ToolStripMenuItem("削除");
+            var toolStripMenuItem2 = new ToolStripMenuItem("場所を開く");
             toolStripMenuItem2.Font = new Font("メイリオ", 9);
             toolStripMenuItem2.Click += (s, eventArgs) =>
+            {
+                var point = this.PointToClient(Cursor.Position);
+                var selectedItem = this.GetItemAt(point.X, point.Y);
+
+                if (selectedItem != null)
+                {
+                    var path = string.Empty;
+                    try
+                    {
+                        path = Path.GetDirectoryName(this.SelectedItems[0].Tag.ToString());
+                    }
+                    catch { }
+                    OnLaunch(this, new LaunchEventArgs(path));
+                }
+            };
+            contextMenuStrip.Items.Add(toolStripMenuItem2);
+
+            var toolStripMenuItem3 = new ToolStripMenuItem("削除");
+            toolStripMenuItem3.Font = new Font("メイリオ", 9);
+            toolStripMenuItem3.Click += (s, eventArgs) =>
             {
                 var point = this.PointToClient(Cursor.Position);
                 var selectedItem = this.GetItemAt(point.X, point.Y);
@@ -69,7 +89,7 @@ namespace PowerCacheOffice
                     OnItemChanged(this, EventArgs.Empty);
                 }
             };
-            contextMenuStrip.Items.Add(toolStripMenuItem2);
+            contextMenuStrip.Items.Add(toolStripMenuItem3);
 
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
             this.SetStyle(ControlStyles.EnableNotifyMessage, true);

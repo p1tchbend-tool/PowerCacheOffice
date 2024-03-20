@@ -152,6 +152,9 @@ namespace PowerCacheOffice
 
         private void Form3_Load(object sender, EventArgs e)
         {
+            var area = Screen.FromPoint(Cursor.Position).WorkingArea;
+            this.Location = new Point(area.X + (area.Width - this.Width) / 2, area.Y + (area.Height - this.Height) / 2);
+
             listBox1.MouseMove += (s, eventArgs) =>
             {
                 var index = listBox1.IndexFromPoint(eventArgs.Location);

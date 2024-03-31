@@ -27,15 +27,21 @@ namespace PowerCacheOffice
         private Point mousePosition = new Point();
         private Form1 mainForm = null;
 
-        private LaunchView launchView1 = new LaunchView();
-        private LaunchView launchView2 = new LaunchView();
-        private LaunchView launchView3 = new LaunchView();
-        private LaunchView launchView4 = new LaunchView();
-        private LaunchView launchView5 = new LaunchView();
+        private LaunchView launchView1 = null;
+        private LaunchView launchView2 = null;
+        private LaunchView launchView3 = null;
+        private LaunchView launchView4 = null;
+        private LaunchView launchView5 = null;
 
         public Form3(bool isDarkMode, Form1 mainForm)
         {
             this.mainForm = mainForm;
+            launchView1 = new LaunchView(mainForm, this);
+            launchView2 = new LaunchView(mainForm, this);
+            launchView3 = new LaunchView(mainForm, this);
+            launchView4 = new LaunchView(mainForm, this);
+            launchView5 = new LaunchView(mainForm, this);
+
             if (!Directory.Exists(powerCacheOfficeLaunchDataFolder)) Directory.CreateDirectory(powerCacheOfficeLaunchDataFolder);
             try
             {
@@ -215,6 +221,37 @@ namespace PowerCacheOffice
             };
 
             toolStripMenuItem3.Click += (s, eventArgs) =>
+            {
+                if (listBox1.SelectedItems.Count != 1) return;
+                try
+                {
+                    var path = listBox1.SelectedItem.ToString();
+                    if (!Directory.Exists(path)) path = Path.GetDirectoryName(path);
+
+                    var folders = Directory.GetDirectories(@path);
+                    var files = Directory.GetFiles(@path);
+                    var items = new LaunchMenuItem[folders.Length + files.Length];
+
+                    for (int i = 0; i < folders.Length; i++)
+                    {
+                        items[i] = new LaunchMenuItem(folders[i], mainForm, this);
+                    }
+
+                    int num = 0;
+                    for (int i = folders.Length; i < folders.Length + files.Length; i++)
+                    {
+                        items[i] = new LaunchMenuItem(files[num], mainForm, this);
+                        num++;
+                    }
+
+                    var menu = new ContextMenuStrip();
+                    menu.Items.AddRange(items);
+                    menu.Show(new Point(Cursor.Position.X + 1, Cursor.Position.Y + 1));
+                }
+                catch { }
+            };
+
+            toolStripMenuItem4.Click += (s, eventArgs) =>
             {
                 if (listBox1.SelectedItems.Count != 1) return;
                 var item = listBox1.SelectedItem;

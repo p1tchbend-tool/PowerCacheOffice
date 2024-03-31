@@ -24,6 +24,7 @@ namespace PowerCacheOffice
 
         private static ListViewItem dragItem = null;
         private static LaunchView dragItemParent = null;
+
         private ContextMenuStrip contextMenuStrip = new ContextMenuStrip();
         private ImageList imageList = new ImageList();
         private bool isLeave = false;
@@ -34,7 +35,7 @@ namespace PowerCacheOffice
             if (m.Msg != WM_ERASEBKGND) base.OnNotifyMessage(m);
         }
 
-        public LaunchView() 
+        public LaunchView(Form1 mainForm, Form3 launchForm) 
         {
             imageList.ColorDepth = ColorDepth.Depth32Bit;
             imageList.ImageSize = new Size(48, 48);
@@ -66,10 +67,45 @@ namespace PowerCacheOffice
             };
             contextMenuStrip.Items.Add(toolStripMenuItem2);
 
-            var toolStripMenuItem3 = new ToolStripMenuItem("削除");
+            var toolStripMenuItem3 = new ToolStripMenuItem("メニュー展開");
             toolStripMenuItem3.Font = new Font("メイリオ", 9);
             toolStripMenuItem3.BackColor = Color.FromArgb(243, 243, 243);
-            toolStripMenuItem3.Click += (s, eventArgs) =>
+            toolStripMenuItem3.Click += (s, e) =>
+            {
+                if (this.SelectedItems.Count != 1) return;
+                try
+                {
+                    var path = this.SelectedItems[0].Tag.ToString();
+                    if (!Directory.Exists(path)) path = Path.GetDirectoryName(path);
+
+                    var folders = Directory.GetDirectories(@path);
+                    var files = Directory.GetFiles(@path);
+                    var items = new LaunchMenuItem[folders.Length + files.Length];
+
+                    for (int i = 0; i < folders.Length; i++)
+                    {
+                        items[i] = new LaunchMenuItem(folders[i], mainForm, launchForm);
+                    }
+
+                    int num = 0;
+                    for (int i = folders.Length; i < folders.Length + files.Length; i++)
+                    {
+                        items[i] = new LaunchMenuItem(files[num], mainForm, launchForm);
+                        num++;
+                    }
+
+                    var menu = new ContextMenuStrip();
+                    menu.Items.AddRange(items);
+                    menu.Show(new Point(Cursor.Position.X + 1, Cursor.Position.Y + 1));
+                }
+                catch { }
+            };
+            contextMenuStrip.Items.Add(toolStripMenuItem3);
+
+            var toolStripMenuItem4 = new ToolStripMenuItem("削除");
+            toolStripMenuItem4.Font = new Font("メイリオ", 9);
+            toolStripMenuItem4.BackColor = Color.FromArgb(243, 243, 243);
+            toolStripMenuItem4.Click += (s, eventArgs) =>
             {
                 if (this.SelectedItems.Count == 1)
                 {
@@ -85,7 +121,7 @@ namespace PowerCacheOffice
                     OnItemChanged(this, EventArgs.Empty);
                 }
             };
-            contextMenuStrip.Items.Add(toolStripMenuItem3);
+            contextMenuStrip.Items.Add(toolStripMenuItem4);
 
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
             this.SetStyle(ControlStyles.EnableNotifyMessage, true);

@@ -146,6 +146,9 @@
     <Compile Include="HotKey.Designer.cs">
       <DependentUpon>HotKey.cs</DependentUpon>
     </Compile>
+    <Compile Include="LaunchMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="LaunchSettings.cs" />
     <Compile Include="LaunchView.cs">
       <SubType>Component</SubType>

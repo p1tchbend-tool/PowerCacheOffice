@@ -7,23 +7,25 @@ using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PowerCacheOffice
 {
     public partial class Form3 : Form
     {
-        public string SelectedFile {  get; set; }
-
+        private static readonly string powerCacheOfficeDataFolder = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice");
         private static readonly string powerCacheOfficeLaunchDataFolder = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\launch");
+
         private JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
         {
             Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
             WriteIndented = true
         };
+        private List<string> recentFiles = new List<string>();
         private Point mousePosition = new Point();
+        private Form1 mainForm = null;
 
         private LaunchView launchView1 = new LaunchView();
         private LaunchView launchView2 = new LaunchView();
@@ -31,10 +33,16 @@ namespace PowerCacheOffice
         private LaunchView launchView4 = new LaunchView();
         private LaunchView launchView5 = new LaunchView();
 
-        public Form3(List<string> recentFiles, bool isDarkMode)
+        public Form3(bool isDarkMode, Form1 mainForm)
         {
-            SelectedFile = string.Empty;
+            this.mainForm = mainForm;
             if (!Directory.Exists(powerCacheOfficeLaunchDataFolder)) Directory.CreateDirectory(powerCacheOfficeLaunchDataFolder);
+            try
+            {
+                recentFiles = JsonSerializer.Deserialize<List<string>>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json")));
+            }
+            catch { recentFiles = new List<string>(); }
+
             InitializeComponent();
 
             launchView1.Name = "view1";
@@ -42,8 +50,8 @@ namespace PowerCacheOffice
             launchView1.Location = new Point(10, 11);
             launchView1.OnLaunch += (s, e) =>
             {
-                SelectedFile = ((LaunchView.LaunchEventArgs)e).Path;
-                this.Close();
+                mainForm.OpenRecentFile(((LaunchView.LaunchEventArgs)e).Path);
+                this.Visible = false;
             };
             launchView1.OnItemChanged += (s, e) => SaveLaunchViews();
             tabPage1.Controls.Add(launchView1);
@@ -53,8 +61,8 @@ namespace PowerCacheOffice
             launchView2.Location = new Point(10, 11);
             launchView2.OnLaunch += (s, e) =>
             {
-                SelectedFile = ((LaunchView.LaunchEventArgs)e).Path;
-                this.Close();
+                mainForm.OpenRecentFile(((LaunchView.LaunchEventArgs)e).Path);
+                this.Visible = false;
             };
             launchView2.OnItemChanged += (s, e) => SaveLaunchViews();
             tabPage2.Controls.Add(launchView2);
@@ -64,8 +72,8 @@ namespace PowerCacheOffice
             launchView3.Location = new Point(10, 11);
             launchView3.OnLaunch += (s, e) =>
             {
-                SelectedFile = ((LaunchView.LaunchEventArgs)e).Path;
-                this.Close();
+                mainForm.OpenRecentFile(((LaunchView.LaunchEventArgs)e).Path);
+                this.Visible = false;
             };
             launchView3.OnItemChanged += (s, e) => SaveLaunchViews();
             tabPage3.Controls.Add(launchView3);
@@ -75,8 +83,8 @@ namespace PowerCacheOffice
             launchView4.Location = new Point(10, 11);
             launchView4.OnLaunch += (s, e) =>
             {
-                SelectedFile = ((LaunchView.LaunchEventArgs)e).Path;
-                this.Close();
+                mainForm.OpenRecentFile(((LaunchView.LaunchEventArgs)e).Path);
+                this.Visible = false;
             };
             launchView4.OnItemChanged += (s, e) => SaveLaunchViews();
             tabPage4.Controls.Add(launchView4);
@@ -86,17 +94,13 @@ namespace PowerCacheOffice
             launchView5.Location = new Point(10, 11);
             launchView5.OnLaunch += (s, e) =>
             {
-                SelectedFile = ((LaunchView.LaunchEventArgs)e).Path;
-                this.Close();
+                mainForm.OpenRecentFile(((LaunchView.LaunchEventArgs)e).Path);
+                this.Visible = false;
             };
             launchView5.OnItemChanged += (s, e) => SaveLaunchViews();
             tabPage5.Controls.Add(launchView5);
 
-            try
-            {
-                LoadLaunchViewsAsync();
-            }
-            catch { }
+            LoadLaunchViews();
 
             Program.SortTabIndex(this);
             Program.ChangeDarkMode(this, isDarkMode);
@@ -111,22 +115,37 @@ namespace PowerCacheOffice
 
             this.Shown += (s, e) =>
             {
-                ((Form1)this.Owner).OnRecentFilesAdded += (sender, eventArgs) =>
+                mainForm.OnRecentFilesAdded += (sender, eventArgs) =>
                 {
                     var recentFile = ((Form1.RecentFilesAddedEventArgs)eventArgs).RecentFile;
-                    foreach (var item in listBox1.Items)
+                    recentFiles.RemoveAll(x => x == recentFile);
+                    recentFiles.Add(recentFile);
+                    if (recentFiles.Count > 100) recentFiles.RemoveRange(100, recentFiles.Count - 100);
+                    try
                     {
-                        if (item.ToString() == recentFile)
-                        {
-                            listBox1.Items.Remove(item);
-                            break;
-                        }
+                        File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json"), JsonSerializer.Serialize(recentFiles, jsonSerializerOptions));
                     }
-                    listBox1.Items.Insert(0, recentFile);
+                    catch { }
+
+                    listBox1.BeginUpdate();
+                    listBox1.Items.Clear();
+                    foreach (var item in recentFiles.AsEnumerable().Reverse())
+                    {
+                        listBox1.Items.Add(item);
+                    }
+                    listBox1.EndUpdate();
                 };
 
                 listBox1.Focus();
                 NativeMethods.SetForegroundWindow(this.Handle);
+            };
+
+            this.FormClosing += (s, e) =>
+            {
+                if (e.CloseReason != CloseReason.UserClosing) return;
+
+                this.Visible = false;
+                e.Cancel = true;
             };
 
             this.MouseDown += (s, e) =>
@@ -152,9 +171,6 @@ namespace PowerCacheOffice
 
         private void Form3_Load(object sender, EventArgs e)
         {
-            var area = Screen.FromPoint(Cursor.Position).WorkingArea;
-            this.Location = new Point(area.X + (area.Width - this.Width) / 2, area.Y + (area.Height - this.Height) / 2);
-
             listBox1.MouseMove += (s, eventArgs) =>
             {
                 var index = listBox1.IndexFromPoint(eventArgs.Location);
@@ -179,8 +195,8 @@ namespace PowerCacheOffice
                 }
                 else
                 {
-                    SelectedFile = listBox1.SelectedItem.ToString();
-                    this.Close();
+                    mainForm.OpenRecentFile(listBox1.SelectedItem.ToString());
+                    this.Visible = false;
                 }
             };
 
@@ -193,12 +209,9 @@ namespace PowerCacheOffice
             toolStripMenuItem2.Click += (s, eventArgs) =>
             {
                 if (listBox1.SelectedItems.Count != 1) return;
-                try
-                {
-                    SelectedFile = Path.GetDirectoryName(listBox1.SelectedItem.ToString());
-                }
-                catch { }
-                this.Close();
+
+                mainForm.OpenRecentFile(Path.GetDirectoryName(listBox1.SelectedItem.ToString()));
+                this.Visible = false;
             };
 
             toolStripMenuItem3.Click += (s, eventArgs) =>
@@ -225,13 +238,6 @@ namespace PowerCacheOffice
             }
         }
 
-        public List<string> GetRecentFiles()
-        {
-            var list = new List<string>();
-            foreach (var item in listBox1.Items) list.Add(item.ToString());
-            return list.AsEnumerable().Reverse().ToList();
-        }
-
         private void SaveLaunchViews()
         {
             if (!Directory.Exists(powerCacheOfficeLaunchDataFolder)) Directory.CreateDirectory(powerCacheOfficeLaunchDataFolder);
@@ -251,40 +257,52 @@ namespace PowerCacheOffice
             catch { }
         }
 
-        private Task LoadLaunchViewsAsync()
+        private void LoadLaunchViews()
         {
-            return Task.Run(() =>
+            try
             {
-                try
-                {
-                    var path = Path.Combine(powerCacheOfficeLaunchDataFolder, launchView1.Name + ".json");
-                    var launchSettings = JsonSerializer.Deserialize<LaunchSettings>(File.ReadAllText(path));
-                    launchView1.SetItems(launchSettings.LaunchViewBase64Images, launchSettings.LaunchViewPaths);
+                var path = Path.Combine(powerCacheOfficeLaunchDataFolder, launchView1.Name + ".json");
+                var launchSettings = JsonSerializer.Deserialize<LaunchSettings>(File.ReadAllText(path));
+                launchView1.SetItems(launchSettings.LaunchViewBase64Images, launchSettings.LaunchViewPaths);
 
-                    path = Path.Combine(powerCacheOfficeLaunchDataFolder, launchView2.Name + ".json");
-                    launchSettings = JsonSerializer.Deserialize<LaunchSettings>(File.ReadAllText(path));
-                    launchView2.SetItems(launchSettings.LaunchViewBase64Images, launchSettings.LaunchViewPaths);
+                path = Path.Combine(powerCacheOfficeLaunchDataFolder, launchView2.Name + ".json");
+                launchSettings = JsonSerializer.Deserialize<LaunchSettings>(File.ReadAllText(path));
+                launchView2.SetItems(launchSettings.LaunchViewBase64Images, launchSettings.LaunchViewPaths);
 
-                    path = Path.Combine(powerCacheOfficeLaunchDataFolder, launchView3.Name + ".json");
-                    launchSettings = JsonSerializer.Deserialize<LaunchSettings>(File.ReadAllText(path));
-                    launchView3.SetItems(launchSettings.LaunchViewBase64Images, launchSettings.LaunchViewPaths);
+                path = Path.Combine(powerCacheOfficeLaunchDataFolder, launchView3.Name + ".json");
+                launchSettings = JsonSerializer.Deserialize<LaunchSettings>(File.ReadAllText(path));
+                launchView3.SetItems(launchSettings.LaunchViewBase64Images, launchSettings.LaunchViewPaths);
 
-                    path = Path.Combine(powerCacheOfficeLaunchDataFolder, launchView4.Name + ".json");
-                    launchSettings = JsonSerializer.Deserialize<LaunchSettings>(File.ReadAllText(path));
-                    launchView4.SetItems(launchSettings.LaunchViewBase64Images, launchSettings.LaunchViewPaths);
+                path = Path.Combine(powerCacheOfficeLaunchDataFolder, launchView4.Name + ".json");
+                launchSettings = JsonSerializer.Deserialize<LaunchSettings>(File.ReadAllText(path));
+                launchView4.SetItems(launchSettings.LaunchViewBase64Images, launchSettings.LaunchViewPaths);
 
-                    path = Path.Combine(powerCacheOfficeLaunchDataFolder, launchView5.Name + ".json");
-                    launchSettings = JsonSerializer.Deserialize<LaunchSettings>(File.ReadAllText(path));
-                    launchView5.SetItems(launchSettings.LaunchViewBase64Images, launchSettings.LaunchViewPaths);
+                path = Path.Combine(powerCacheOfficeLaunchDataFolder, launchView5.Name + ".json");
+                launchSettings = JsonSerializer.Deserialize<LaunchSettings>(File.ReadAllText(path));
+                launchView5.SetItems(launchSettings.LaunchViewBase64Images, launchSettings.LaunchViewPaths);
+            }
+            catch { }
+        }
 
-                    launchView1.Update();
-                    launchView2.Update();
-                    launchView3.Update();
-                    launchView4.Update();
-                    launchView5.Update();
-                }
-                catch { }
-            });
+        public void ShowInCenterScreen(bool isDarkMode)
+        {
+            var area = Screen.FromPoint(Cursor.Position).WorkingArea;
+            this.Location = new Point(area.X + (area.Width - this.Width) / 2, area.Y + (area.Height - this.Height) / 2);
+            this.WindowState = FormWindowState.Normal;
+
+            Program.ChangeDarkMode(this, isDarkMode);
+            if (isDarkMode)
+            {
+                this.Icon = Properties.Resources.PowerCacheOfficeLaunchWhite;
+            }
+            else
+            {
+                this.Icon = Properties.Resources.PowerCacheOfficeLaunchBlack;
+            }
+
+            listBox1.Focus();
+            NativeMethods.SetForegroundWindow(this.Handle);
+            this.Visible = true;
         }
     }
 }

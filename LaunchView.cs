@@ -41,6 +41,7 @@ namespace PowerCacheOffice
 
             var toolStripMenuItem1 = new ToolStripMenuItem("パスのコピー");
             toolStripMenuItem1.Font = new Font("メイリオ", 9);
+            toolStripMenuItem1.BackColor = Color.FromArgb(243, 243, 243);
             toolStripMenuItem1.Click += (s, eventArgs) =>
             {
                 if (this.SelectedItems.Count == 1) Clipboard.SetText(this.SelectedItems[0].Tag.ToString());
@@ -49,6 +50,7 @@ namespace PowerCacheOffice
 
             var toolStripMenuItem2 = new ToolStripMenuItem("場所を開く");
             toolStripMenuItem2.Font = new Font("メイリオ", 9);
+            toolStripMenuItem2.BackColor = Color.FromArgb(243, 243, 243);
             toolStripMenuItem2.Click += (s, eventArgs) =>
             {
                 if (this.SelectedItems.Count == 1)
@@ -66,6 +68,7 @@ namespace PowerCacheOffice
 
             var toolStripMenuItem3 = new ToolStripMenuItem("削除");
             toolStripMenuItem3.Font = new Font("メイリオ", 9);
+            toolStripMenuItem3.BackColor = Color.FromArgb(243, 243, 243);
             toolStripMenuItem3.Click += (s, eventArgs) =>
             {
                 if (this.SelectedItems.Count == 1)

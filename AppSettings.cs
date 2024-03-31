@@ -56,10 +56,10 @@ namespace PowerCacheOffice
             IsBackup = true;
             CacheTargetDirectories = new List<string>();
 
-            OpenClipboardPathKey = Keys.R;
+            OpenClipboardPathKey = Keys.E;
             OpenClipboardPathModKey = HotKey.MOD_KEY_ALT;
             OpenRecentFileKey = Keys.R;
-            OpenRecentFileModKey = HotKey.MOD_KEY_ALT + HotKey.MOD_KEY_SHIFT;
+            OpenRecentFileModKey = HotKey.MOD_KEY_ALT;
         }
 
         public void UpdateSettings()
@@ -78,10 +78,10 @@ namespace PowerCacheOffice
 
             if (this.Version == "1.1.0")
             {
-                this.OpenClipboardPathKey = Keys.R;
+                this.OpenClipboardPathKey = Keys.E;
                 this.OpenClipboardPathModKey = HotKey.MOD_KEY_ALT;
                 this.OpenRecentFileKey = Keys.R;
-                this.OpenRecentFileModKey = HotKey.MOD_KEY_ALT + HotKey.MOD_KEY_SHIFT;
+                this.OpenRecentFileModKey = HotKey.MOD_KEY_ALT;
 
                 this.Version = "1.2.0";
             }

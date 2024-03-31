@@ -37,12 +37,12 @@ namespace PowerCacheOffice
         private static readonly int openClipboardPathId = 1;
         private static readonly int openRecentFileId = 2;
         private static HotKey hotKey = new HotKey();
+        private static Form3 launchForm = null;
 
         private static string diffFilePath = string.Empty;
         private AppSettings appSettings = new AppSettings();
         private CacheSettings cacheSettings = new CacheSettings();
         private BackupSettings backupSettings = new BackupSettings();
-        private List<string> recentFiles = new List<string>();
         private CreateCacheManager createCacheManager = new CreateCacheManager();
         private JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
         {
@@ -51,7 +51,6 @@ namespace PowerCacheOffice
         };
         private HttpClient httpClient = new HttpClient();
         private bool isUpdating = false;
-        private bool isLaunchFormShowing = false;
         private bool isCacheCreating = false;
 
         public Form1()
@@ -86,6 +85,8 @@ namespace PowerCacheOffice
             ChangeHotKeyText(textBox4, appSettings.OpenClipboardPathModKey, appSettings.OpenClipboardPathKey);
             ChangeHotKeyText(textBox5, appSettings.OpenRecentFileModKey, appSettings.OpenRecentFileKey);
 
+            launchForm = new Form3(appSettings.IsDarkMode, this);
+
             hotKey.Add(appSettings.OpenClipboardPathModKey, appSettings.OpenClipboardPathKey, openClipboardPathId);
             hotKey.Add(appSettings.OpenRecentFileModKey, appSettings.OpenRecentFileKey, openRecentFileId);
             hotKey.OnHotKey += (s, eventArgs) =>
@@ -96,7 +97,8 @@ namespace PowerCacheOffice
                 }
                 else if (((HotKey.HotKeyEventArgs)eventArgs).Id == openRecentFileId)
                 {
-                    OpenRecentFile();
+                    if (launchForm == null || launchForm.IsDisposed) launchForm = new Form3(appSettings.IsDarkMode, this);
+                    launchForm.ShowInCenterScreen(appSettings.IsDarkMode);
                 }
             };
 
@@ -111,12 +113,6 @@ namespace PowerCacheOffice
                 backupSettings = JsonSerializer.Deserialize<BackupSettings>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "backupSettings.json")));
             }
             catch { backupSettings = new BackupSettings(); }
-
-            try
-            {
-                recentFiles = JsonSerializer.Deserialize<List<string>>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json")));
-            }
-            catch { recentFiles = new List<string>(); }
 
             if (File.Exists(Path.Combine(powerCacheOfficeDataFolder, ".createdCacheList.txt")))
             {
@@ -367,7 +363,7 @@ namespace PowerCacheOffice
 
                 if (string.IsNullOrEmpty(version))
                 {
-                    MessageBox.Show("バージョン  " + FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion + "\n\n最新のバージョンです。", Program.AppName);
+                    MessageBox.Show("アップデートの確認に失敗しました。\n時間をおいて安定した通信環境でもう一度お試しください。", Program.AppName);
                 }
                 else
                 {
@@ -518,14 +514,6 @@ namespace PowerCacheOffice
                     extension != ".doc" && extension != ".docx" && extension != ".docm" && extension != ".odt" &&
                     extension != ".ppt" && extension != ".pptx" && extension != ".pptm" && extension != ".odp") continue;
 
-                recentFiles.RemoveAll(x => x == filePath);
-                recentFiles.Add(filePath);
-                if (recentFiles.Count > 100) recentFiles.RemoveRange(100, recentFiles.Count - 100);
-                try
-                {
-                    File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json"), JsonSerializer.Serialize(recentFiles, jsonSerializerOptions));
-                }
-                catch { }
                 OnRecentFilesAdded(this, new RecentFilesAddedEventArgs(filePath));
 
                 string arguments = string.Empty;
@@ -1090,66 +1078,47 @@ namespace PowerCacheOffice
 
         private void button6_Click(object sender, EventArgs e)
         {
-            OpenRecentFile();
+            if (launchForm == null || launchForm.IsDisposed) launchForm = new Form3(appSettings.IsDarkMode, this);
+            launchForm.ShowInCenterScreen(appSettings.IsDarkMode);
         }
 
-        private void OpenRecentFile()
+        public void OpenRecentFile(string filePath)
         {
-            if (isLaunchFormShowing) return;
-            isLaunchFormShowing = true;
+            if (string.IsNullOrEmpty(filePath)) return;
+
+            ProcessStartInfo psi = new ProcessStartInfo();
+            psi.UseShellExecute = true;
+            var extension = Path.GetExtension(filePath).ToLower();
+
+            if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm" || extension == ".ods")
+            {
+                psi.FileName = appSettings.ExcelPath;
+                psi.Arguments = $@"""{filePath}""";
+                BackupFile(filePath);
+            }
+            else if (extension == ".doc" || extension == ".docx" || extension == ".docm" || extension == ".odt")
+            {
+                psi.FileName = appSettings.WordPath;
+                psi.Arguments = $@"""{filePath}""";
+                BackupFile(filePath);
+            }
+            else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm" || extension == ".odp")
+            {
+                psi.FileName = appSettings.PowerPointPath;
+                psi.Arguments = $@"""{filePath}""";
+                BackupFile(filePath);
+            }
+            else
+            {
+                psi.FileName = filePath;
+            }
+
             try
             {
-                using (var launchForm = new Form3(recentFiles, appSettings.IsDarkMode))
-                {
-                    launchForm.ShowDialog(this);
-
-                    if (!string.IsNullOrEmpty(launchForm.SelectedFile))
-                    {
-                        ProcessStartInfo psi = new ProcessStartInfo();
-                        psi.UseShellExecute = true;
-                        var extension = Path.GetExtension(launchForm.SelectedFile).ToLower();
-
-                        if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm" || extension == ".ods")
-                        {
-                            psi.FileName = appSettings.ExcelPath;
-                            psi.Arguments = $@"""{launchForm.SelectedFile}""";
-                            BackupFile(launchForm.SelectedFile);
-                        }
-                        else if (extension == ".doc" || extension == ".docx" || extension == ".docm" || extension == ".odt")
-                        {
-                            psi.FileName = appSettings.WordPath;
-                            psi.Arguments = $@"""{launchForm.SelectedFile}""";
-                            BackupFile(launchForm.SelectedFile);
-                        }
-                        else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm" || extension == ".odp")
-                        {
-                            psi.FileName = appSettings.PowerPointPath;
-                            psi.Arguments = $@"""{launchForm.SelectedFile}""";
-                            BackupFile(launchForm.SelectedFile);
-                        }
-                        else
-                        {
-                            psi.FileName = launchForm.SelectedFile;
-                        }
-
-                        try
-                        {
-                            var process = Process.Start(psi);
-                            SetProcessWindowAsForeground(process);
-                        }
-                        catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
-                    }
-
-                    recentFiles = launchForm.GetRecentFiles();
-                    if (recentFiles.Count > 100) recentFiles.RemoveRange(100, recentFiles.Count - 100);
-                    try
-                    {
-                        File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json"), JsonSerializer.Serialize(recentFiles, jsonSerializerOptions));
-                    }
-                    catch { }
-                }
+                var process = Process.Start(psi);
+                SetProcessWindowAsForeground(process);
             }
-            finally { isLaunchFormShowing = false; }
+            catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
         }
 
         private void OpenClipboardPath()
@@ -1196,10 +1165,6 @@ namespace PowerCacheOffice
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
 
-                recentFiles.RemoveAll(x => x == text);
-                recentFiles.Add(text);
-                if (recentFiles.Count > 100) recentFiles.RemoveRange(100, recentFiles.Count - 100);
-                File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json"), JsonSerializer.Serialize(recentFiles, jsonSerializerOptions));
                 OnRecentFilesAdded(this, new RecentFilesAddedEventArgs(text));
             }
             catch { }

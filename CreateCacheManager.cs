@@ -10,6 +10,11 @@ namespace PowerCacheOffice
     {
         public int CacheTargetCount { get; private set; }
         public int CreatedCacheCount { get; private set; }
+
+        private static readonly string powerCacheOfficeDataFolder = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice");
+        private static readonly string powerCacheOfficeCacheFolder = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\.cache");
         private List<string> caches = new List<string>();
 
         public CreateCacheManager()
@@ -28,6 +33,7 @@ namespace PowerCacheOffice
 
         private void CountCacheTarget(string folder)
         {
+            if (folder.ToLower().StartsWith(powerCacheOfficeDataFolder.ToLower())) return;
             foreach (var x in Directory.EnumerateFiles(folder))
             {
                 try
@@ -48,7 +54,7 @@ namespace PowerCacheOffice
             {
                 try
                 {
-                    if ((new DirectoryInfo(x).Attributes & FileAttributes.System) == FileAttributes.System) return;
+                    if ((new DirectoryInfo(x).Attributes & FileAttributes.System) == FileAttributes.System) continue;
                     CountCacheTarget(x);
                 }
                 catch { }
@@ -66,6 +72,7 @@ namespace PowerCacheOffice
 
         private void CreateCache(string folder)
         {
+            if (folder.ToLower().StartsWith(powerCacheOfficeDataFolder.ToLower())) return;
             foreach (var x in Directory.EnumerateFiles(folder))
             {
                 try
@@ -81,8 +88,7 @@ namespace PowerCacheOffice
                     {
                         if (caches.Any(cache => cache == x)) continue;
 
-                        var cacheFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\.cache");
-                        var itemCacheFolder = Path.Combine(cacheFolder, Guid.NewGuid().ToString());
+                        var itemCacheFolder = Path.Combine(powerCacheOfficeCacheFolder, Guid.NewGuid().ToString());
                         if (!Directory.Exists(itemCacheFolder)) Directory.CreateDirectory(itemCacheFolder);
 
                         var cacheFile = Path.Combine(itemCacheFolder, Path.GetFileName(x));
@@ -101,7 +107,7 @@ namespace PowerCacheOffice
             {
                 try
                 {
-                    if ((new DirectoryInfo(x).Attributes & FileAttributes.System) == FileAttributes.System) return;
+                    if ((new DirectoryInfo(x).Attributes & FileAttributes.System) == FileAttributes.System) continue;
                     CreateCache(x);
                 }
                 catch { }

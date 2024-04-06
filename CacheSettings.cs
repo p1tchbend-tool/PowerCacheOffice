@@ -2,7 +2,7 @@
 
 namespace PowerCacheOffice
 {
-    public class CacheSettings
+    internal class CacheSettings
     {
         public string Version { get; set; }
         public List<CacheRelation> CacheRelations { get; set; }

@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace PowerCacheOffice
 {
-    public partial class Form1 : Form
+    internal partial class Form1 : Form
     {
         public event EventHandler OnRecentFilesAdded = delegate { };
         public class RecentFilesAddedEventArgs : EventArgs
@@ -158,8 +158,8 @@ namespace PowerCacheOffice
                 catch { }
             };
 
-            label8.Click += (s, eventArgs) => CheckUpdate();
-            panel5.Click += (s, eventArgs) => CheckUpdate();
+            label8.Click += (s, eventArgs) => CheckUpdateAsync();
+            panel5.Click += (s, eventArgs) => CheckUpdateAsync();
 
             fileSystemWatcher1.Path = powerCacheOfficeCacheFolder;
             fileSystemWatcher1.Error += (s, eventArgs) =>
@@ -335,7 +335,7 @@ namespace PowerCacheOffice
                 Application.Restart();
             };
             toolStripMenuItem3.Click += (s, eventArgs) => this.Close();
-            toolStripMenuItem4.Click += (s, eventArgs) => CheckUpdate();
+            toolStripMenuItem4.Click += (s, eventArgs) => CheckUpdateAsync();
 
             textBox4.Enter += (s, eventArgs) => label6.Text = "登録するにはキーを押してください。";
             textBox4.Leave += (s, eventArgs) => label6.Text = "クリップボードのパスを開く";
@@ -348,10 +348,12 @@ namespace PowerCacheOffice
             timer1.Start();
         }
 
-        private async void CheckUpdate()
+        private async void CheckUpdateAsync()
         {
             if (isUpdating) return;
             isUpdating = true;
+            label8.BackColor = Color.FromArgb(128, 128, 128);
+            panel5.BackColor = Color.FromArgb(128, 128, 128);
             try
             {
                 var version = string.Empty;
@@ -397,7 +399,20 @@ namespace PowerCacheOffice
                     }
                 }
             }
-            finally { isUpdating = false; }
+            finally
+            {
+                if (appSettings.IsDarkMode)
+                {
+                    label8.BackColor = Color.FromArgb(33, 33, 33);
+                    panel5.BackColor = Color.FromArgb(33, 33, 33);
+                }
+                else
+                {
+                    label8.BackColor = Color.FromArgb(243, 243, 243);
+                    panel5.BackColor = Color.FromArgb(243, 243, 243);
+                }
+                isUpdating = false;
+            }
         }
 
         private void ChangeDarkModeForm1(bool enabled)

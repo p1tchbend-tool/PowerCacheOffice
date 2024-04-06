@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace PowerCacheOffice
 {
-    public partial class Form3 : Form
+    internal partial class Form3 : Form
     {
         private static readonly string powerCacheOfficeDataFolder = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice");

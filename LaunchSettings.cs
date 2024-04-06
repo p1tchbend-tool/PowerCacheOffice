@@ -2,7 +2,7 @@
 
 namespace PowerCacheOffice
 {
-    public class LaunchSettings
+    internal class LaunchSettings
     {
         public string Version { get; set; }
         public List<string> LaunchViewBase64Images { get; set; }

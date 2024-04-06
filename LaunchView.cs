@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace PowerCacheOffice
 {
-    public class LaunchView : ListView
+    internal class LaunchView : ListView
     {
         public event EventHandler OnItemChanged = delegate { };
         public event EventHandler OnLaunch = delegate { };

@@ -5,7 +5,7 @@ using Microsoft.VisualBasic.ApplicationServices;
 
 namespace PowerCacheOffice
 {
-    public class App : WindowsFormsApplicationBase
+    internal class App : WindowsFormsApplicationBase
     {
         public App() : base()
         {

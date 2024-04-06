@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace PowerCacheOffice
 {
-    public partial class Form2 : Form
+    internal partial class Form2 : Form
     {
         public static readonly int No = 0;
         public static readonly int Yes = 1;

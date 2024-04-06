@@ -2,7 +2,7 @@
 
 namespace PowerCacheOffice
 {
-    public class BackupRelation
+    internal class BackupRelation
     {
         public string OriginalFilePath { get; set; }
         public string BackupFilePath { get; set; }

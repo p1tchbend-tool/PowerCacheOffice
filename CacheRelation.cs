@@ -2,7 +2,7 @@
 
 namespace PowerCacheOffice
 {
-    public class CacheRelation
+    internal class CacheRelation
     {
         public string RemotePath { get; set; }
         public string LocalPath { get; set; }

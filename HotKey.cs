@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace PowerCacheOffice
 {
-    public partial class HotKey : Form
+    internal partial class HotKey : Form
     {
         public static readonly int MOD_KEY_NONE = 0;
         public static readonly int MOD_KEY_ALT = 1;

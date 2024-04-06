@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace PowerCacheOffice
 {
-    public class AppSettings
+    internal class AppSettings
     {
         public string Version { get; set; }
         public string ExcelPath { get; set; }

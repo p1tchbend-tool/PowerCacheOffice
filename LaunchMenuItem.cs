@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace PowerCacheOffice
 {
-    public class LaunchMenuItem : ToolStripMenuItem
+    internal class LaunchMenuItem : ToolStripMenuItem
     {
         public LaunchMenuItem(string itemPath, Form1 mainForm, Form3 launchForm)
         {

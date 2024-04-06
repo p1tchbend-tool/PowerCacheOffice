@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PowerCacheOffice
 {
-    public class CreateCacheManager
+    internal class CreateCacheManager
     {
         public int CacheTargetCount { get; private set; }
         public int CreatedCacheCount { get; private set; }

@@ -20,6 +20,9 @@ namespace PowerCacheOffice
         [STAThread]
         static void Main(string[] args)
         {
+            NativeMethods.SetThreadDpiAwarenessContext(NativeMethods.DPI_AWARENESS_INVALID);
+            NativeMethods.SetProcessDpiAwarenessContext(NativeMethods.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE);
+
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += (s, e) => ErrorHandling(e.Exception);
             AppDomain.CurrentDomain.UnhandledException += (s, e) => ErrorHandling((Exception)e.ExceptionObject);

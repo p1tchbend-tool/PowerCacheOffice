@@ -373,8 +373,6 @@ namespace PowerCacheOffice
         {
             if (isUpdating) return;
             isUpdating = true;
-            label8.BackColor = Color.FromArgb(128, 128, 128);
-            panel5.BackColor = Color.FromArgb(128, 128, 128);
             try
             {
                 var version = string.Empty;
@@ -420,20 +418,7 @@ namespace PowerCacheOffice
                     }
                 }
             }
-            finally
-            {
-                if (appSettings.IsDarkMode)
-                {
-                    label8.BackColor = Color.FromArgb(33, 33, 33);
-                    panel5.BackColor = Color.FromArgb(33, 33, 33);
-                }
-                else
-                {
-                    label8.BackColor = Color.FromArgb(243, 243, 243);
-                    panel5.BackColor = Color.FromArgb(243, 243, 243);
-                }
-                isUpdating = false;
-            }
+            finally { isUpdating = false; }
         }
 
         private void ChangeDarkModeForm1(bool enabled)
@@ -1063,7 +1048,16 @@ namespace PowerCacheOffice
         {
             progressBar1.Maximum = createCacheManager.CacheTargetCount;
             progressBar1.Value = createCacheManager.CreatedCacheCount;
-            ChangeDarkModeForm1(appSettings.IsDarkMode);
+
+            if (isUpdating)
+            {
+                label8.BackColor = Color.FromArgb(128, 128, 128);
+                panel5.BackColor = Color.FromArgb(128, 128, 128);
+            }
+            else
+            {
+                ChangeDarkModeForm1(appSettings.IsDarkMode);
+            }
         }
 
         private void MargeCreatedCacheToCacheSettings()

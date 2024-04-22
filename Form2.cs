@@ -12,9 +12,30 @@ namespace PowerCacheOffice
 
         public int Result { get; set; }
 
+        private int initialWidth = 0;
+        private int initialHeight = 0;
+
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_DPICHANGED = 0x02E0;
+            if (m.Msg == WM_DPICHANGED)
+            {
+                float f = NativeMethods.GetDpiForSystem();
+                this.Width = (int)Math.Round(initialWidth * (this.DeviceDpi / f));
+                this.Height = (int)Math.Round(initialHeight * (this.DeviceDpi / f));
+
+                return;
+            };
+            base.WndProc(ref m);
+        }
+
         public Form2(string filePath, bool isDarkMode)
         {
             InitializeComponent();
+
+            initialWidth = this.Width;
+            initialHeight = this.Height;
+
             Program.SortTabIndex(this);
             Program.ChangeDarkMode(this, isDarkMode);
 

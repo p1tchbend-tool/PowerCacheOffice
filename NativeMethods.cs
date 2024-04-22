@@ -44,12 +44,7 @@ namespace PowerCacheOffice
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool DestroyIcon(IntPtr handle);
 
-        [DllImport("user32.dll")]
-        public static extern bool SetThreadDpiAwarenessContext(IntPtr dpiFlag);
-        public static readonly IntPtr DPI_AWARENESS_INVALID = new IntPtr(-1);
-
-        [DllImport("user32.dll")]
-        public static extern bool SetProcessDpiAwarenessContext(IntPtr dpiFlag);
-        public static readonly IntPtr DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE = new IntPtr(-3);
+        [DllImport("User32.dll")]
+        public static extern int GetDpiForSystem();
     }
 }

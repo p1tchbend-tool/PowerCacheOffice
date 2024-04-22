@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -53,9 +54,29 @@ namespace PowerCacheOffice
         private bool isUpdating = false;
         private bool isCacheCreating = false;
 
+        private int initialWidth = 0;
+        private int initialHeight = 0;
+
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_DPICHANGED = 0x02E0;
+            if (m.Msg == WM_DPICHANGED)
+            {
+                float f = NativeMethods.GetDpiForSystem();
+                this.Width = (int)Math.Round(initialWidth * (this.DeviceDpi / f));
+                this.Height = (int)Math.Round(initialHeight * (this.DeviceDpi / f));
+
+                return;
+            };
+            base.WndProc(ref m);
+        }
+
         public Form1()
         {
             InitializeComponent();
+
+            initialWidth = this.Width;
+            initialHeight = this.Height;
 
             if (!Directory.Exists(powerCacheOfficeDataFolder)) Directory.CreateDirectory(powerCacheOfficeDataFolder);
             if (!Directory.Exists(powerCacheOfficeCacheFolder)) Directory.CreateDirectory(powerCacheOfficeCacheFolder);

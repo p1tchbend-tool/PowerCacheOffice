@@ -33,6 +33,23 @@ namespace PowerCacheOffice
         private LaunchView launchView4 = null;
         private LaunchView launchView5 = null;
 
+        private int initialWidth = 0;
+        private int initialHeight = 0;
+
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_DPICHANGED = 0x02E0;
+            if (m.Msg == WM_DPICHANGED)
+            {
+                float f = NativeMethods.GetDpiForSystem();
+                this.Width = (int)Math.Round(initialWidth * (this.DeviceDpi / f));
+                this.Height = (int)Math.Round(initialHeight * (this.DeviceDpi / f));
+
+                return;
+            };
+            base.WndProc(ref m);
+        }
+
         public Form3(bool isDarkMode, Form1 mainForm)
         {
             this.mainForm = mainForm;
@@ -50,6 +67,9 @@ namespace PowerCacheOffice
             catch { recentFiles = new List<string>(); }
 
             InitializeComponent();
+
+            initialWidth = this.Width;
+            initialHeight = this.Height;
 
             launchView1.Name = "view1";
             launchView1.Size = new Size(832, 200);

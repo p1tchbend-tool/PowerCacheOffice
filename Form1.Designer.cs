@@ -28,643 +28,636 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-            this.button1 = new System.Windows.Forms.Button();
-            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.button2 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.label4 = new System.Windows.Forms.Label();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.button6 = new System.Windows.Forms.Button();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
-            this.button7 = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
-            this.button8 = new System.Windows.Forms.Button();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.contextMenuStrip2.SuspendLayout();
-            this.SuspendLayout();
+            listBox1 = new System.Windows.Forms.ListBox();
+            textBox1 = new System.Windows.Forms.TextBox();
+            label1 = new System.Windows.Forms.Label();
+            fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            button1 = new System.Windows.Forms.Button();
+            notifyIcon1 = new System.Windows.Forms.NotifyIcon(components);
+            contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(components);
+            toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            button2 = new System.Windows.Forms.Button();
+            textBox2 = new System.Windows.Forms.TextBox();
+            label2 = new System.Windows.Forms.Label();
+            button4 = new System.Windows.Forms.Button();
+            button5 = new System.Windows.Forms.Button();
+            groupBox1 = new System.Windows.Forms.GroupBox();
+            checkBox3 = new System.Windows.Forms.CheckBox();
+            checkBox2 = new System.Windows.Forms.CheckBox();
+            checkBox1 = new System.Windows.Forms.CheckBox();
+            panel3 = new System.Windows.Forms.Panel();
+            panel2 = new System.Windows.Forms.Panel();
+            panel1 = new System.Windows.Forms.Panel();
+            groupBox2 = new System.Windows.Forms.GroupBox();
+            button3 = new System.Windows.Forms.Button();
+            textBox3 = new System.Windows.Forms.TextBox();
+            label3 = new System.Windows.Forms.Label();
+            progressBar1 = new System.Windows.Forms.ProgressBar();
+            timer1 = new System.Windows.Forms.Timer(components);
+            label4 = new System.Windows.Forms.Label();
+            groupBox3 = new System.Windows.Forms.GroupBox();
+            label6 = new System.Windows.Forms.Label();
+            label5 = new System.Windows.Forms.Label();
+            textBox5 = new System.Windows.Forms.TextBox();
+            textBox4 = new System.Windows.Forms.TextBox();
+            button6 = new System.Windows.Forms.Button();
+            checkBox4 = new System.Windows.Forms.CheckBox();
+            checkBox5 = new System.Windows.Forms.CheckBox();
+            contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(components);
+            toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
+            button7 = new System.Windows.Forms.Button();
+            label7 = new System.Windows.Forms.Label();
+            button8 = new System.Windows.Forms.Button();
+            checkBox6 = new System.Windows.Forms.CheckBox();
+            label8 = new System.Windows.Forms.Label();
+            panel5 = new System.Windows.Forms.Panel();
+            panel4 = new System.Windows.Forms.Panel();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).BeginInit();
+            contextMenuStrip1.SuspendLayout();
+            groupBox1.SuspendLayout();
+            groupBox2.SuspendLayout();
+            groupBox3.SuspendLayout();
+            contextMenuStrip2.SuspendLayout();
+            SuspendLayout();
             // 
             // listBox1
             // 
-            this.listBox1.BackColor = System.Drawing.Color.White;
-            this.listBox1.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.listBox1.ForeColor = System.Drawing.Color.Black;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.HorizontalScrollbar = true;
-            this.listBox1.ItemHeight = 18;
-            this.listBox1.Location = new System.Drawing.Point(8, 76);
-            this.listBox1.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.ScrollAlwaysVisible = true;
-            this.listBox1.Size = new System.Drawing.Size(652, 112);
-            this.listBox1.TabIndex = 0;
+            listBox1.BackColor = System.Drawing.Color.White;
+            listBox1.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            listBox1.ForeColor = System.Drawing.Color.Black;
+            listBox1.FormattingEnabled = true;
+            listBox1.HorizontalScrollbar = true;
+            listBox1.ItemHeight = 18;
+            listBox1.Location = new System.Drawing.Point(8, 76);
+            listBox1.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            listBox1.Name = "listBox1";
+            listBox1.ScrollAlwaysVisible = true;
+            listBox1.Size = new System.Drawing.Size(652, 94);
+            listBox1.TabIndex = 0;
             // 
             // textBox1
             // 
-            this.textBox1.BackColor = System.Drawing.Color.White;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.textBox1.ForeColor = System.Drawing.Color.Black;
-            this.textBox1.Location = new System.Drawing.Point(8, 43);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(620, 25);
-            this.textBox1.TabIndex = 5;
+            textBox1.BackColor = System.Drawing.Color.White;
+            textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            textBox1.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            textBox1.ForeColor = System.Drawing.Color.Black;
+            textBox1.Location = new System.Drawing.Point(8, 43);
+            textBox1.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new System.Drawing.Size(620, 25);
+            textBox1.TabIndex = 5;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(5, 21);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(493, 18);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "追加した文字列から始まるパスはキャッシュが作成されます。 例: Z:\\, \\\\192.168.0.100";
+            label1.AutoSize = true;
+            label1.ForeColor = System.Drawing.Color.Black;
+            label1.Location = new System.Drawing.Point(5, 21);
+            label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(493, 18);
+            label1.TabIndex = 2;
+            label1.Text = "追加した文字列から始まるパスはキャッシュが作成されます。 例: Z:\\, \\\\192.168.0.100";
             // 
             // fileSystemWatcher1
             // 
-            this.fileSystemWatcher1.EnableRaisingEvents = true;
-            this.fileSystemWatcher1.IncludeSubdirectories = true;
-            this.fileSystemWatcher1.SynchronizingObject = this;
+            fileSystemWatcher1.EnableRaisingEvents = true;
+            fileSystemWatcher1.IncludeSubdirectories = true;
+            fileSystemWatcher1.SynchronizingObject = this;
             // 
             // button1
             // 
-            this.button1.BackColor = System.Drawing.Color.Transparent;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(636, 42);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(24, 24);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "+";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            button1.BackColor = System.Drawing.Color.Transparent;
+            button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            button1.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            button1.ForeColor = System.Drawing.Color.Black;
+            button1.Location = new System.Drawing.Point(636, 42);
+            button1.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(24, 24);
+            button1.TabIndex = 4;
+            button1.Text = "+";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // notifyIcon1
             // 
-            this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
-            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "Power Cache Office";
-            this.notifyIcon1.Visible = true;
+            notifyIcon1.ContextMenuStrip = contextMenuStrip1;
+            notifyIcon1.Icon = (System.Drawing.Icon)resources.GetObject("notifyIcon1.Icon");
+            notifyIcon1.Text = "Power Cache Office";
+            notifyIcon1.Visible = true;
             // 
             // contextMenuStrip1
             // 
-            this.contextMenuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(243)))));
-            this.contextMenuStrip1.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
-            this.toolStripMenuItem2,
-            this.toolStripMenuItem3,
-            this.toolStripMenuItem4});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(137, 92);
+            contextMenuStrip1.BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
+            contextMenuStrip1.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem2, toolStripMenuItem3, toolStripMenuItem4 });
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new System.Drawing.Size(137, 92);
             // 
             // toolStripMenuItem1
             // 
-            this.toolStripMenuItem1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(243)))));
-            this.toolStripMenuItem1.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
-            this.toolStripMenuItem1.Text = "表示";
+            toolStripMenuItem1.BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
+            toolStripMenuItem1.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
+            toolStripMenuItem1.Text = "表示";
             // 
             // toolStripMenuItem2
             // 
-            this.toolStripMenuItem2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(243)))));
-            this.toolStripMenuItem2.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(136, 22);
-            this.toolStripMenuItem2.Text = "再起動";
+            toolStripMenuItem2.BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
+            toolStripMenuItem2.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            toolStripMenuItem2.Name = "toolStripMenuItem2";
+            toolStripMenuItem2.Size = new System.Drawing.Size(136, 22);
+            toolStripMenuItem2.Text = "再起動";
             // 
             // toolStripMenuItem3
             // 
-            this.toolStripMenuItem3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(243)))));
-            this.toolStripMenuItem3.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(136, 22);
-            this.toolStripMenuItem3.Text = "終了";
+            toolStripMenuItem3.BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
+            toolStripMenuItem3.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            toolStripMenuItem3.Name = "toolStripMenuItem3";
+            toolStripMenuItem3.Size = new System.Drawing.Size(136, 22);
+            toolStripMenuItem3.Text = "終了";
             // 
             // toolStripMenuItem4
             // 
-            this.toolStripMenuItem4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(243)))));
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(136, 22);
-            this.toolStripMenuItem4.Text = "更新の確認";
+            toolStripMenuItem4.BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
+            toolStripMenuItem4.Name = "toolStripMenuItem4";
+            toolStripMenuItem4.Size = new System.Drawing.Size(136, 22);
+            toolStripMenuItem4.Text = "更新の確認";
             // 
             // button2
             // 
-            this.button2.BackColor = System.Drawing.Color.Transparent;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button2.ForeColor = System.Drawing.Color.Black;
-            this.button2.Location = new System.Drawing.Point(522, 480);
-            this.button2.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(150, 24);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "キャッシュを検索";
-            this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            button2.BackColor = System.Drawing.Color.Transparent;
+            button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            button2.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            button2.ForeColor = System.Drawing.Color.Black;
+            button2.Location = new System.Drawing.Point(522, 480);
+            button2.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            button2.Name = "button2";
+            button2.Size = new System.Drawing.Size(150, 24);
+            button2.TabIndex = 1;
+            button2.Text = "キャッシュを検索";
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
             // 
             // textBox2
             // 
-            this.textBox2.BackColor = System.Drawing.Color.White;
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox2.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.textBox2.ForeColor = System.Drawing.Color.Black;
-            this.textBox2.Location = new System.Drawing.Point(101, 480);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(250, 25);
-            this.textBox2.TabIndex = 6;
+            textBox2.BackColor = System.Drawing.Color.White;
+            textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            textBox2.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            textBox2.ForeColor = System.Drawing.Color.Black;
+            textBox2.Location = new System.Drawing.Point(101, 480);
+            textBox2.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new System.Drawing.Size(250, 25);
+            textBox2.TabIndex = 6;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(24, 483);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(73, 18);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "キーワード:";
+            label2.AutoSize = true;
+            label2.ForeColor = System.Drawing.Color.Black;
+            label2.Location = new System.Drawing.Point(24, 483);
+            label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(73, 18);
+            label2.TabIndex = 7;
+            label2.Text = "キーワード:";
             // 
             // button4
             // 
-            this.button4.BackColor = System.Drawing.Color.Transparent;
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button4.ForeColor = System.Drawing.Color.Black;
-            this.button4.Location = new System.Drawing.Point(522, 448);
-            this.button4.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(150, 24);
-            this.button4.TabIndex = 11;
-            this.button4.Text = "キャッシュを削除";
-            this.button4.UseVisualStyleBackColor = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            button4.BackColor = System.Drawing.Color.Transparent;
+            button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            button4.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            button4.ForeColor = System.Drawing.Color.Black;
+            button4.Location = new System.Drawing.Point(522, 448);
+            button4.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            button4.Name = "button4";
+            button4.Size = new System.Drawing.Size(150, 24);
+            button4.TabIndex = 11;
+            button4.Text = "キャッシュを削除";
+            button4.UseVisualStyleBackColor = false;
+            button4.Click += button4_Click;
             // 
             // button5
             // 
-            this.button5.BackColor = System.Drawing.Color.Transparent;
-            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button5.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button5.ForeColor = System.Drawing.Color.Black;
-            this.button5.Location = new System.Drawing.Point(201, 448);
-            this.button5.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(150, 24);
-            this.button5.TabIndex = 12;
-            this.button5.Text = "インデックスを再作成";
-            this.button5.UseVisualStyleBackColor = false;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            button5.BackColor = System.Drawing.Color.Transparent;
+            button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            button5.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            button5.ForeColor = System.Drawing.Color.Black;
+            button5.Location = new System.Drawing.Point(201, 448);
+            button5.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            button5.Name = "button5";
+            button5.Size = new System.Drawing.Size(150, 24);
+            button5.TabIndex = 12;
+            button5.Text = "インデックスを再作成";
+            button5.UseVisualStyleBackColor = false;
+            button5.Click += button5_Click;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.checkBox3);
-            this.groupBox1.Controls.Add(this.checkBox2);
-            this.groupBox1.Controls.Add(this.checkBox1);
-            this.groupBox1.Controls.Add(this.panel3);
-            this.groupBox1.Controls.Add(this.panel2);
-            this.groupBox1.Controls.Add(this.panel1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(560, 133);
-            this.groupBox1.TabIndex = 13;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "関連付け";
+            groupBox1.Controls.Add(checkBox3);
+            groupBox1.Controls.Add(checkBox2);
+            groupBox1.Controls.Add(checkBox1);
+            groupBox1.Controls.Add(panel3);
+            groupBox1.Controls.Add(panel2);
+            groupBox1.Controls.Add(panel1);
+            groupBox1.Location = new System.Drawing.Point(12, 12);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new System.Drawing.Size(560, 133);
+            groupBox1.TabIndex = 13;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "関連付け";
             // 
             // checkBox3
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(42, 96);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(361, 22);
-            this.checkBox3.TabIndex = 5;
-            this.checkBox3.Text = "PowerPoint ファイル（ppt, pptx, pptm, odp）を関連付ける";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            checkBox3.AutoSize = true;
+            checkBox3.Location = new System.Drawing.Point(42, 96);
+            checkBox3.Name = "checkBox3";
+            checkBox3.Size = new System.Drawing.Size(361, 22);
+            checkBox3.TabIndex = 5;
+            checkBox3.Text = "PowerPoint ファイル（ppt, pptx, pptm, odp）を関連付ける";
+            checkBox3.UseVisualStyleBackColor = true;
+            checkBox3.CheckedChanged += checkBox3_CheckedChanged;
             // 
             // checkBox2
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(42, 60);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(327, 22);
-            this.checkBox2.TabIndex = 4;
-            this.checkBox2.Text = "Word ファイル（doc, docx, docm, odt）を関連付ける";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            checkBox2.AutoSize = true;
+            checkBox2.Location = new System.Drawing.Point(42, 60);
+            checkBox2.Name = "checkBox2";
+            checkBox2.Size = new System.Drawing.Size(327, 22);
+            checkBox2.TabIndex = 4;
+            checkBox2.Text = "Word ファイル（doc, docx, docm, odt）を関連付ける";
+            checkBox2.UseVisualStyleBackColor = true;
+            checkBox2.CheckedChanged += checkBox2_CheckedChanged;
             // 
             // checkBox1
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(42, 24);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(316, 22);
-            this.checkBox1.TabIndex = 3;
-            this.checkBox1.Text = "Excel ファイル（xls, xlsx, xlsm, ods）を関連付ける";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.textBox1);
-            this.groupBox2.Controls.Add(this.listBox1);
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.button1);
-            this.groupBox2.Location = new System.Drawing.Point(12, 151);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(670, 185);
-            this.groupBox2.TabIndex = 14;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "キャッシュ対象フォルダ";
-            // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.Color.Transparent;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button3.ForeColor = System.Drawing.Color.Black;
-            this.button3.Location = new System.Drawing.Point(522, 512);
-            this.button3.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(150, 24);
-            this.button3.TabIndex = 15;
-            this.button3.Text = "キャッシュを事前作成";
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // textBox3
-            // 
-            this.textBox3.BackColor = System.Drawing.Color.White;
-            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox3.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.textBox3.ForeColor = System.Drawing.Color.Black;
-            this.textBox3.Location = new System.Drawing.Point(101, 512);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(410, 25);
-            this.textBox3.TabIndex = 16;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(12, 515);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(85, 18);
-            this.label3.TabIndex = 17;
-            this.label3.Text = "対象フォルダ:";
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(20, 544);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(652, 23);
-            this.progressBar1.TabIndex = 18;
-            // 
-            // timer1
-            // 
-            this.timer1.Interval = 500;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // label4
-            // 
-            this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.label4.Location = new System.Drawing.Point(28, 547);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(402, 19);
-            this.label4.TabIndex = 19;
-            this.label4.Text = "対象フォルダを解析中です……";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label4.Visible = false;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Controls.Add(this.textBox5);
-            this.groupBox3.Controls.Add(this.textBox4);
-            this.groupBox3.Location = new System.Drawing.Point(12, 346);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(460, 95);
-            this.groupBox3.TabIndex = 20;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "ホットキー";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(218, 26);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(164, 18);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "クリップボードのパスを開く";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(218, 57);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(152, 18);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "最近開いたファイルを表示";
-            // 
-            // textBox5
-            // 
-            this.textBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(243)))));
-            this.textBox5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox5.Location = new System.Drawing.Point(8, 55);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.ReadOnly = true;
-            this.textBox5.Size = new System.Drawing.Size(200, 25);
-            this.textBox5.TabIndex = 2;
-            // 
-            // textBox4
-            // 
-            this.textBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(243)))));
-            this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox4.Location = new System.Drawing.Point(8, 24);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.ReadOnly = true;
-            this.textBox4.Size = new System.Drawing.Size(200, 25);
-            this.textBox4.TabIndex = 1;
-            // 
-            // button6
-            // 
-            this.button6.BackColor = System.Drawing.Color.Transparent;
-            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button6.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button6.ForeColor = System.Drawing.Color.Black;
-            this.button6.Location = new System.Drawing.Point(20, 448);
-            this.button6.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(170, 24);
-            this.button6.TabIndex = 21;
-            this.button6.Text = "最近開いたファイルを表示";
-            this.button6.UseVisualStyleBackColor = false;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(483, 355);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(171, 22);
-            this.checkBox4.TabIndex = 22;
-            this.checkBox4.Text = "スタートアップに登録する";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
-            // 
-            // checkBox5
-            // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Location = new System.Drawing.Point(483, 411);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(183, 22);
-            this.checkBox5.TabIndex = 23;
-            this.checkBox5.Text = "再起動時にキャッシュを削除";
-            this.checkBox5.UseVisualStyleBackColor = true;
-            this.checkBox5.CheckedChanged += new System.EventHandler(this.checkBox5_CheckedChanged);
-            // 
-            // contextMenuStrip2
-            // 
-            this.contextMenuStrip2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(243)))));
-            this.contextMenuStrip2.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.contextMenuStrip2.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem5,
-            this.toolStripMenuItem6});
-            this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(149, 48);
-            // 
-            // toolStripMenuItem5
-            // 
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(148, 22);
-            this.toolStripMenuItem5.Text = "パスのコピー";
-            // 
-            // toolStripMenuItem6
-            // 
-            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(148, 22);
-            this.toolStripMenuItem6.Text = "削除";
-            // 
-            // button7
-            // 
-            this.button7.BackColor = System.Drawing.Color.Transparent;
-            this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button7.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button7.ForeColor = System.Drawing.Color.Black;
-            this.button7.Location = new System.Drawing.Point(361, 480);
-            this.button7.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(150, 24);
-            this.button7.TabIndex = 24;
-            this.button7.Text = "バックアップを検索";
-            this.button7.UseVisualStyleBackColor = false;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
-            // 
-            // label7
-            // 
-            this.label7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label7.Location = new System.Drawing.Point(582, 20);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(100, 40);
-            this.label7.TabIndex = 26;
-            this.label7.Text = " Dark";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // button8
-            // 
-            this.button8.BackColor = System.Drawing.Color.Transparent;
-            this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button8.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button8.ForeColor = System.Drawing.Color.Black;
-            this.button8.Location = new System.Drawing.Point(361, 448);
-            this.button8.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(150, 24);
-            this.button8.TabIndex = 27;
-            this.button8.Text = "バックアップを削除";
-            this.button8.UseVisualStyleBackColor = false;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
-            // 
-            // checkBox6
-            // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Location = new System.Drawing.Point(483, 383);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(195, 22);
-            this.checkBox6.TabIndex = 28;
-            this.checkBox6.Text = "自動でバックアップを取得する";
-            this.checkBox6.UseVisualStyleBackColor = true;
-            this.checkBox6.CheckedChanged += new System.EventHandler(this.checkBox6_CheckedChanged);
-            // 
-            // label8
-            // 
-            this.label8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label8.Location = new System.Drawing.Point(582, 72);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(100, 40);
-            this.label8.TabIndex = 29;
-            this.label8.Text = " Update";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // panel5
-            // 
-            this.panel5.BackColor = System.Drawing.Color.Transparent;
-            this.panel5.BackgroundImage = global::PowerCacheOffice.Properties.Resources.update;
-            this.panel5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel5.Location = new System.Drawing.Point(650, 80);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(25, 25);
-            this.panel5.TabIndex = 30;
-            // 
-            // panel4
-            // 
-            this.panel4.BackColor = System.Drawing.Color.Transparent;
-            this.panel4.BackgroundImage = global::PowerCacheOffice.Properties.Resources.moon;
-            this.panel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel4.Location = new System.Drawing.Point(645, 25);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(30, 30);
-            this.panel4.TabIndex = 25;
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new System.Drawing.Point(42, 24);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new System.Drawing.Size(316, 22);
+            checkBox1.TabIndex = 3;
+            checkBox1.Text = "Excel ファイル（xls, xlsx, xlsm, ods）を関連付ける";
+            checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.Color.Transparent;
-            this.panel3.BackgroundImage = global::PowerCacheOffice.Properties.Resources.p;
-            this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel3.Location = new System.Drawing.Point(6, 96);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(30, 30);
-            this.panel3.TabIndex = 2;
+            panel3.BackColor = System.Drawing.Color.Transparent;
+            panel3.BackgroundImage = Properties.Resources.p;
+            panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            panel3.Location = new System.Drawing.Point(6, 96);
+            panel3.Name = "panel3";
+            panel3.Size = new System.Drawing.Size(30, 30);
+            panel3.TabIndex = 2;
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.Transparent;
-            this.panel2.BackgroundImage = global::PowerCacheOffice.Properties.Resources.w;
-            this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel2.Location = new System.Drawing.Point(6, 60);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(30, 30);
-            this.panel2.TabIndex = 1;
+            panel2.BackColor = System.Drawing.Color.Transparent;
+            panel2.BackgroundImage = Properties.Resources.w;
+            panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            panel2.Location = new System.Drawing.Point(6, 60);
+            panel2.Name = "panel2";
+            panel2.Size = new System.Drawing.Size(30, 30);
+            panel2.TabIndex = 1;
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.BackgroundImage = global::PowerCacheOffice.Properties.Resources.x;
-            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel1.Location = new System.Drawing.Point(6, 24);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(30, 30);
-            this.panel1.TabIndex = 0;
+            panel1.BackColor = System.Drawing.Color.Transparent;
+            panel1.BackgroundImage = Properties.Resources.x;
+            panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            panel1.Location = new System.Drawing.Point(6, 24);
+            panel1.Name = "panel1";
+            panel1.Size = new System.Drawing.Size(30, 30);
+            panel1.TabIndex = 0;
+            // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(textBox1);
+            groupBox2.Controls.Add(listBox1);
+            groupBox2.Controls.Add(label1);
+            groupBox2.Controls.Add(button1);
+            groupBox2.Location = new System.Drawing.Point(12, 151);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new System.Drawing.Size(670, 185);
+            groupBox2.TabIndex = 14;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "キャッシュ対象フォルダ";
+            // 
+            // button3
+            // 
+            button3.BackColor = System.Drawing.Color.Transparent;
+            button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            button3.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            button3.ForeColor = System.Drawing.Color.Black;
+            button3.Location = new System.Drawing.Point(522, 512);
+            button3.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            button3.Name = "button3";
+            button3.Size = new System.Drawing.Size(150, 24);
+            button3.TabIndex = 15;
+            button3.Text = "キャッシュを事前作成";
+            button3.UseVisualStyleBackColor = false;
+            button3.Click += button3_Click;
+            // 
+            // textBox3
+            // 
+            textBox3.BackColor = System.Drawing.Color.White;
+            textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            textBox3.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            textBox3.ForeColor = System.Drawing.Color.Black;
+            textBox3.Location = new System.Drawing.Point(101, 512);
+            textBox3.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            textBox3.Name = "textBox3";
+            textBox3.Size = new System.Drawing.Size(410, 25);
+            textBox3.TabIndex = 16;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.ForeColor = System.Drawing.Color.Black;
+            label3.Location = new System.Drawing.Point(12, 515);
+            label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(85, 18);
+            label3.TabIndex = 17;
+            label3.Text = "対象フォルダ:";
+            // 
+            // progressBar1
+            // 
+            progressBar1.Location = new System.Drawing.Point(20, 544);
+            progressBar1.Name = "progressBar1";
+            progressBar1.Size = new System.Drawing.Size(652, 23);
+            progressBar1.TabIndex = 18;
+            // 
+            // timer1
+            // 
+            timer1.Interval = 500;
+            timer1.Tick += timer1_Tick;
+            // 
+            // label4
+            // 
+            label4.BackColor = System.Drawing.Color.FromArgb(230, 230, 230);
+            label4.ForeColor = System.Drawing.Color.FromArgb(33, 33, 33);
+            label4.Location = new System.Drawing.Point(28, 547);
+            label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(402, 19);
+            label4.TabIndex = 19;
+            label4.Text = "対象フォルダを解析中です……";
+            label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            label4.Visible = false;
+            // 
+            // groupBox3
+            // 
+            groupBox3.Controls.Add(label6);
+            groupBox3.Controls.Add(label5);
+            groupBox3.Controls.Add(textBox5);
+            groupBox3.Controls.Add(textBox4);
+            groupBox3.Location = new System.Drawing.Point(12, 346);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new System.Drawing.Size(460, 95);
+            groupBox3.TabIndex = 20;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "ホットキー";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.ForeColor = System.Drawing.Color.Black;
+            label6.Location = new System.Drawing.Point(218, 26);
+            label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(164, 18);
+            label6.TabIndex = 9;
+            label6.Text = "クリップボードのパスを開く";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.ForeColor = System.Drawing.Color.Black;
+            label5.Location = new System.Drawing.Point(218, 57);
+            label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(152, 18);
+            label5.TabIndex = 8;
+            label5.Text = "最近開いたファイルを表示";
+            // 
+            // textBox5
+            // 
+            textBox5.BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
+            textBox5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            textBox5.Location = new System.Drawing.Point(8, 55);
+            textBox5.Name = "textBox5";
+            textBox5.ReadOnly = true;
+            textBox5.Size = new System.Drawing.Size(200, 25);
+            textBox5.TabIndex = 2;
+            // 
+            // textBox4
+            // 
+            textBox4.BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
+            textBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            textBox4.Location = new System.Drawing.Point(8, 24);
+            textBox4.Name = "textBox4";
+            textBox4.ReadOnly = true;
+            textBox4.Size = new System.Drawing.Size(200, 25);
+            textBox4.TabIndex = 1;
+            // 
+            // button6
+            // 
+            button6.BackColor = System.Drawing.Color.Transparent;
+            button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            button6.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            button6.ForeColor = System.Drawing.Color.Black;
+            button6.Location = new System.Drawing.Point(20, 448);
+            button6.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            button6.Name = "button6";
+            button6.Size = new System.Drawing.Size(170, 24);
+            button6.TabIndex = 21;
+            button6.Text = "最近開いたファイルを表示";
+            button6.UseVisualStyleBackColor = false;
+            button6.Click += button6_Click;
+            // 
+            // checkBox4
+            // 
+            checkBox4.AutoSize = true;
+            checkBox4.Location = new System.Drawing.Point(483, 355);
+            checkBox4.Name = "checkBox4";
+            checkBox4.Size = new System.Drawing.Size(171, 22);
+            checkBox4.TabIndex = 22;
+            checkBox4.Text = "スタートアップに登録する";
+            checkBox4.UseVisualStyleBackColor = true;
+            checkBox4.CheckedChanged += checkBox4_CheckedChanged;
+            // 
+            // checkBox5
+            // 
+            checkBox5.AutoSize = true;
+            checkBox5.Location = new System.Drawing.Point(483, 411);
+            checkBox5.Name = "checkBox5";
+            checkBox5.Size = new System.Drawing.Size(183, 22);
+            checkBox5.TabIndex = 23;
+            checkBox5.Text = "再起動時にキャッシュを削除";
+            checkBox5.UseVisualStyleBackColor = true;
+            checkBox5.CheckedChanged += checkBox5_CheckedChanged;
+            // 
+            // contextMenuStrip2
+            // 
+            contextMenuStrip2.BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
+            contextMenuStrip2.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            contextMenuStrip2.ImageScalingSize = new System.Drawing.Size(20, 20);
+            contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem5, toolStripMenuItem6 });
+            contextMenuStrip2.Name = "contextMenuStrip2";
+            contextMenuStrip2.Size = new System.Drawing.Size(149, 48);
+            // 
+            // toolStripMenuItem5
+            // 
+            toolStripMenuItem5.Name = "toolStripMenuItem5";
+            toolStripMenuItem5.Size = new System.Drawing.Size(148, 22);
+            toolStripMenuItem5.Text = "パスのコピー";
+            // 
+            // toolStripMenuItem6
+            // 
+            toolStripMenuItem6.Name = "toolStripMenuItem6";
+            toolStripMenuItem6.Size = new System.Drawing.Size(148, 22);
+            toolStripMenuItem6.Text = "削除";
+            // 
+            // button7
+            // 
+            button7.BackColor = System.Drawing.Color.Transparent;
+            button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            button7.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            button7.ForeColor = System.Drawing.Color.Black;
+            button7.Location = new System.Drawing.Point(361, 480);
+            button7.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            button7.Name = "button7";
+            button7.Size = new System.Drawing.Size(150, 24);
+            button7.TabIndex = 24;
+            button7.Text = "バックアップを検索";
+            button7.UseVisualStyleBackColor = false;
+            button7.Click += button7_Click;
+            // 
+            // label7
+            // 
+            label7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            label7.Location = new System.Drawing.Point(582, 20);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(100, 40);
+            label7.TabIndex = 26;
+            label7.Text = " Dark";
+            label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // button8
+            // 
+            button8.BackColor = System.Drawing.Color.Transparent;
+            button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            button8.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            button8.ForeColor = System.Drawing.Color.Black;
+            button8.Location = new System.Drawing.Point(361, 448);
+            button8.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            button8.Name = "button8";
+            button8.Size = new System.Drawing.Size(150, 24);
+            button8.TabIndex = 27;
+            button8.Text = "バックアップを削除";
+            button8.UseVisualStyleBackColor = false;
+            button8.Click += button8_Click;
+            // 
+            // checkBox6
+            // 
+            checkBox6.AutoSize = true;
+            checkBox6.Location = new System.Drawing.Point(483, 383);
+            checkBox6.Name = "checkBox6";
+            checkBox6.Size = new System.Drawing.Size(195, 22);
+            checkBox6.TabIndex = 28;
+            checkBox6.Text = "自動でバックアップを取得する";
+            checkBox6.UseVisualStyleBackColor = true;
+            checkBox6.CheckedChanged += checkBox6_CheckedChanged;
+            // 
+            // label8
+            // 
+            label8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            label8.Location = new System.Drawing.Point(582, 72);
+            label8.Name = "label8";
+            label8.Size = new System.Drawing.Size(100, 40);
+            label8.TabIndex = 29;
+            label8.Text = " Update";
+            label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // panel5
+            // 
+            panel5.BackColor = System.Drawing.Color.Transparent;
+            panel5.BackgroundImage = Properties.Resources.update;
+            panel5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            panel5.Location = new System.Drawing.Point(650, 80);
+            panel5.Name = "panel5";
+            panel5.Size = new System.Drawing.Size(25, 25);
+            panel5.TabIndex = 30;
+            // 
+            // panel4
+            // 
+            panel4.BackColor = System.Drawing.Color.Transparent;
+            panel4.BackgroundImage = Properties.Resources.moon;
+            panel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            panel4.Location = new System.Drawing.Point(645, 25);
+            panel4.Name = "panel4";
+            panel4.Size = new System.Drawing.Size(30, 30);
+            panel4.TabIndex = 25;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(243)))));
-            this.ClientSize = new System.Drawing.Size(694, 579);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.panel5);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.checkBox6);
-            this.Controls.Add(this.button8);
-            this.Controls.Add(this.panel4);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button7);
-            this.Controls.Add(this.checkBox5);
-            this.Controls.Add(this.checkBox4);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.progressBar1);
-            this.DoubleBuffered = true;
-            this.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.MaximizeBox = false;
-            this.Name = "Form1";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Power Cache Office";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.contextMenuStrip2.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
+            ClientSize = new System.Drawing.Size(694, 581);
+            Controls.Add(label4);
+            Controls.Add(panel5);
+            Controls.Add(label8);
+            Controls.Add(checkBox6);
+            Controls.Add(button8);
+            Controls.Add(panel4);
+            Controls.Add(label7);
+            Controls.Add(button6);
+            Controls.Add(button5);
+            Controls.Add(button7);
+            Controls.Add(checkBox5);
+            Controls.Add(checkBox4);
+            Controls.Add(groupBox3);
+            Controls.Add(label3);
+            Controls.Add(textBox3);
+            Controls.Add(button3);
+            Controls.Add(groupBox1);
+            Controls.Add(button4);
+            Controls.Add(label2);
+            Controls.Add(textBox2);
+            Controls.Add(button2);
+            Controls.Add(groupBox2);
+            Controls.Add(progressBar1);
+            DoubleBuffered = true;
+            Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            MaximizeBox = false;
+            Name = "Form1";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            Text = "Power Cache Office";
+            Load += Form1_Load;
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).EndInit();
+            contextMenuStrip1.ResumeLayout(false);
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            groupBox3.PerformLayout();
+            contextMenuStrip2.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

@@ -36,6 +36,10 @@ namespace PowerCacheOffice
             initialWidth = this.Width;
             initialHeight = this.Height;
 
+            float f = NativeMethods.GetDpiForSystem();
+            this.Width = (int)Math.Round(initialWidth * (this.DeviceDpi / f));
+            this.Height = (int)Math.Round(initialHeight * (this.DeviceDpi / f));
+
             Program.SortTabIndex(this);
             Program.ChangeDarkMode(this, isDarkMode);
 

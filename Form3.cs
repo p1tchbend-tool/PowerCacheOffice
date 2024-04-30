@@ -71,9 +71,20 @@ namespace PowerCacheOffice
             initialWidth = this.Width;
             initialHeight = this.Height;
 
+            float f = NativeMethods.GetDpiForSystem();
+            this.Width = (int)Math.Round(initialWidth * (this.DeviceDpi / f));
+            this.Height = (int)Math.Round(initialHeight * (this.DeviceDpi / f));
+
+            var launchViewInitialWidth = 658;
+            var launchViewInitialHeight = 150;
+            var launchViewInitialX = 10;
+            var launchViewInitialY = 11;
+
             launchView1.Name = "view1";
-            launchView1.Size = new Size(832, 200);
-            launchView1.Location = new Point(10, 11);
+            launchView1.Size = new Size(
+                (int)Math.Round(launchViewInitialWidth * (f / 96f)), (int)Math.Round(launchViewInitialHeight * (f / 96f)));
+            launchView1.Location = new Point(
+                (int)Math.Round(launchViewInitialX * (f / 96f)), (int)Math.Round(launchViewInitialY * (f / 96f)));
             launchView1.OnLaunch += (s, e) =>
             {
                 mainForm.OpenRecentFile(((LaunchView.LaunchEventArgs)e).Path);
@@ -83,8 +94,10 @@ namespace PowerCacheOffice
             tabPage1.Controls.Add(launchView1);
 
             launchView2.Name = "view2";
-            launchView2.Size = new Size(832, 200);
-            launchView2.Location = new Point(10, 11);
+            launchView2.Size = new Size(
+                (int)Math.Round(launchViewInitialWidth * (f / 96f)), (int)Math.Round(launchViewInitialHeight * (f / 96f)));
+            launchView2.Location = new Point(
+                (int)Math.Round(launchViewInitialX * (f / 96f)), (int)Math.Round(launchViewInitialY * (f / 96f)));
             launchView2.OnLaunch += (s, e) =>
             {
                 mainForm.OpenRecentFile(((LaunchView.LaunchEventArgs)e).Path);
@@ -94,8 +107,10 @@ namespace PowerCacheOffice
             tabPage2.Controls.Add(launchView2);
 
             launchView3.Name = "view3";
-            launchView3.Size = new Size(832, 200);
-            launchView3.Location = new Point(10, 11);
+            launchView3.Size = new Size(
+                (int)Math.Round(launchViewInitialWidth * (f / 96f)), (int)Math.Round(launchViewInitialHeight * (f / 96f)));
+            launchView3.Location = new Point(
+                (int)Math.Round(launchViewInitialX * (f / 96f)), (int)Math.Round(launchViewInitialY * (f / 96f)));
             launchView3.OnLaunch += (s, e) =>
             {
                 mainForm.OpenRecentFile(((LaunchView.LaunchEventArgs)e).Path);
@@ -105,8 +120,10 @@ namespace PowerCacheOffice
             tabPage3.Controls.Add(launchView3);
 
             launchView4.Name = "view4";
-            launchView4.Size = new Size(832, 200);
-            launchView4.Location = new Point(10, 11);
+            launchView4.Size = new Size(
+                (int)Math.Round(launchViewInitialWidth * (f / 96f)), (int)Math.Round(launchViewInitialHeight * (f / 96f)));
+            launchView4.Location = new Point(
+                (int)Math.Round(launchViewInitialX * (f / 96f)), (int)Math.Round(launchViewInitialY * (f / 96f)));
             launchView4.OnLaunch += (s, e) =>
             {
                 mainForm.OpenRecentFile(((LaunchView.LaunchEventArgs)e).Path);
@@ -116,8 +133,10 @@ namespace PowerCacheOffice
             tabPage4.Controls.Add(launchView4);
 
             launchView5.Name = "view5";
-            launchView5.Size = new Size(832, 200);
-            launchView5.Location = new Point(10, 11);
+            launchView5.Size = new Size(
+                (int)Math.Round(launchViewInitialWidth * (f / 96f)), (int)Math.Round(launchViewInitialHeight * (f / 96f)));
+            launchView5.Location = new Point(
+                (int)Math.Round(launchViewInitialX * (f / 96f)), (int)Math.Round(launchViewInitialY * (f / 96f)));
             launchView5.OnLaunch += (s, e) =>
             {
                 mainForm.OpenRecentFile(((LaunchView.LaunchEventArgs)e).Path);

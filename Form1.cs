@@ -78,6 +78,10 @@ namespace PowerCacheOffice
             initialWidth = this.Width;
             initialHeight = this.Height;
 
+            float f = NativeMethods.GetDpiForSystem();
+            this.Width = (int)Math.Round(initialWidth * (this.DeviceDpi / f));
+            this.Height = (int)Math.Round(initialHeight * (this.DeviceDpi / f));
+
             if (!Directory.Exists(powerCacheOfficeDataFolder)) Directory.CreateDirectory(powerCacheOfficeDataFolder);
             if (!Directory.Exists(powerCacheOfficeCacheFolder)) Directory.CreateDirectory(powerCacheOfficeCacheFolder);
             if (!Directory.Exists(powerCacheOfficeTempFolder)) Directory.CreateDirectory(powerCacheOfficeTempFolder);

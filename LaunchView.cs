@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -38,7 +37,7 @@ namespace PowerCacheOffice
         public LaunchView(Form1 mainForm, Form3 launchForm) 
         {
             imageList.ColorDepth = ColorDepth.Depth32Bit;
-            imageList.ImageSize = new Size(48, 48);
+            imageList.ImageSize = new Size(32, 32);
 
             var toolStripMenuItem1 = new ToolStripMenuItem("パスのコピー");
             toolStripMenuItem1.Font = new Font("メイリオ", 9);
@@ -179,7 +178,7 @@ namespace PowerCacheOffice
 
                 if (selectedItem == null)
                 {
-                    imageList.Images.Add(ResizeBitmap(GetIconImageFromPath(files[0]), 48, 48));
+                    imageList.Images.Add(GetIconImageFromPath(files[0]));
                     this.Items.Add(item);
                 }
                 else
@@ -189,7 +188,7 @@ namespace PowerCacheOffice
 
                     var bitmaps = new List<Bitmap>();
                     foreach (var bitmap in imageList.Images) bitmaps.Add((Bitmap)bitmap);
-                    bitmaps.Insert(index, ResizeBitmap(GetIconImageFromPath(files[0]), 48, 48));
+                    bitmaps.Insert(index, GetIconImageFromPath(files[0]));
                     imageList.Images.Clear();
                     imageList.Images.AddRange(bitmaps.ToArray());
 
@@ -314,26 +313,6 @@ namespace PowerCacheOffice
             }
             catch { }
             return bmp;
-        }
-
-        private Bitmap ResizeBitmap(Bitmap original, int width, int height)
-        {
-            if (original == null) return null;
-
-            float scale = Math.Min((float)width / original.Width, (float)height / original.Height);
-            int scaleWidth = (int)(original.Width * scale);
-            int scaleHeight = (int)(original.Height * scale);
-
-            Bitmap result = new Bitmap(width, height);
-            using (Graphics graphics = Graphics.FromImage(result))
-            {
-                graphics.CompositingQuality = CompositingQuality.HighQuality;
-                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                graphics.SmoothingMode = SmoothingMode.HighQuality;
-                graphics.Clear(Color.Transparent);
-                graphics.DrawImage(original, new Rectangle((width - scaleWidth) / 2, (height - scaleHeight) / 2, scaleWidth, scaleHeight));
-            }
-            return result;
         }
     }
 }

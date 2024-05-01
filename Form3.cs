@@ -75,6 +75,9 @@ namespace PowerCacheOffice
             this.Width = (int)Math.Round(initialWidth * (this.DeviceDpi / f));
             this.Height = (int)Math.Round(initialHeight * (this.DeviceDpi / f));
 
+            listBox1.ItemHeight = (int)Math.Round(listBox1.ItemHeight * (f / 96f));
+            listBox1.Height = listBox1.ItemHeight * 12;
+
             var launchViewInitialWidth = 658;
             var launchViewInitialHeight = 150;
             var launchViewInitialX = 10;

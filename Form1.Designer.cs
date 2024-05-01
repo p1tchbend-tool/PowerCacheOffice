@@ -98,7 +98,7 @@
             listBox1.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             listBox1.Name = "listBox1";
             listBox1.ScrollAlwaysVisible = true;
-            listBox1.Size = new System.Drawing.Size(652, 94);
+            listBox1.Size = new System.Drawing.Size(652, 112);
             listBox1.TabIndex = 0;
             // 
             // textBox1
@@ -198,7 +198,7 @@
             button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             button2.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             button2.ForeColor = System.Drawing.Color.Black;
-            button2.Location = new System.Drawing.Point(522, 480);
+            button2.Location = new System.Drawing.Point(522, 500);
             button2.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(150, 24);
@@ -213,7 +213,7 @@
             textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             textBox2.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             textBox2.ForeColor = System.Drawing.Color.Black;
-            textBox2.Location = new System.Drawing.Point(101, 480);
+            textBox2.Location = new System.Drawing.Point(101, 500);
             textBox2.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             textBox2.Name = "textBox2";
             textBox2.Size = new System.Drawing.Size(250, 25);
@@ -223,7 +223,7 @@
             // 
             label2.AutoSize = true;
             label2.ForeColor = System.Drawing.Color.Black;
-            label2.Location = new System.Drawing.Point(24, 483);
+            label2.Location = new System.Drawing.Point(24, 503);
             label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(73, 18);
@@ -236,7 +236,7 @@
             button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             button4.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             button4.ForeColor = System.Drawing.Color.Black;
-            button4.Location = new System.Drawing.Point(522, 448);
+            button4.Location = new System.Drawing.Point(522, 468);
             button4.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             button4.Name = "button4";
             button4.Size = new System.Drawing.Size(150, 24);
@@ -251,7 +251,7 @@
             button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             button5.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             button5.ForeColor = System.Drawing.Color.Black;
-            button5.Location = new System.Drawing.Point(201, 448);
+            button5.Location = new System.Drawing.Point(201, 468);
             button5.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             button5.Name = "button5";
             button5.Size = new System.Drawing.Size(150, 24);
@@ -346,7 +346,7 @@
             groupBox2.Controls.Add(button1);
             groupBox2.Location = new System.Drawing.Point(12, 151);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new System.Drawing.Size(670, 185);
+            groupBox2.Size = new System.Drawing.Size(670, 205);
             groupBox2.TabIndex = 14;
             groupBox2.TabStop = false;
             groupBox2.Text = "キャッシュ対象フォルダ";
@@ -357,7 +357,7 @@
             button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             button3.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             button3.ForeColor = System.Drawing.Color.Black;
-            button3.Location = new System.Drawing.Point(522, 512);
+            button3.Location = new System.Drawing.Point(522, 532);
             button3.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             button3.Name = "button3";
             button3.Size = new System.Drawing.Size(150, 24);
@@ -372,7 +372,7 @@
             textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             textBox3.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             textBox3.ForeColor = System.Drawing.Color.Black;
-            textBox3.Location = new System.Drawing.Point(101, 512);
+            textBox3.Location = new System.Drawing.Point(101, 532);
             textBox3.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             textBox3.Name = "textBox3";
             textBox3.Size = new System.Drawing.Size(410, 25);
@@ -382,7 +382,7 @@
             // 
             label3.AutoSize = true;
             label3.ForeColor = System.Drawing.Color.Black;
-            label3.Location = new System.Drawing.Point(12, 515);
+            label3.Location = new System.Drawing.Point(12, 535);
             label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(85, 18);
@@ -391,7 +391,7 @@
             // 
             // progressBar1
             // 
-            progressBar1.Location = new System.Drawing.Point(20, 544);
+            progressBar1.Location = new System.Drawing.Point(20, 565);
             progressBar1.Name = "progressBar1";
             progressBar1.Size = new System.Drawing.Size(652, 23);
             progressBar1.TabIndex = 18;
@@ -405,7 +405,7 @@
             // 
             label4.BackColor = System.Drawing.Color.FromArgb(230, 230, 230);
             label4.ForeColor = System.Drawing.Color.FromArgb(33, 33, 33);
-            label4.Location = new System.Drawing.Point(28, 547);
+            label4.Location = new System.Drawing.Point(28, 567);
             label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(402, 19);
@@ -420,7 +420,7 @@
             groupBox3.Controls.Add(label5);
             groupBox3.Controls.Add(textBox5);
             groupBox3.Controls.Add(textBox4);
-            groupBox3.Location = new System.Drawing.Point(12, 346);
+            groupBox3.Location = new System.Drawing.Point(12, 366);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new System.Drawing.Size(460, 95);
             groupBox3.TabIndex = 20;
@@ -475,7 +475,7 @@
             button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             button6.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             button6.ForeColor = System.Drawing.Color.Black;
-            button6.Location = new System.Drawing.Point(20, 448);
+            button6.Location = new System.Drawing.Point(20, 468);
             button6.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             button6.Name = "button6";
             button6.Size = new System.Drawing.Size(170, 24);
@@ -487,7 +487,7 @@
             // checkBox4
             // 
             checkBox4.AutoSize = true;
-            checkBox4.Location = new System.Drawing.Point(483, 355);
+            checkBox4.Location = new System.Drawing.Point(483, 375);
             checkBox4.Name = "checkBox4";
             checkBox4.Size = new System.Drawing.Size(171, 22);
             checkBox4.TabIndex = 22;
@@ -498,7 +498,7 @@
             // checkBox5
             // 
             checkBox5.AutoSize = true;
-            checkBox5.Location = new System.Drawing.Point(483, 411);
+            checkBox5.Location = new System.Drawing.Point(483, 431);
             checkBox5.Name = "checkBox5";
             checkBox5.Size = new System.Drawing.Size(183, 22);
             checkBox5.TabIndex = 23;
@@ -533,7 +533,7 @@
             button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             button7.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             button7.ForeColor = System.Drawing.Color.Black;
-            button7.Location = new System.Drawing.Point(361, 480);
+            button7.Location = new System.Drawing.Point(361, 500);
             button7.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             button7.Name = "button7";
             button7.Size = new System.Drawing.Size(150, 24);
@@ -558,7 +558,7 @@
             button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             button8.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             button8.ForeColor = System.Drawing.Color.Black;
-            button8.Location = new System.Drawing.Point(361, 448);
+            button8.Location = new System.Drawing.Point(361, 468);
             button8.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             button8.Name = "button8";
             button8.Size = new System.Drawing.Size(150, 24);
@@ -570,7 +570,7 @@
             // checkBox6
             // 
             checkBox6.AutoSize = true;
-            checkBox6.Location = new System.Drawing.Point(483, 383);
+            checkBox6.Location = new System.Drawing.Point(483, 403);
             checkBox6.Name = "checkBox6";
             checkBox6.Size = new System.Drawing.Size(195, 22);
             checkBox6.TabIndex = 28;
@@ -613,7 +613,7 @@
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
-            ClientSize = new System.Drawing.Size(694, 581);
+            ClientSize = new System.Drawing.Size(694, 601);
             Controls.Add(label4);
             Controls.Add(panel5);
             Controls.Add(label8);

@@ -82,6 +82,9 @@ namespace PowerCacheOffice
             this.Width = (int)Math.Round(initialWidth * (this.DeviceDpi / f));
             this.Height = (int)Math.Round(initialHeight * (this.DeviceDpi / f));
 
+            listBox1.ItemHeight = (int)Math.Round(listBox1.ItemHeight * (f / 96f));
+            listBox1.Height = listBox1.ItemHeight * 7;
+
             if (!Directory.Exists(powerCacheOfficeDataFolder)) Directory.CreateDirectory(powerCacheOfficeDataFolder);
             if (!Directory.Exists(powerCacheOfficeCacheFolder)) Directory.CreateDirectory(powerCacheOfficeCacheFolder);
             if (!Directory.Exists(powerCacheOfficeTempFolder)) Directory.CreateDirectory(powerCacheOfficeTempFolder);

@@ -168,7 +168,7 @@
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(128, 18);
             label2.TabIndex = 3;
-            label2.Text = "最近使ったファイル：";
+            label2.Text = "最近開いたファイル：";
             // 
             // timer1
             // 
@@ -180,7 +180,7 @@
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
-            ClientSize = new System.Drawing.Size(714, 501);
+            ClientSize = new System.Drawing.Size(714, 506);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(tabControl1);

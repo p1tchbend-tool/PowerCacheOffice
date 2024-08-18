@@ -13,6 +13,7 @@ namespace PowerCacheOffice
 {
     internal partial class Form3 : Form
     {
+        private static dynamic wScriptShell = Activator.CreateInstance(Type.GetTypeFromProgID("WScript.Shell"));
         private static readonly string powerCacheOfficeDataFolder = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice");
         private static readonly string powerCacheOfficeLaunchDataFolder = Path.Combine(
@@ -26,6 +27,7 @@ namespace PowerCacheOffice
         private List<string> recentFiles = new List<string>();
         private Point mousePosition = new Point();
         private Form1 mainForm = null;
+        private ListBox selectedListBox = null;
 
         private LaunchView launchView1 = null;
         private LaunchView launchView2 = null;
@@ -76,7 +78,10 @@ namespace PowerCacheOffice
             this.Height = (int)Math.Round(initialHeight * (this.DeviceDpi / f));
 
             listBox1.ItemHeight = (int)Math.Round(listBox1.ItemHeight * (f / 96f));
-            listBox1.Height = listBox1.ItemHeight * 12;
+            listBox1.Height = listBox1.ItemHeight * 7;
+
+            listBox2.ItemHeight = (int)Math.Round(listBox2.ItemHeight * (f / 96f));
+            listBox2.Height = listBox2.ItemHeight * 7;
 
             var launchViewInitialWidth = 658;
             var launchViewInitialHeight = 150;
@@ -214,7 +219,48 @@ namespace PowerCacheOffice
             }
             listBox1.EndUpdate();
 
+            InitializelistBox2();
+
             timer1.Start();
+        }
+
+        private void InitializelistBox2()
+        {
+            listBox2.BeginUpdate();
+            listBox2.Items.Clear();
+            var items = Directory.EnumerateFiles(Environment.GetFolderPath(Environment.SpecialFolder.Recent), "*")
+                .Where(filePath => !isOfficeFile(filePath))
+                .OrderByDescending(filePath => File.GetLastWriteTime(filePath).Date)
+                .ThenByDescending(filePath => File.GetLastWriteTime(filePath).TimeOfDay)
+                .Distinct()
+                .ToList();
+            foreach (var item in items)
+            {
+                var file = GetSourcePathFromShortcutFile(item);
+                if (!string.IsNullOrEmpty(file)) listBox2.Items.Add(file);
+            }
+            listBox2.EndUpdate();
+        }
+
+        private bool isOfficeFile(string path)
+        {
+            var extension = Path.GetExtension(path).ToLower();
+            if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm" || extension == ".ods" ||
+                extension == ".doc" || extension == ".docx" || extension == ".docm" || extension == ".odt" ||
+                extension == ".ppt" || extension == ".pptx" || extension == ".pptm" || extension == ".odp")
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private string GetSourcePathFromShortcutFile(string path)
+        {
+            try
+            {
+                return wScriptShell.CreateShortcut(path).TargetPath;
+            }
+            catch { return string.Empty; }
         }
 
         private void Form3_Load(object sender, EventArgs e)
@@ -240,6 +286,7 @@ namespace PowerCacheOffice
                 if (eventArgs.Button == MouseButtons.Right)
                 {
                     contextMenuStrip1.Show(listBox1.PointToScreen(eventArgs.Location));
+                    selectedListBox = listBox1;
                 }
                 else
                 {
@@ -248,26 +295,59 @@ namespace PowerCacheOffice
                 }
             };
 
+            listBox2.MouseMove += (s, eventArgs) =>
+            {
+                var index = listBox2.IndexFromPoint(eventArgs.Location);
+                if (index != ListBox.NoMatches) listBox2.SelectedIndex = index;
+
+                if (listBox2.SelectedItem != null && eventArgs.Button == MouseButtons.Left)
+                {
+                    string[] files = { listBox2.SelectedItem.ToString() };
+                    var dataObject = new DataObject(DataFormats.FileDrop, files);
+                    listBox2.DoDragDrop(dataObject, DragDropEffects.Copy);
+                };
+            };
+
+            listBox2.MouseUp += (s, eventArgs) =>
+            {
+                if (listBox2.SelectedItems.Count != 1) return;
+                if (!listBox2.ClientRectangle.Contains(eventArgs.Location)) return;
+
+                if (eventArgs.Button == MouseButtons.Right)
+                {
+                    contextMenuStrip1.Show(listBox2.PointToScreen(eventArgs.Location));
+                    selectedListBox = listBox2;
+                }
+                else
+                {
+                    mainForm.OpenRecentFile(listBox2.SelectedItem.ToString());
+                    this.Visible = false;
+                }
+            };
+
             toolStripMenuItem1.Click += (s, eventArgs) =>
             {
-                if (listBox1.SelectedItems.Count != 1) return;
-                Clipboard.SetText(listBox1.SelectedItem.ToString());
+                if (selectedListBox == null) return;
+                if (selectedListBox.SelectedItems.Count != 1) return;
+                Clipboard.SetText(selectedListBox.SelectedItem.ToString());
             };
 
             toolStripMenuItem2.Click += (s, eventArgs) =>
             {
-                if (listBox1.SelectedItems.Count != 1) return;
+                if (selectedListBox == null) return;
+                if (selectedListBox.SelectedItems.Count != 1) return;
 
-                mainForm.OpenRecentFile(Path.GetDirectoryName(listBox1.SelectedItem.ToString()));
+                mainForm.OpenRecentFile(Path.GetDirectoryName(selectedListBox.SelectedItem.ToString()));
                 this.Visible = false;
             };
 
             toolStripMenuItem3.Click += (s, eventArgs) =>
             {
-                if (listBox1.SelectedItems.Count != 1) return;
+                if (selectedListBox == null) return;
+                if (selectedListBox.SelectedItems.Count != 1) return;
                 try
                 {
-                    var path = listBox1.SelectedItem.ToString();
+                    var path = selectedListBox.SelectedItem.ToString();
                     if (!Directory.Exists(path)) path = Path.GetDirectoryName(path);
 
                     var folders = Directory.GetDirectories(@path);
@@ -293,14 +373,15 @@ namespace PowerCacheOffice
                 catch { }
             };
 
-            toolStripMenuItem4.Click += (s, eventArgs) =>
-            {
-                if (listBox1.SelectedItems.Count != 1) return;
-                var item = listBox1.SelectedItem;
-
-                var result = MessageBox.Show("選択したアイテムを削除しますか？", Program.AppName, MessageBoxButtons.YesNo);
-                if (result == DialogResult.Yes) listBox1.Items.Remove(item);
-            };
+            // toolStripMenuItem4.Click += (s, eventArgs) =>
+            // {
+            //     if (selectedListBox == null) return;
+            //     if (selectedListBox.SelectedItems.Count != 1) return;
+            //     var item = selectedListBox.SelectedItem;
+            // 
+            //     var result = MessageBox.Show("選択したアイテムを削除しますか？", Program.AppName, MessageBoxButtons.YesNo);
+            //     if (result == DialogResult.Yes) selectedListBox.Items.Remove(item);
+            // };
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -379,6 +460,7 @@ namespace PowerCacheOffice
                 this.Icon = Properties.Resources.PowerCacheOfficeLaunchBlack;
             }
 
+            InitializelistBox2();
             listBox1.Focus();
             NativeMethods.SetForegroundWindow(this.Handle);
             this.Visible = true;

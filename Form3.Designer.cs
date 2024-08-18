@@ -46,8 +46,17 @@
             timer1 = new System.Windows.Forms.Timer(components);
             listBox2 = new System.Windows.Forms.ListBox();
             label3 = new System.Windows.Forms.Label();
+            label4 = new System.Windows.Forms.Label();
+            listView1 = new System.Windows.Forms.ListView();
+            columnHeader1 = new System.Windows.Forms.ColumnHeader();
+            columnHeader2 = new System.Windows.Forms.ColumnHeader();
+            columnHeader3 = new System.Windows.Forms.ColumnHeader();
+            groupBox1 = new System.Windows.Forms.GroupBox();
+            button1 = new System.Windows.Forms.Button();
+            textBox1 = new System.Windows.Forms.TextBox();
             contextMenuStrip1.SuspendLayout();
             tabControl1.SuspendLayout();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // listBox1
@@ -58,10 +67,11 @@
             listBox1.FormattingEnabled = true;
             listBox1.HorizontalScrollbar = true;
             listBox1.ItemHeight = 18;
-            listBox1.Location = new System.Drawing.Point(19, 285);
+            listBox1.Location = new System.Drawing.Point(8, 100);
+            listBox1.Margin = new System.Windows.Forms.Padding(5);
             listBox1.Name = "listBox1";
             listBox1.ScrollAlwaysVisible = true;
-            listBox1.Size = new System.Drawing.Size(679, 112);
+            listBox1.Size = new System.Drawing.Size(663, 112);
             listBox1.TabIndex = 0;
             // 
             // contextMenuStrip1
@@ -167,7 +177,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            label2.Location = new System.Drawing.Point(12, 255);
+            label2.Location = new System.Drawing.Point(6, 75);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(161, 18);
             label2.TabIndex = 3;
@@ -186,34 +196,113 @@
             listBox2.FormattingEnabled = true;
             listBox2.HorizontalScrollbar = true;
             listBox2.ItemHeight = 18;
-            listBox2.Location = new System.Drawing.Point(19, 450);
+            listBox2.Location = new System.Drawing.Point(8, 255);
             listBox2.Name = "listBox2";
             listBox2.ScrollAlwaysVisible = true;
-            listBox2.Size = new System.Drawing.Size(679, 112);
+            listBox2.Size = new System.Drawing.Size(663, 112);
             listBox2.TabIndex = 4;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            label3.Location = new System.Drawing.Point(12, 420);
+            label3.Location = new System.Drawing.Point(6, 230);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(128, 18);
             label3.TabIndex = 4;
             label3.Text = "最近開いたファイル：";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            label4.Location = new System.Drawing.Point(6, 385);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(92, 18);
+            label4.TabIndex = 5;
+            label4.Text = "バックアップ：";
+            // 
+            // listView1
+            // 
+            listView1.BackColor = System.Drawing.Color.White;
+            listView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3 });
+            listView1.Cursor = System.Windows.Forms.Cursors.Hand;
+            listView1.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            listView1.FullRowSelect = true;
+            listView1.GridLines = true;
+            listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            listView1.Location = new System.Drawing.Point(8, 410);
+            listView1.MultiSelect = false;
+            listView1.Name = "listView1";
+            listView1.Size = new System.Drawing.Size(663, 115);
+            listView1.TabIndex = 6;
+            listView1.UseCompatibleStateImageBehavior = false;
+            listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            columnHeader1.Text = "更新日時";
+            // 
+            // columnHeader2
+            // 
+            columnHeader2.Text = "ファイル名";
+            // 
+            // columnHeader3
+            // 
+            columnHeader3.Text = "パス名";
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(button1);
+            groupBox1.Controls.Add(textBox1);
+            groupBox1.Controls.Add(label2);
+            groupBox1.Controls.Add(listBox1);
+            groupBox1.Controls.Add(listView1);
+            groupBox1.Controls.Add(label3);
+            groupBox1.Controls.Add(label4);
+            groupBox1.Controls.Add(listBox2);
+            groupBox1.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            groupBox1.Location = new System.Drawing.Point(19, 241);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new System.Drawing.Size(679, 536);
+            groupBox1.TabIndex = 7;
+            groupBox1.TabStop = false;
+            // 
+            // button1
+            // 
+            button1.BackColor = System.Drawing.Color.Transparent;
+            button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            button1.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            button1.ForeColor = System.Drawing.Color.Black;
+            button1.Location = new System.Drawing.Point(601, 24);
+            button1.Margin = new System.Windows.Forms.Padding(5);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(70, 25);
+            button1.TabIndex = 8;
+            button1.Text = "検 索";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
+            // 
+            // textBox1
+            // 
+            textBox1.BackColor = System.Drawing.Color.White;
+            textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            textBox1.Location = new System.Drawing.Point(8, 24);
+            textBox1.Margin = new System.Windows.Forms.Padding(5);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new System.Drawing.Size(583, 25);
+            textBox1.TabIndex = 7;
             // 
             // Form3
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
-            ClientSize = new System.Drawing.Size(714, 581);
-            Controls.Add(listBox2);
-            Controls.Add(label3);
-            Controls.Add(label2);
+            ClientSize = new System.Drawing.Size(714, 789);
+            Controls.Add(groupBox1);
             Controls.Add(label1);
             Controls.Add(tabControl1);
-            Controls.Add(listBox1);
             DoubleBuffered = true;
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             MaximizeBox = false;
@@ -226,6 +315,8 @@
             Load += Form3_Load;
             contextMenuStrip1.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -249,5 +340,13 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button1;
     }
 }

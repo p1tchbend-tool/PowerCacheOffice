@@ -213,6 +213,41 @@ namespace PowerCacheOffice
                     this.Location = new Point(this.Location.X + e.X - mousePosition.X, this.Location.Y + e.Y - mousePosition.Y);
             };
 
+            InitializeListBox1();
+            InitializeListBox2();
+            InitializeListView1();
+
+            textBox1.PreviewKeyDown += (s, eventArgs) =>
+            {
+                if (eventArgs.KeyCode == Keys.Enter)
+                {
+                    if (string.IsNullOrEmpty(textBox1.Text))
+                    {
+                        InitializeListBox1();
+                        InitializeListBox2();
+                        InitializeListView1();
+                    }
+                    else
+                    {
+                        InitializeListBox1(textBox1.Text);
+                        InitializeListBox2(textBox1.Text);
+                        InitializeListView1(textBox1.Text);
+                    }
+                }
+            };
+            textBox1.KeyPress += (s, eventArgs) =>
+            {
+                if (eventArgs.KeyChar == (char)Keys.Enter || eventArgs.KeyChar == (char)Keys.Escape)
+                {
+                    eventArgs.Handled = true;
+                }
+            };
+
+            timer1.Start();
+        }
+
+        private void InitializeListBox1()
+        {
             listBox1.BeginUpdate();
             listBox1.Items.Clear();
             foreach (var item in recentFiles.AsEnumerable().Reverse())
@@ -220,18 +255,24 @@ namespace PowerCacheOffice
                 listBox1.Items.Add(item);
             }
             listBox1.EndUpdate();
-
-            InitializelistBox2();
-
-            timer1.Start();
         }
 
-        private void InitializelistBox2()
+        private void InitializeListBox1(string text)
+        {
+            listBox1.BeginUpdate();
+            listBox1.Items.Clear();
+            foreach (var item in recentFiles.AsEnumerable().Reverse())
+            {
+                if (item.ToLower().Contains(text.ToLower())) listBox1.Items.Add(item);
+            }
+            listBox1.EndUpdate();
+        }
+
+        private void InitializeListBox2()
         {
             listBox2.BeginUpdate();
             listBox2.Items.Clear();
             var items = Directory.EnumerateFiles(Environment.GetFolderPath(Environment.SpecialFolder.Recent), "*")
-                .Where(filePath => !isOfficeFile(filePath))
                 .OrderByDescending(filePath => File.GetLastWriteTime(filePath).Date)
                 .ThenByDescending(filePath => File.GetLastWriteTime(filePath).TimeOfDay)
                 .Distinct()
@@ -239,9 +280,69 @@ namespace PowerCacheOffice
             foreach (var item in items)
             {
                 var file = GetSourcePathFromShortcutFile(item);
-                if (!string.IsNullOrEmpty(file)) listBox2.Items.Add(file);
+                if (!string.IsNullOrEmpty(file) && !isOfficeFile(file)) listBox2.Items.Add(file);
             }
             listBox2.EndUpdate();
+        }
+
+        private void InitializeListBox2(string text)
+        {
+            listBox2.BeginUpdate();
+            listBox2.Items.Clear();
+            var items = Directory.EnumerateFiles(Environment.GetFolderPath(Environment.SpecialFolder.Recent), "*")
+                .OrderByDescending(filePath => File.GetLastWriteTime(filePath).Date)
+                .ThenByDescending(filePath => File.GetLastWriteTime(filePath).TimeOfDay)
+                .Distinct()
+                .ToList();
+            foreach (var item in items)
+            {
+                var file = GetSourcePathFromShortcutFile(item);
+                if (!string.IsNullOrEmpty(file) && !isOfficeFile(file) &&
+                    file.ToLower().Contains(text.ToLower())) listBox2.Items.Add(file);
+            }
+            listBox2.EndUpdate();
+        }
+
+        private void InitializeListView1()
+        {
+            listView1.BeginUpdate();
+            listView1.Items.Clear();
+            try
+            {
+                var backupSettings = JsonSerializer.Deserialize<BackupSettings>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "backupSettings.json")));
+                foreach (var item in backupSettings.BackupRelations)
+                {
+                    var arr = new string[3] { item.LastWriteTime.ToString(), Path.GetFileName(item.OriginalFilePath), item.OriginalFilePath };
+                    var listViewItem = new ListViewItem(arr);
+                    listViewItem.Tag = item.BackupFilePath;
+                    listView1.Items.Add(listViewItem);
+                }
+            }
+            catch { }
+            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            listView1.EndUpdate();
+        }
+
+        private void InitializeListView1(string text)
+        {
+            listView1.BeginUpdate();
+            listView1.Items.Clear();
+            try
+            {
+                var backupSettings = JsonSerializer.Deserialize<BackupSettings>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "backupSettings.json")));
+                foreach (var item in backupSettings.BackupRelations)
+                {
+                    if (!item.OriginalFilePath.ToLower().Contains(text.ToLower())) continue;
+
+                    var arr = new string[3] { item.LastWriteTime.ToString(), Path.GetFileName(item.OriginalFilePath), item.OriginalFilePath };
+                    var listViewItem = new ListViewItem(arr);
+                    listViewItem.Tag = item.BackupFilePath;
+                    listView1.Items.Add(listViewItem);
+                }
+            }
+            catch { }
+            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            listView1.EndUpdate();
         }
 
         private bool isOfficeFile(string path)
@@ -339,6 +440,53 @@ namespace PowerCacheOffice
                 else
                 {
                     mainForm.OpenRecentFile(listBox2.SelectedItem.ToString());
+                    this.Visible = false;
+                }
+            };
+
+            listView1.MouseMove += (s, eventArgs) =>
+            {
+                listView1.Focus();
+                var item = listView1.GetItemAt(eventArgs.X, eventArgs.Y);
+                if (item != null)
+                {
+                    item.Focused = true;
+                    item.Selected = true;
+                }
+            };
+
+            listView1.Click += (s, eventArgs) =>
+            {
+                if (listView1.SelectedItems.Count != 1) return;
+
+                var result = MessageBox.Show("以下のファイルを復元しますか？\n※現在のファイルは上書きされます。\n\n" +
+                    listView1.SelectedItems[0].SubItems[2].Text, "", MessageBoxButtons.YesNo);
+                if (result != DialogResult.Yes) return;
+
+                try
+                {
+                    var backupSettings = JsonSerializer.Deserialize<BackupSettings>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "backupSettings.json")));
+                    var backupRelations = backupSettings.BackupRelations.First(item => item.BackupFilePath == listView1.SelectedItems[0].Tag.ToString());
+
+                    File.Copy(backupRelations.BackupFilePath, backupRelations.OriginalFilePath, true);
+                    MessageBox.Show("バックアップからの復元に成功しました。");
+                }
+                catch { MessageBox.Show("バックアップからの復元に失敗しました。"); }
+            };
+
+            listBox1.MouseUp += (s, eventArgs) =>
+            {
+                if (listBox1.SelectedItems.Count != 1) return;
+                if (!listBox1.ClientRectangle.Contains(eventArgs.Location)) return;
+
+                if (eventArgs.Button == MouseButtons.Right)
+                {
+                    contextMenuStrip1.Show(listBox1.PointToScreen(eventArgs.Location));
+                    selectedListBox = listBox1;
+                }
+                else
+                {
+                    mainForm.OpenRecentFile(listBox1.SelectedItem.ToString());
                     this.Visible = false;
                 }
             };
@@ -483,10 +631,26 @@ namespace PowerCacheOffice
                 this.Icon = Properties.Resources.PowerCacheOfficeLaunchBlack;
             }
 
-            InitializelistBox2();
-            listBox1.Focus();
+            InitializeListBox2();
+            textBox1.Focus();
             NativeMethods.SetForegroundWindow(this.Handle);
             this.Visible = true;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBox1.Text))
+            {
+                InitializeListBox1();
+                InitializeListBox2();
+                InitializeListView1();
+            }
+            else
+            {
+                InitializeListBox1(textBox1.Text);
+                InitializeListBox2(textBox1.Text);
+                InitializeListView1(textBox1.Text);
+            }
         }
     }
 }

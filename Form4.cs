@@ -37,6 +37,13 @@ namespace PowerCacheOffice
                     this.Close();
                 }
             };
+            textBox1.KeyPress += (s, eventArgs) =>
+            {
+                if (eventArgs.KeyChar == (char)Keys.Enter || eventArgs.KeyChar == (char)Keys.Escape)
+                {
+                    eventArgs.Handled = true;
+                }
+            };
         }
 
         private void button1_Click(object sender, EventArgs e)

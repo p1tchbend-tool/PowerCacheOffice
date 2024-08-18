@@ -38,12 +38,10 @@
             notifyIcon1 = new System.Windows.Forms.NotifyIcon(components);
             contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(components);
             toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
             toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-            button2 = new System.Windows.Forms.Button();
-            textBox2 = new System.Windows.Forms.TextBox();
-            label2 = new System.Windows.Forms.Label();
             button4 = new System.Windows.Forms.Button();
             button5 = new System.Windows.Forms.Button();
             groupBox1 = new System.Windows.Forms.GroupBox();
@@ -65,13 +63,11 @@
             label5 = new System.Windows.Forms.Label();
             textBox5 = new System.Windows.Forms.TextBox();
             textBox4 = new System.Windows.Forms.TextBox();
-            button6 = new System.Windows.Forms.Button();
             checkBox4 = new System.Windows.Forms.CheckBox();
             checkBox5 = new System.Windows.Forms.CheckBox();
             contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(components);
             toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
             toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
-            button7 = new System.Windows.Forms.Button();
             label7 = new System.Windows.Forms.Label();
             button8 = new System.Windows.Forms.Button();
             checkBox6 = new System.Windows.Forms.CheckBox();
@@ -157,24 +153,30 @@
             contextMenuStrip1.BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
             contextMenuStrip1.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem2, toolStripMenuItem3, toolStripMenuItem4 });
+            contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem7, toolStripMenuItem2, toolStripMenuItem3, toolStripMenuItem4 });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new System.Drawing.Size(137, 92);
+            contextMenuStrip1.Size = new System.Drawing.Size(294, 114);
             // 
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
             toolStripMenuItem1.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
-            toolStripMenuItem1.Text = "表示";
+            toolStripMenuItem1.Size = new System.Drawing.Size(293, 22);
+            toolStripMenuItem1.Text = "設定画面を表示";
+            // 
+            // toolStripMenuItem7
+            // 
+            toolStripMenuItem7.Name = "toolStripMenuItem7";
+            toolStripMenuItem7.Size = new System.Drawing.Size(293, 22);
+            toolStripMenuItem7.Text = "「Power Cache Office Launch」を表示";
             // 
             // toolStripMenuItem2
             // 
             toolStripMenuItem2.BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
             toolStripMenuItem2.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             toolStripMenuItem2.Name = "toolStripMenuItem2";
-            toolStripMenuItem2.Size = new System.Drawing.Size(136, 22);
+            toolStripMenuItem2.Size = new System.Drawing.Size(293, 22);
             toolStripMenuItem2.Text = "再起動";
             // 
             // toolStripMenuItem3
@@ -182,53 +184,15 @@
             toolStripMenuItem3.BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
             toolStripMenuItem3.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             toolStripMenuItem3.Name = "toolStripMenuItem3";
-            toolStripMenuItem3.Size = new System.Drawing.Size(136, 22);
+            toolStripMenuItem3.Size = new System.Drawing.Size(293, 22);
             toolStripMenuItem3.Text = "終了";
             // 
             // toolStripMenuItem4
             // 
             toolStripMenuItem4.BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
             toolStripMenuItem4.Name = "toolStripMenuItem4";
-            toolStripMenuItem4.Size = new System.Drawing.Size(136, 22);
+            toolStripMenuItem4.Size = new System.Drawing.Size(293, 22);
             toolStripMenuItem4.Text = "更新の確認";
-            // 
-            // button2
-            // 
-            button2.BackColor = System.Drawing.Color.Transparent;
-            button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            button2.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            button2.ForeColor = System.Drawing.Color.Black;
-            button2.Location = new System.Drawing.Point(522, 500);
-            button2.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            button2.Name = "button2";
-            button2.Size = new System.Drawing.Size(150, 24);
-            button2.TabIndex = 1;
-            button2.Text = "キャッシュを検索";
-            button2.UseVisualStyleBackColor = false;
-            button2.Click += button2_Click;
-            // 
-            // textBox2
-            // 
-            textBox2.BackColor = System.Drawing.Color.White;
-            textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            textBox2.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            textBox2.ForeColor = System.Drawing.Color.Black;
-            textBox2.Location = new System.Drawing.Point(101, 500);
-            textBox2.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new System.Drawing.Size(250, 25);
-            textBox2.TabIndex = 6;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.ForeColor = System.Drawing.Color.Black;
-            label2.Location = new System.Drawing.Point(24, 503);
-            label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(73, 18);
-            label2.TabIndex = 7;
-            label2.Text = "キーワード:";
             // 
             // button4
             // 
@@ -357,7 +321,7 @@
             button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             button3.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             button3.ForeColor = System.Drawing.Color.Black;
-            button3.Location = new System.Drawing.Point(522, 532);
+            button3.Location = new System.Drawing.Point(522, 500);
             button3.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             button3.Name = "button3";
             button3.Size = new System.Drawing.Size(150, 24);
@@ -372,7 +336,7 @@
             textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             textBox3.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             textBox3.ForeColor = System.Drawing.Color.Black;
-            textBox3.Location = new System.Drawing.Point(101, 532);
+            textBox3.Location = new System.Drawing.Point(101, 499);
             textBox3.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             textBox3.Name = "textBox3";
             textBox3.Size = new System.Drawing.Size(410, 25);
@@ -382,7 +346,7 @@
             // 
             label3.AutoSize = true;
             label3.ForeColor = System.Drawing.Color.Black;
-            label3.Location = new System.Drawing.Point(12, 535);
+            label3.Location = new System.Drawing.Point(12, 503);
             label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(85, 18);
@@ -391,7 +355,7 @@
             // 
             // progressBar1
             // 
-            progressBar1.Location = new System.Drawing.Point(20, 565);
+            progressBar1.Location = new System.Drawing.Point(20, 535);
             progressBar1.Name = "progressBar1";
             progressBar1.Size = new System.Drawing.Size(652, 23);
             progressBar1.TabIndex = 18;
@@ -405,7 +369,7 @@
             // 
             label4.BackColor = System.Drawing.Color.FromArgb(230, 230, 230);
             label4.ForeColor = System.Drawing.Color.FromArgb(33, 33, 33);
-            label4.Location = new System.Drawing.Point(28, 567);
+            label4.Location = new System.Drawing.Point(25, 537);
             label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(402, 19);
@@ -445,9 +409,9 @@
             label5.Location = new System.Drawing.Point(218, 57);
             label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label5.Name = "label5";
-            label5.Size = new System.Drawing.Size(152, 18);
+            label5.Size = new System.Drawing.Size(225, 18);
             label5.TabIndex = 8;
-            label5.Text = "最近開いたファイルを表示";
+            label5.Text = "「Power Cache Office Launch」を表示";
             // 
             // textBox5
             // 
@@ -468,21 +432,6 @@
             textBox4.ReadOnly = true;
             textBox4.Size = new System.Drawing.Size(200, 25);
             textBox4.TabIndex = 1;
-            // 
-            // button6
-            // 
-            button6.BackColor = System.Drawing.Color.Transparent;
-            button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            button6.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            button6.ForeColor = System.Drawing.Color.Black;
-            button6.Location = new System.Drawing.Point(20, 468);
-            button6.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            button6.Name = "button6";
-            button6.Size = new System.Drawing.Size(170, 24);
-            button6.TabIndex = 21;
-            button6.Text = "最近開いたファイルを表示";
-            button6.UseVisualStyleBackColor = false;
-            button6.Click += button6_Click;
             // 
             // checkBox4
             // 
@@ -526,21 +475,6 @@
             toolStripMenuItem6.Name = "toolStripMenuItem6";
             toolStripMenuItem6.Size = new System.Drawing.Size(148, 22);
             toolStripMenuItem6.Text = "削除";
-            // 
-            // button7
-            // 
-            button7.BackColor = System.Drawing.Color.Transparent;
-            button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            button7.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            button7.ForeColor = System.Drawing.Color.Black;
-            button7.Location = new System.Drawing.Point(361, 500);
-            button7.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            button7.Name = "button7";
-            button7.Size = new System.Drawing.Size(150, 24);
-            button7.TabIndex = 24;
-            button7.Text = "バックアップを検索";
-            button7.UseVisualStyleBackColor = false;
-            button7.Click += button7_Click;
             // 
             // label7
             // 
@@ -613,7 +547,7 @@
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
-            ClientSize = new System.Drawing.Size(694, 601);
+            ClientSize = new System.Drawing.Size(694, 571);
             Controls.Add(label4);
             Controls.Add(panel5);
             Controls.Add(label8);
@@ -621,9 +555,7 @@
             Controls.Add(button8);
             Controls.Add(panel4);
             Controls.Add(label7);
-            Controls.Add(button6);
             Controls.Add(button5);
-            Controls.Add(button7);
             Controls.Add(checkBox5);
             Controls.Add(checkBox4);
             Controls.Add(groupBox3);
@@ -632,9 +564,6 @@
             Controls.Add(button3);
             Controls.Add(groupBox1);
             Controls.Add(button4);
-            Controls.Add(label2);
-            Controls.Add(textBox2);
-            Controls.Add(button2);
             Controls.Add(groupBox2);
             Controls.Add(progressBar1);
             DoubleBuffered = true;
@@ -668,9 +597,6 @@
         private System.IO.FileSystemWatcher fileSystemWatcher1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -696,20 +622,19 @@
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button button6;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.CheckBox checkBox4;
         private System.Windows.Forms.CheckBox checkBox5;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
-        private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.CheckBox checkBox6;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem7;
     }
 }
 

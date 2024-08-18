@@ -354,6 +354,11 @@ namespace PowerCacheOffice
             };
 
             toolStripMenuItem1.Click += (s, eventArgs) => EnableForm1();
+            toolStripMenuItem7.Click += (s, eventArgs) =>
+            {
+                if (launchForm == null || launchForm.IsDisposed) launchForm = new Form3(appSettings.IsDarkMode, this);
+                launchForm.ShowInCenterScreen(appSettings.IsDarkMode);
+            };
             toolStripMenuItem2.Click += (s, eventArgs) =>
             {
                 var result = MessageBox.Show("再起動しますか？", Program.AppName, MessageBoxButtons.YesNo);
@@ -712,15 +717,15 @@ namespace PowerCacheOffice
             catch { }
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            SearchFolderInExplorer(powerCacheOfficeCacheFolder, textBox2.Text);
-        }
+        // private void button2_Click(object sender, EventArgs e)
+        // {
+        //     SearchFolderInExplorer(powerCacheOfficeCacheFolder, textBox2.Text);
+        // }
 
-        private void button7_Click(object sender, EventArgs e)
-        {
-            SearchFolderInExplorer(powerCacheOfficeBackupFolder, textBox2.Text);
-        }
+        // private void button7_Click(object sender, EventArgs e)
+        // {
+        //     SearchFolderInExplorer(powerCacheOfficeBackupFolder, textBox2.Text);
+        // }
 
         private void SearchFolderInExplorer(string folder, string keyword)
         {
@@ -1112,11 +1117,11 @@ namespace PowerCacheOffice
             return dt1 == dt2;
         }
 
-        private void button6_Click(object sender, EventArgs e)
-        {
-            if (launchForm == null || launchForm.IsDisposed) launchForm = new Form3(appSettings.IsDarkMode, this);
-            launchForm.ShowInCenterScreen(appSettings.IsDarkMode);
-        }
+        // private void button6_Click(object sender, EventArgs e)
+        // {
+        //     if (launchForm == null || launchForm.IsDisposed) launchForm = new Form3(appSettings.IsDarkMode, this);
+        //     launchForm.ShowInCenterScreen(appSettings.IsDarkMode);
+        // }
 
         public void OpenRecentFile(string filePath)
         {

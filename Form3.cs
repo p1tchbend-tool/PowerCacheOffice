@@ -28,6 +28,7 @@ namespace PowerCacheOffice
         private Point mousePosition = new Point();
         private Form1 mainForm = null;
         private ListBox selectedListBox = null;
+        private bool isDarkMode = false;
 
         private LaunchView launchView1 = null;
         private LaunchView launchView2 = null;
@@ -54,6 +55,7 @@ namespace PowerCacheOffice
 
         public Form3(bool isDarkMode, Form1 mainForm)
         {
+            this.isDarkMode = isDarkMode;
             this.mainForm = mainForm;
             launchView1 = new LaunchView(mainForm, this);
             launchView2 = new LaunchView(mainForm, this);
@@ -265,6 +267,22 @@ namespace PowerCacheOffice
 
         private void Form3_Load(object sender, EventArgs e)
         {
+            tabControl1.MouseUp += (s, eventArgs) =>
+            {
+                if (tabControl1.SelectedTab == null) return;
+                var selectedPage = tabControl1.SelectedTab;
+
+                using (var form4 = new Form4(isDarkMode, selectedPage.Text))
+                {
+                    var result = form4.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        selectedPage.Text = form4.PageName;
+                        SaveLaunchViews();
+                    }
+                }
+            };
+
             listBox1.MouseMove += (s, eventArgs) =>
             {
                 var index = listBox1.IndexFromPoint(eventArgs.Location);
@@ -404,15 +422,15 @@ namespace PowerCacheOffice
             try
             {
                 File.WriteAllText(Path.Combine(powerCacheOfficeLaunchDataFolder, launchView1.Name + ".json"),
-                    JsonSerializer.Serialize(new LaunchSettings(launchView1.GetLargeImageListAsBase64Strings(), launchView1.GetPaths()), jsonSerializerOptions));
+                    JsonSerializer.Serialize(new LaunchSettings(launchView1.GetLargeImageListAsBase64Strings(), launchView1.GetPaths(), tabPage1.Text), jsonSerializerOptions));
                 File.WriteAllText(Path.Combine(powerCacheOfficeLaunchDataFolder, launchView2.Name + ".json"),
-                    JsonSerializer.Serialize(new LaunchSettings(launchView2.GetLargeImageListAsBase64Strings(), launchView2.GetPaths()), jsonSerializerOptions));
+                    JsonSerializer.Serialize(new LaunchSettings(launchView2.GetLargeImageListAsBase64Strings(), launchView2.GetPaths(), tabPage2.Text), jsonSerializerOptions));
                 File.WriteAllText(Path.Combine(powerCacheOfficeLaunchDataFolder, launchView3.Name + ".json"),
-                    JsonSerializer.Serialize(new LaunchSettings(launchView3.GetLargeImageListAsBase64Strings(), launchView3.GetPaths()), jsonSerializerOptions));
+                    JsonSerializer.Serialize(new LaunchSettings(launchView3.GetLargeImageListAsBase64Strings(), launchView3.GetPaths(), tabPage3.Text), jsonSerializerOptions));
                 File.WriteAllText(Path.Combine(powerCacheOfficeLaunchDataFolder, launchView4.Name + ".json"),
-                    JsonSerializer.Serialize(new LaunchSettings(launchView4.GetLargeImageListAsBase64Strings(), launchView4.GetPaths()), jsonSerializerOptions));
+                    JsonSerializer.Serialize(new LaunchSettings(launchView4.GetLargeImageListAsBase64Strings(), launchView4.GetPaths(), tabPage4.Text), jsonSerializerOptions));
                 File.WriteAllText(Path.Combine(powerCacheOfficeLaunchDataFolder, launchView5.Name + ".json"),
-                    JsonSerializer.Serialize(new LaunchSettings(launchView5.GetLargeImageListAsBase64Strings(), launchView5.GetPaths()), jsonSerializerOptions));
+                    JsonSerializer.Serialize(new LaunchSettings(launchView5.GetLargeImageListAsBase64Strings(), launchView5.GetPaths(), tabPage5.Text), jsonSerializerOptions));
             }
             catch { }
         }
@@ -424,22 +442,27 @@ namespace PowerCacheOffice
                 var path = Path.Combine(powerCacheOfficeLaunchDataFolder, launchView1.Name + ".json");
                 var launchSettings = JsonSerializer.Deserialize<LaunchSettings>(File.ReadAllText(path));
                 launchView1.SetItems(launchSettings.LaunchViewBase64Images, launchSettings.LaunchViewPaths);
+                tabPage1.Text = launchSettings.LaunchViewPageName;
 
                 path = Path.Combine(powerCacheOfficeLaunchDataFolder, launchView2.Name + ".json");
                 launchSettings = JsonSerializer.Deserialize<LaunchSettings>(File.ReadAllText(path));
                 launchView2.SetItems(launchSettings.LaunchViewBase64Images, launchSettings.LaunchViewPaths);
+                tabPage2.Text = launchSettings.LaunchViewPageName;
 
                 path = Path.Combine(powerCacheOfficeLaunchDataFolder, launchView3.Name + ".json");
                 launchSettings = JsonSerializer.Deserialize<LaunchSettings>(File.ReadAllText(path));
                 launchView3.SetItems(launchSettings.LaunchViewBase64Images, launchSettings.LaunchViewPaths);
+                tabPage3.Text = launchSettings.LaunchViewPageName;
 
                 path = Path.Combine(powerCacheOfficeLaunchDataFolder, launchView4.Name + ".json");
                 launchSettings = JsonSerializer.Deserialize<LaunchSettings>(File.ReadAllText(path));
                 launchView4.SetItems(launchSettings.LaunchViewBase64Images, launchSettings.LaunchViewPaths);
+                tabPage4.Text = launchSettings.LaunchViewPageName;
 
                 path = Path.Combine(powerCacheOfficeLaunchDataFolder, launchView5.Name + ".json");
                 launchSettings = JsonSerializer.Deserialize<LaunchSettings>(File.ReadAllText(path));
                 launchView5.SetItems(launchSettings.LaunchViewBase64Images, launchSettings.LaunchViewPaths);
+                tabPage5.Text = launchSettings.LaunchViewPageName;
             }
             catch { }
         }

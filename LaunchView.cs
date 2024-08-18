@@ -252,7 +252,7 @@ namespace PowerCacheOffice
 
             largeImageListAsBase64Strings.ForEach(base64String =>
             {
-                imageList.Images.Add(GetBitmapFromtBase64String(base64String));
+                imageList.Images.Add(GetBitmapFromBase64String(base64String));
             });
 
             for (int i = 0; i < this.Items.Count; i++) this.Items[i].ImageIndex = i;
@@ -284,7 +284,7 @@ namespace PowerCacheOffice
             }
         }
 
-        private Bitmap GetBitmapFromtBase64String(string str)
+        private Bitmap GetBitmapFromBase64String(string str)
         {
             if (string.IsNullOrEmpty(str)) return new Bitmap(1, 1);
 
@@ -295,21 +295,26 @@ namespace PowerCacheOffice
             }
         }
 
-        private Bitmap GetIconImageFromPath(string str)
+        private Bitmap GetIconImageFromPath(string path)
         {
-            Bitmap bmp = new Bitmap(1, 1);
-            if (string.IsNullOrEmpty(str)) return bmp;
+            var bmp = new Bitmap(1, 1);
+            if (string.IsNullOrEmpty(path)) return bmp;
 
             try
             {
-                NativeMethods.SHFILEINFO shinfo = new NativeMethods.SHFILEINFO();
-                IntPtr hSuccess = NativeMethods.SHGetFileInfo(
-                    @str, 0, ref shinfo, (uint)Marshal.SizeOf(shinfo), NativeMethods.SHGFI_ICON | NativeMethods.SHGFI_LARGEICON);
-                if (hSuccess == IntPtr.Zero) return bmp;
+                WindowsShellApi.SHFILEINFO shinfo = new WindowsShellApi.SHFILEINFO();
+                IntPtr hImg = WindowsShellApi.SHGetFileInfo(
+                    path, 0, out shinfo, (uint)Marshal.SizeOf(typeof(WindowsShellApi.SHFILEINFO)), WindowsShellApi.SHGFI.SHGFI_SYSICONINDEX);
 
-                Icon icon = Icon.FromHandle(shinfo.hIcon);
-                bmp = icon.ToBitmap();
-                NativeMethods.DestroyIcon(icon.Handle);
+                WindowsShellApi.IImageList imglist = null;
+                WindowsShellApi.SHGetImageList(WindowsShellApi.SHIL.SHIL_EXTRALARGE, ref WindowsShellApi.IID_IImageList, out imglist);
+
+                IntPtr hicon = IntPtr.Zero;
+                imglist.GetIcon(shinfo.iIcon, (int)WindowsShellApi.ImageListDrawItemConstants.ILD_TRANSPARENT, ref hicon);
+
+                Icon myIcon = Icon.FromHandle(hicon);
+                bmp = myIcon.ToBitmap();
+                NativeMethods.DestroyIcon(myIcon.Handle);
             }
             catch { }
             return bmp;

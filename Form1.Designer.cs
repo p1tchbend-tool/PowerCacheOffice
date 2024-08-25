@@ -155,28 +155,28 @@
             contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem7, toolStripMenuItem2, toolStripMenuItem3, toolStripMenuItem4 });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new System.Drawing.Size(294, 114);
+            contextMenuStrip1.Size = new System.Drawing.Size(274, 136);
             // 
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
             toolStripMenuItem1.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new System.Drawing.Size(293, 22);
+            toolStripMenuItem1.Size = new System.Drawing.Size(273, 22);
             toolStripMenuItem1.Text = "設定画面を表示";
             // 
             // toolStripMenuItem7
             // 
             toolStripMenuItem7.Name = "toolStripMenuItem7";
-            toolStripMenuItem7.Size = new System.Drawing.Size(293, 22);
-            toolStripMenuItem7.Text = "「Power Cache Office Launch」を表示";
+            toolStripMenuItem7.Size = new System.Drawing.Size(273, 22);
+            toolStripMenuItem7.Text = "Power Cache Office Launch を表示";
             // 
             // toolStripMenuItem2
             // 
             toolStripMenuItem2.BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
             toolStripMenuItem2.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             toolStripMenuItem2.Name = "toolStripMenuItem2";
-            toolStripMenuItem2.Size = new System.Drawing.Size(293, 22);
+            toolStripMenuItem2.Size = new System.Drawing.Size(273, 22);
             toolStripMenuItem2.Text = "再起動";
             // 
             // toolStripMenuItem3
@@ -184,14 +184,14 @@
             toolStripMenuItem3.BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
             toolStripMenuItem3.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             toolStripMenuItem3.Name = "toolStripMenuItem3";
-            toolStripMenuItem3.Size = new System.Drawing.Size(293, 22);
+            toolStripMenuItem3.Size = new System.Drawing.Size(273, 22);
             toolStripMenuItem3.Text = "終了";
             // 
             // toolStripMenuItem4
             // 
             toolStripMenuItem4.BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
             toolStripMenuItem4.Name = "toolStripMenuItem4";
-            toolStripMenuItem4.Size = new System.Drawing.Size(293, 22);
+            toolStripMenuItem4.Size = new System.Drawing.Size(273, 22);
             toolStripMenuItem4.Text = "更新の確認";
             // 
             // button4

@@ -14,10 +14,13 @@ namespace PowerCacheOffice
 
         public string ExcelDiffToolPath { get; set; }
         public string ExcelDiffToolArguments { get; set; }
+        public string ExcelDiffToolArgumentsForBackup { get; set; }
         public string WordDiffToolPath { get; set; }
         public string WordDiffToolArguments { get; set; }
+        public string WordDiffToolArgumentsForBackup { get; set; }
         public string PowerPointDiffToolPath { get; set; }
         public string PowerPointDiffToolArguments { get; set; }
+        public string PowerPointDiffToolArgumentsForBackup { get; set; }
 
         public bool IsRelatedExcel { get; set; }
         public bool IsRelatedWord { get; set; }
@@ -35,17 +38,20 @@ namespace PowerCacheOffice
 
         public AppSettings()
         {
-            Version = "2.0.0";
+            Version = "3.0.0";
             ExcelPath = @"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE";
             WordPath = @"C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE";
             PowerPointPath = @"C:\Program Files\Microsoft Office\root\Office16\POWERPNT.EXE";
 
             ExcelDiffToolPath = @"C:\Program Files\WinMerge\WinMergeU.exe";
             ExcelDiffToolArguments = @"/u /dl ""ローカル"" /dr ""リモート""";
+            ExcelDiffToolArgumentsForBackup = @"/u /dl ""オリジナル"" /dr ""バックアップ""";
             WordDiffToolPath = @"C:\Program Files\WinMerge\WinMergeU.exe";
             WordDiffToolArguments = @"/u /dl ""ローカル"" /dr ""リモート""";
+            WordDiffToolArgumentsForBackup = @"/u /dl ""オリジナル"" /dr ""バックアップ""";
             PowerPointDiffToolPath = @"C:\Program Files\WinMerge\WinMergeU.exe";
             PowerPointDiffToolArguments = @"/u /dl ""ローカル"" /dr ""リモート""";
+            PowerPointDiffToolArgumentsForBackup = @"/u /dl ""オリジナル"" /dr ""バックアップ""";
 
             IsRelatedExcel = true;
             IsRelatedWord = true;
@@ -106,6 +112,15 @@ namespace PowerCacheOffice
                 IsBackup = true;
 
                 this.Version = "2.0.0";
+            }
+
+            if (this.Version == "2.0.0")
+            {
+                ExcelDiffToolArgumentsForBackup = @"/u /dl ""オリジナル"" /dr ""バックアップ""";
+                WordDiffToolArgumentsForBackup = @"/u /dl ""オリジナル"" /dr ""バックアップ""";
+                PowerPointDiffToolArgumentsForBackup = @"/u /dl ""オリジナル"" /dr ""バックアップ""";
+
+                this.Version = "3.0.0";
             }
 
             if (this.ExcelPath == @"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE" ||

@@ -310,7 +310,7 @@ namespace PowerCacheOffice
             try
             {
                 var backupSettings = JsonSerializer.Deserialize<BackupSettings>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "backupSettings.json")));
-                foreach (var item in backupSettings.BackupRelations)
+                foreach (var item in backupSettings.BackupRelations.OrderByDescending(x => x.LastWriteTime))
                 {
                     var arr = new string[3] { item.LastWriteTime.ToString(), Path.GetFileName(item.OriginalFilePath), item.OriginalFilePath };
                     var listViewItem = new ListViewItem(arr);
@@ -330,7 +330,7 @@ namespace PowerCacheOffice
             try
             {
                 var backupSettings = JsonSerializer.Deserialize<BackupSettings>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "backupSettings.json")));
-                foreach (var item in backupSettings.BackupRelations)
+                foreach (var item in backupSettings.BackupRelations.OrderByDescending(x => x.LastWriteTime))
                 {
                     if (!item.OriginalFilePath.ToLower().Contains(text.ToLower())) continue;
 
@@ -455,39 +455,30 @@ namespace PowerCacheOffice
                 }
             };
 
-            listView1.Click += (s, eventArgs) =>
+            listView1.MouseUp += (s, eventArgs) =>
             {
                 if (listView1.SelectedItems.Count != 1) return;
-
-                var result = MessageBox.Show("以下のファイルを復元しますか？\n※現在のファイルは上書きされます。\n\n" +
-                    listView1.SelectedItems[0].SubItems[2].Text, "", MessageBoxButtons.YesNo);
-                if (result != DialogResult.Yes) return;
-
-                try
-                {
-                    var backupSettings = JsonSerializer.Deserialize<BackupSettings>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "backupSettings.json")));
-                    var backupRelations = backupSettings.BackupRelations.First(item => item.BackupFilePath == listView1.SelectedItems[0].Tag.ToString());
-
-                    File.Copy(backupRelations.BackupFilePath, backupRelations.OriginalFilePath, true);
-                    MessageBox.Show("バックアップからの復元に成功しました。");
-                }
-                catch { MessageBox.Show("バックアップからの復元に失敗しました。"); }
-            };
-
-            listBox1.MouseUp += (s, eventArgs) =>
-            {
-                if (listBox1.SelectedItems.Count != 1) return;
-                if (!listBox1.ClientRectangle.Contains(eventArgs.Location)) return;
+                if (!listView1.ClientRectangle.Contains(eventArgs.Location)) return;
 
                 if (eventArgs.Button == MouseButtons.Right)
                 {
-                    contextMenuStrip1.Show(listBox1.PointToScreen(eventArgs.Location));
-                    selectedListBox = listBox1;
+                    contextMenuStrip2.Show(listView1.PointToScreen(eventArgs.Location));
                 }
                 else
                 {
-                    mainForm.OpenRecentFile(listBox1.SelectedItem.ToString());
-                    this.Visible = false;
+                    var result = MessageBox.Show("以下のファイルを復元しますか？\n※現在のファイルは上書きされます。\n\n" +
+                    listView1.SelectedItems[0].SubItems[2].Text, "", MessageBoxButtons.YesNo);
+                    if (result != DialogResult.Yes) return;
+
+                    try
+                    {
+                        var backupSettings = JsonSerializer.Deserialize<BackupSettings>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "backupSettings.json")));
+                        var backupRelations = backupSettings.BackupRelations.First(item => item.BackupFilePath == listView1.SelectedItems[0].Tag.ToString());
+
+                        File.Copy(backupRelations.BackupFilePath, backupRelations.OriginalFilePath, true);
+                        MessageBox.Show("バックアップからの復元に成功しました。");
+                    }
+                    catch { MessageBox.Show("バックアップからの復元に失敗しました。"); }
                 }
             };
 
@@ -548,6 +539,28 @@ namespace PowerCacheOffice
             //     var result = MessageBox.Show("選択したアイテムを削除しますか？", Program.AppName, MessageBoxButtons.YesNo);
             //     if (result == DialogResult.Yes) selectedListBox.Items.Remove(item);
             // };
+
+            toolStripMenuItem5.Click += (s, eventArgs) =>
+            {
+                if (listView1.SelectedItems.Count != 1) return;
+
+                var backupSettings = JsonSerializer.Deserialize<BackupSettings>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "backupSettings.json")));
+                var backupRelations = backupSettings.BackupRelations.First(item => item.BackupFilePath == listView1.SelectedItems[0].Tag.ToString());
+
+                mainForm.ConfirmBackupFile(backupRelations.BackupFilePath);
+                this.Visible = false;
+            };
+
+            toolStripMenuItem6.Click += (s, eventArgs) =>
+            {
+                if (listView1.SelectedItems.Count != 1) return;
+
+                var backupSettings = JsonSerializer.Deserialize<BackupSettings>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "backupSettings.json")));
+                var backupRelations = backupSettings.BackupRelations.First(item => item.BackupFilePath == listView1.SelectedItems[0].Tag.ToString());
+
+                mainForm.ConfirmBackupFileAtDiffTool(backupRelations.BackupFilePath, backupRelations.OriginalFilePath);
+                this.Visible = false;
+            };
         }
 
         private void timer1_Tick(object sender, EventArgs e)

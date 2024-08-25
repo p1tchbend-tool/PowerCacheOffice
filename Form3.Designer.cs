@@ -34,7 +34,6 @@
             toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             tabControl1 = new System.Windows.Forms.TabControl();
             tabPage1 = new System.Windows.Forms.TabPage();
             tabPage2 = new System.Windows.Forms.TabPage();
@@ -54,9 +53,13 @@
             groupBox1 = new System.Windows.Forms.GroupBox();
             button1 = new System.Windows.Forms.Button();
             textBox1 = new System.Windows.Forms.TextBox();
+            contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(components);
+            toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
             contextMenuStrip1.SuspendLayout();
             tabControl1.SuspendLayout();
             groupBox1.SuspendLayout();
+            contextMenuStrip2.SuspendLayout();
             SuspendLayout();
             // 
             // listBox1
@@ -79,34 +82,27 @@
             contextMenuStrip1.BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
             contextMenuStrip1.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem2, toolStripMenuItem3, toolStripMenuItem4 });
+            contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem2, toolStripMenuItem3 });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new System.Drawing.Size(149, 92);
+            contextMenuStrip1.Size = new System.Drawing.Size(149, 70);
             // 
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new System.Drawing.Size(148, 22);
+            toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             toolStripMenuItem1.Text = "パスのコピー";
             // 
             // toolStripMenuItem2
             // 
             toolStripMenuItem2.Name = "toolStripMenuItem2";
-            toolStripMenuItem2.Size = new System.Drawing.Size(148, 22);
+            toolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
             toolStripMenuItem2.Text = "場所を開く";
             // 
             // toolStripMenuItem3
             // 
             toolStripMenuItem3.Name = "toolStripMenuItem3";
-            toolStripMenuItem3.Size = new System.Drawing.Size(148, 22);
+            toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
             toolStripMenuItem3.Text = "メニュー展開";
-            // 
-            // toolStripMenuItem4
-            // 
-            toolStripMenuItem4.Name = "toolStripMenuItem4";
-            toolStripMenuItem4.Size = new System.Drawing.Size(148, 22);
-            toolStripMenuItem4.Text = "削除";
-            toolStripMenuItem4.Visible = false;
             // 
             // tabControl1
             // 
@@ -294,6 +290,27 @@
             textBox1.Size = new System.Drawing.Size(583, 25);
             textBox1.TabIndex = 7;
             // 
+            // contextMenuStrip2
+            // 
+            contextMenuStrip2.BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
+            contextMenuStrip2.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            contextMenuStrip2.ImageScalingSize = new System.Drawing.Size(20, 20);
+            contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem5, toolStripMenuItem6 });
+            contextMenuStrip2.Name = "contextMenuStrip1";
+            contextMenuStrip2.Size = new System.Drawing.Size(181, 70);
+            // 
+            // toolStripMenuItem5
+            // 
+            toolStripMenuItem5.Name = "toolStripMenuItem5";
+            toolStripMenuItem5.Size = new System.Drawing.Size(160, 22);
+            toolStripMenuItem5.Text = "開いて確認する";
+            // 
+            // toolStripMenuItem6
+            // 
+            toolStripMenuItem6.Name = "toolStripMenuItem6";
+            toolStripMenuItem6.Size = new System.Drawing.Size(160, 22);
+            toolStripMenuItem6.Text = "差分比較する";
+            // 
             // Form3
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -317,6 +334,7 @@
             tabControl1.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            contextMenuStrip2.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -335,7 +353,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.ListBox listBox2;
@@ -348,5 +365,8 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
     }
 }

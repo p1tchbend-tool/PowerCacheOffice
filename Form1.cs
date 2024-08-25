@@ -215,7 +215,7 @@ namespace PowerCacheOffice
                             {
                                 if (!Directory.Exists(powerCacheOfficeTempFolder)) Directory.CreateDirectory(powerCacheOfficeTempFolder);
 
-                                var tempFile = Path.Combine(powerCacheOfficeTempFolder, "【差分確認】" + Path.GetFileName(cacheRelation.RemotePath));
+                                var tempFile = Path.Combine(powerCacheOfficeTempFolder, "【確認用】" + Path.GetFileName(cacheRelation.RemotePath));
                                 File.Copy(cacheRelation.RemotePath, tempFile, true);
 
                                 ProcessStartInfo psi = new ProcessStartInfo();
@@ -1269,6 +1269,78 @@ namespace PowerCacheOffice
                 }
             }
             catch { }
+        }
+
+        public void ConfirmBackupFile(string backupFilePath)
+        {
+            try
+            {
+                if (!Directory.Exists(powerCacheOfficeTempFolder)) Directory.CreateDirectory(powerCacheOfficeTempFolder);
+
+                var tempFile = Path.Combine(powerCacheOfficeTempFolder, "【確認用】" + Path.GetFileName(backupFilePath));
+                File.Copy(backupFilePath, tempFile, true);
+
+                ProcessStartInfo psi = new ProcessStartInfo();
+                psi.UseShellExecute = true;
+                psi.Arguments = $@"""{tempFile}""";
+
+                var extension = Path.GetExtension(tempFile).ToLower();
+                if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm" || extension == ".ods")
+                {
+                    psi.FileName = appSettings.ExcelPath;
+                }
+                else if (extension == ".doc" || extension == ".docx" || extension == ".docm" || extension == ".odt")
+                {
+                    psi.FileName = appSettings.WordPath;
+                }
+                else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm" || extension == ".odp")
+                {
+                    psi.FileName = appSettings.PowerPointPath;
+                }
+
+                var process = Process.Start(psi);
+                SetProcessWindowAsForeground(process);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
+        }
+
+        public void ConfirmBackupFileAtDiffTool(string backupFilePath, string originalFilePath)
+        {
+            try
+            {
+                if (!Directory.Exists(powerCacheOfficeTempFolder)) Directory.CreateDirectory(powerCacheOfficeTempFolder);
+
+                var tempFileBackup = Path.Combine(powerCacheOfficeTempFolder, "【バックアップ】" + Path.GetFileName(backupFilePath));
+                File.Copy(backupFilePath, tempFileBackup, true);
+
+                var tempFileOriginal = Path.Combine(powerCacheOfficeTempFolder, "【オリジナル】" + Path.GetFileName(originalFilePath));
+                File.Copy(originalFilePath, tempFileOriginal, true);
+
+                ProcessStartInfo psi = new ProcessStartInfo();
+                psi.UseShellExecute = true;
+                psi.Arguments = $@"""{tempFileOriginal}"" ""{tempFileBackup}""";
+
+                var extension = Path.GetExtension(tempFileOriginal).ToLower();
+                if (extension == ".xls" || extension == ".xlsx" || extension == ".xlsm" || extension == ".ods")
+                {
+                    psi.FileName = appSettings.ExcelDiffToolPath;
+                    psi.Arguments += " " + appSettings.ExcelDiffToolArgumentsForBackup;
+                }
+                else if (extension == ".doc" || extension == ".docx" || extension == ".docm" || extension == ".odt")
+                {
+                    psi.FileName = appSettings.WordDiffToolPath;
+                    psi.Arguments += " " + appSettings.WordDiffToolArgumentsForBackup;
+                }
+                else if (extension == ".ppt" || extension == ".pptx" || extension == ".pptm" || extension == ".odp")
+                {
+                    psi.FileName = appSettings.PowerPointDiffToolPath;
+                    psi.Arguments += " " + appSettings.PowerPointDiffToolArgumentsForBackup;
+                }
+
+                var process = Process.Start(psi);
+                SetProcessWindowAsForeground(process);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
         }
     }
 }

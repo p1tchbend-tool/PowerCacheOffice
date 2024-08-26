@@ -24,6 +24,7 @@ namespace PowerCacheOffice
             Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
             WriteIndented = true
         };
+        private List<string> recentOfficeFiles = new List<string>();
         private List<string> recentFiles = new List<string>();
         private Point mousePosition = new Point();
         private Form1 mainForm = null;
@@ -66,9 +67,9 @@ namespace PowerCacheOffice
             if (!Directory.Exists(powerCacheOfficeLaunchDataFolder)) Directory.CreateDirectory(powerCacheOfficeLaunchDataFolder);
             try
             {
-                recentFiles = JsonSerializer.Deserialize<List<string>>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json")));
+                recentOfficeFiles = JsonSerializer.Deserialize<List<string>>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json")));
             }
-            catch { recentFiles = new List<string>(); }
+            catch { recentOfficeFiles = new List<string>(); }
 
             InitializeComponent();
 
@@ -173,18 +174,18 @@ namespace PowerCacheOffice
                 mainForm.OnRecentFilesAdded += (sender, eventArgs) =>
                 {
                     var recentFile = ((Form1.RecentFilesAddedEventArgs)eventArgs).RecentFile;
-                    recentFiles.RemoveAll(x => x == recentFile);
-                    recentFiles.Add(recentFile);
-                    if (recentFiles.Count > 100) recentFiles.RemoveRange(100, recentFiles.Count - 100);
+                    recentOfficeFiles.RemoveAll(x => x == recentFile);
+                    recentOfficeFiles.Add(recentFile);
+                    if (recentOfficeFiles.Count > 100) recentOfficeFiles.RemoveRange(100, recentOfficeFiles.Count - 100);
                     try
                     {
-                        File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json"), JsonSerializer.Serialize(recentFiles, jsonSerializerOptions));
+                        File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json"), JsonSerializer.Serialize(recentOfficeFiles, jsonSerializerOptions));
                     }
                     catch { }
 
                     listBox1.BeginUpdate();
                     listBox1.Items.Clear();
-                    foreach (var item in recentFiles.AsEnumerable().Reverse())
+                    foreach (var item in recentOfficeFiles.AsEnumerable().Reverse())
                     {
                         listBox1.Items.Add(item);
                     }
@@ -243,14 +244,22 @@ namespace PowerCacheOffice
                 }
             };
 
+            Directory.EnumerateFiles(Environment.GetFolderPath(Environment.SpecialFolder.Recent), "*")
+                .OrderByDescending(filePath => File.GetLastWriteTime(filePath).Date)
+                .ThenByDescending(filePath => File.GetLastWriteTime(filePath).TimeOfDay)
+                .Distinct()
+                .ToList()
+                .ForEach(item => recentFiles.Add(GetSourcePathFromShortcutFile(item)));
+
             timer1.Start();
+            timer2.Start();
         }
 
         private void InitializeListBox1()
         {
             listBox1.BeginUpdate();
             listBox1.Items.Clear();
-            foreach (var item in recentFiles.AsEnumerable().Reverse())
+            foreach (var item in recentOfficeFiles.AsEnumerable().Reverse())
             {
                 listBox1.Items.Add(item);
             }
@@ -261,7 +270,7 @@ namespace PowerCacheOffice
         {
             listBox1.BeginUpdate();
             listBox1.Items.Clear();
-            foreach (var item in recentFiles.AsEnumerable().Reverse())
+            foreach (var item in recentOfficeFiles.AsEnumerable().Reverse())
             {
                 if (item.ToLower().Contains(text.ToLower())) listBox1.Items.Add(item);
             }
@@ -272,14 +281,9 @@ namespace PowerCacheOffice
         {
             listBox2.BeginUpdate();
             listBox2.Items.Clear();
-            var items = Directory.EnumerateFiles(Environment.GetFolderPath(Environment.SpecialFolder.Recent), "*")
-                .OrderByDescending(filePath => File.GetLastWriteTime(filePath).Date)
-                .ThenByDescending(filePath => File.GetLastWriteTime(filePath).TimeOfDay)
-                .Distinct()
-                .ToList();
-            foreach (var item in items)
+
+            foreach (var file in recentFiles)
             {
-                var file = GetSourcePathFromShortcutFile(item);
                 if (!string.IsNullOrEmpty(file) && !isOfficeFile(file)) listBox2.Items.Add(file);
             }
             listBox2.EndUpdate();
@@ -289,14 +293,9 @@ namespace PowerCacheOffice
         {
             listBox2.BeginUpdate();
             listBox2.Items.Clear();
-            var items = Directory.EnumerateFiles(Environment.GetFolderPath(Environment.SpecialFolder.Recent), "*")
-                .OrderByDescending(filePath => File.GetLastWriteTime(filePath).Date)
-                .ThenByDescending(filePath => File.GetLastWriteTime(filePath).TimeOfDay)
-                .Distinct()
-                .ToList();
-            foreach (var item in items)
+
+            foreach (var file in recentFiles)
             {
-                var file = GetSourcePathFromShortcutFile(item);
                 if (!string.IsNullOrEmpty(file) && !isOfficeFile(file) &&
                     file.ToLower().Contains(text.ToLower())) listBox2.Items.Add(file);
             }
@@ -467,7 +466,7 @@ namespace PowerCacheOffice
                 else
                 {
                     var result = MessageBox.Show("以下のファイルを復元しますか？\n※現在のファイルは上書きされます。\n\n" +
-                    listView1.SelectedItems[0].SubItems[2].Text, "", MessageBoxButtons.YesNo);
+                    listView1.SelectedItems[0].SubItems[2].Text, Program.AppName, MessageBoxButtons.YesNo);
                     if (result != DialogResult.Yes) return;
 
                     try
@@ -476,9 +475,9 @@ namespace PowerCacheOffice
                         var backupRelations = backupSettings.BackupRelations.First(item => item.BackupFilePath == listView1.SelectedItems[0].Tag.ToString());
 
                         File.Copy(backupRelations.BackupFilePath, backupRelations.OriginalFilePath, true);
-                        MessageBox.Show("バックアップからの復元に成功しました。");
+                        MessageBox.Show("バックアップからの復元に成功しました。", Program.AppName);
                     }
-                    catch { MessageBox.Show("バックアップからの復元に失敗しました。"); }
+                    catch { MessageBox.Show("バックアップからの復元に失敗しました。", Program.AppName); }
                 }
             };
 
@@ -575,6 +574,20 @@ namespace PowerCacheOffice
                     break;
                 }
             }
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            var _recentFiles = new List<string>();
+
+            Directory.EnumerateFiles(Environment.GetFolderPath(Environment.SpecialFolder.Recent), "*")
+                .OrderByDescending(filePath => File.GetLastWriteTime(filePath).Date)
+                .ThenByDescending(filePath => File.GetLastWriteTime(filePath).TimeOfDay)
+                .Distinct()
+                .ToList()
+                .ForEach(item => _recentFiles.Add(GetSourcePathFromShortcutFile(item)));
+
+            recentFiles = _recentFiles;
         }
 
         private void SaveLaunchViews()

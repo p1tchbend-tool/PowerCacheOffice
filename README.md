@@ -89,7 +89,7 @@ PCの容量が不足した場合等に実施してください。
 * 大量のファイルをキャッシュすると、PCの容量が不足する可能性があります。
 
 ## インストール
-[PowerCacheOfficeSetup.msi](https://github.com/p1tchbend-tool/PowerCacheOffice/tree/master/App) を実行してインストールします。
+[PowerCacheOfficeSetup.msi](https://github.com/p1tchbend-tool/PowerCacheOffice/releases/latest) を実行してインストールします。
 
 ## セットアップ
 アプリを実行するとタスクトレイに常駐します。  

@@ -74,12 +74,18 @@
             label8 = new System.Windows.Forms.Label();
             panel5 = new System.Windows.Forms.Panel();
             panel4 = new System.Windows.Forms.Panel();
+            groupBox4 = new System.Windows.Forms.GroupBox();
+            groupBox5 = new System.Windows.Forms.GroupBox();
+            groupBox6 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).BeginInit();
             contextMenuStrip1.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
             contextMenuStrip2.SuspendLayout();
+            groupBox4.SuspendLayout();
+            groupBox5.SuspendLayout();
+            groupBox6.SuspendLayout();
             SuspendLayout();
             // 
             // listBox1
@@ -155,7 +161,7 @@
             contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem7, toolStripMenuItem2, toolStripMenuItem3, toolStripMenuItem4 });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new System.Drawing.Size(274, 136);
+            contextMenuStrip1.Size = new System.Drawing.Size(274, 114);
             // 
             // toolStripMenuItem1
             // 
@@ -200,10 +206,10 @@
             button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             button4.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             button4.ForeColor = System.Drawing.Color.Black;
-            button4.Location = new System.Drawing.Point(522, 468);
+            button4.Location = new System.Drawing.Point(428, 25);
             button4.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             button4.Name = "button4";
-            button4.Size = new System.Drawing.Size(150, 24);
+            button4.Size = new System.Drawing.Size(200, 24);
             button4.TabIndex = 11;
             button4.Text = "キャッシュを削除";
             button4.UseVisualStyleBackColor = false;
@@ -215,10 +221,10 @@
             button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             button5.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             button5.ForeColor = System.Drawing.Color.Black;
-            button5.Location = new System.Drawing.Point(201, 468);
+            button5.Location = new System.Drawing.Point(8, 25);
             button5.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             button5.Name = "button5";
-            button5.Size = new System.Drawing.Size(150, 24);
+            button5.Size = new System.Drawing.Size(200, 24);
             button5.TabIndex = 12;
             button5.Text = "インデックスを再作成";
             button5.UseVisualStyleBackColor = false;
@@ -321,12 +327,12 @@
             button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             button3.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             button3.ForeColor = System.Drawing.Color.Black;
-            button3.Location = new System.Drawing.Point(522, 500);
+            button3.Location = new System.Drawing.Point(570, 21);
             button3.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             button3.Name = "button3";
-            button3.Size = new System.Drawing.Size(150, 24);
+            button3.Size = new System.Drawing.Size(90, 24);
             button3.TabIndex = 15;
-            button3.Text = "キャッシュを事前作成";
+            button3.Text = "事前作成";
             button3.UseVisualStyleBackColor = false;
             button3.Click += button3_Click;
             // 
@@ -336,17 +342,17 @@
             textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             textBox3.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             textBox3.ForeColor = System.Drawing.Color.Black;
-            textBox3.Location = new System.Drawing.Point(101, 499);
+            textBox3.Location = new System.Drawing.Point(97, 21);
             textBox3.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             textBox3.Name = "textBox3";
-            textBox3.Size = new System.Drawing.Size(410, 25);
+            textBox3.Size = new System.Drawing.Size(463, 25);
             textBox3.TabIndex = 16;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.ForeColor = System.Drawing.Color.Black;
-            label3.Location = new System.Drawing.Point(12, 503);
+            label3.Location = new System.Drawing.Point(8, 24);
             label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(85, 18);
@@ -355,7 +361,7 @@
             // 
             // progressBar1
             // 
-            progressBar1.Location = new System.Drawing.Point(20, 535);
+            progressBar1.Location = new System.Drawing.Point(8, 53);
             progressBar1.Name = "progressBar1";
             progressBar1.Size = new System.Drawing.Size(652, 23);
             progressBar1.TabIndex = 18;
@@ -369,7 +375,7 @@
             // 
             label4.BackColor = System.Drawing.Color.FromArgb(230, 230, 230);
             label4.ForeColor = System.Drawing.Color.FromArgb(33, 33, 33);
-            label4.Location = new System.Drawing.Point(25, 537);
+            label4.Location = new System.Drawing.Point(13, 55);
             label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(402, 19);
@@ -384,9 +390,9 @@
             groupBox3.Controls.Add(label5);
             groupBox3.Controls.Add(textBox5);
             groupBox3.Controls.Add(textBox4);
-            groupBox3.Location = new System.Drawing.Point(12, 366);
+            groupBox3.Location = new System.Drawing.Point(12, 453);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new System.Drawing.Size(460, 95);
+            groupBox3.Size = new System.Drawing.Size(455, 105);
             groupBox3.TabIndex = 20;
             groupBox3.TabStop = false;
             groupBox3.Text = "ホットキー";
@@ -436,7 +442,7 @@
             // checkBox4
             // 
             checkBox4.AutoSize = true;
-            checkBox4.Location = new System.Drawing.Point(483, 375);
+            checkBox4.Location = new System.Drawing.Point(6, 22);
             checkBox4.Name = "checkBox4";
             checkBox4.Size = new System.Drawing.Size(171, 22);
             checkBox4.TabIndex = 22;
@@ -447,7 +453,7 @@
             // checkBox5
             // 
             checkBox5.AutoSize = true;
-            checkBox5.Location = new System.Drawing.Point(483, 431);
+            checkBox5.Location = new System.Drawing.Point(6, 77);
             checkBox5.Name = "checkBox5";
             checkBox5.Size = new System.Drawing.Size(183, 22);
             checkBox5.TabIndex = 23;
@@ -492,10 +498,10 @@
             button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             button8.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             button8.ForeColor = System.Drawing.Color.Black;
-            button8.Location = new System.Drawing.Point(361, 468);
+            button8.Location = new System.Drawing.Point(218, 25);
             button8.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             button8.Name = "button8";
-            button8.Size = new System.Drawing.Size(150, 24);
+            button8.Size = new System.Drawing.Size(200, 24);
             button8.TabIndex = 27;
             button8.Text = "バックアップを削除";
             button8.UseVisualStyleBackColor = false;
@@ -504,7 +510,7 @@
             // checkBox6
             // 
             checkBox6.AutoSize = true;
-            checkBox6.Location = new System.Drawing.Point(483, 403);
+            checkBox6.Location = new System.Drawing.Point(6, 50);
             checkBox6.Name = "checkBox6";
             checkBox6.Size = new System.Drawing.Size(195, 22);
             checkBox6.TabIndex = 28;
@@ -542,30 +548,60 @@
             panel4.Size = new System.Drawing.Size(30, 30);
             panel4.TabIndex = 25;
             // 
+            // groupBox4
+            // 
+            groupBox4.Controls.Add(label4);
+            groupBox4.Controls.Add(textBox3);
+            groupBox4.Controls.Add(button3);
+            groupBox4.Controls.Add(label3);
+            groupBox4.Controls.Add(progressBar1);
+            groupBox4.Location = new System.Drawing.Point(12, 362);
+            groupBox4.Name = "groupBox4";
+            groupBox4.Size = new System.Drawing.Size(670, 85);
+            groupBox4.TabIndex = 31;
+            groupBox4.TabStop = false;
+            groupBox4.Text = "キャッシュ事前作成";
+            // 
+            // groupBox5
+            // 
+            groupBox5.Controls.Add(button5);
+            groupBox5.Controls.Add(button8);
+            groupBox5.Controls.Add(button4);
+            groupBox5.Location = new System.Drawing.Point(12, 564);
+            groupBox5.Name = "groupBox5";
+            groupBox5.Size = new System.Drawing.Size(670, 60);
+            groupBox5.TabIndex = 32;
+            groupBox5.TabStop = false;
+            groupBox5.Text = "クリーンアップ";
+            // 
+            // groupBox6
+            // 
+            groupBox6.Controls.Add(checkBox4);
+            groupBox6.Controls.Add(checkBox6);
+            groupBox6.Controls.Add(checkBox5);
+            groupBox6.Location = new System.Drawing.Point(478, 453);
+            groupBox6.Name = "groupBox6";
+            groupBox6.Size = new System.Drawing.Size(204, 105);
+            groupBox6.TabIndex = 10;
+            groupBox6.TabStop = false;
+            groupBox6.Text = "共通設定";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
-            ClientSize = new System.Drawing.Size(694, 571);
-            Controls.Add(label4);
+            ClientSize = new System.Drawing.Size(694, 631);
+            Controls.Add(groupBox6);
+            Controls.Add(groupBox5);
+            Controls.Add(groupBox4);
             Controls.Add(panel5);
             Controls.Add(label8);
-            Controls.Add(checkBox6);
-            Controls.Add(button8);
             Controls.Add(panel4);
             Controls.Add(label7);
-            Controls.Add(button5);
-            Controls.Add(checkBox5);
-            Controls.Add(checkBox4);
             Controls.Add(groupBox3);
-            Controls.Add(label3);
-            Controls.Add(textBox3);
-            Controls.Add(button3);
             Controls.Add(groupBox1);
-            Controls.Add(button4);
             Controls.Add(groupBox2);
-            Controls.Add(progressBar1);
             DoubleBuffered = true;
             Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -585,8 +621,12 @@
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
             contextMenuStrip2.ResumeLayout(false);
+            groupBox4.ResumeLayout(false);
+            groupBox4.PerformLayout();
+            groupBox5.ResumeLayout(false);
+            groupBox6.ResumeLayout(false);
+            groupBox6.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -635,6 +675,9 @@
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem7;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.GroupBox groupBox6;
     }
 }
 

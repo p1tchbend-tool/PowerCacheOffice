@@ -165,9 +165,9 @@
             label2.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             label2.Location = new System.Drawing.Point(8, 60);
             label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(161, 18);
+            label2.Size = new System.Drawing.Size(254, 18);
             label2.TabIndex = 3;
-            label2.Text = "最近開いたOfficeファイル：";
+            label2.Text = "最近開いたファイル (Power Cache Office)：";
             // 
             // timer1
             // 
@@ -194,9 +194,9 @@
             label3.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             label3.Location = new System.Drawing.Point(8, 210);
             label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(128, 18);
+            label3.Size = new System.Drawing.Size(238, 18);
             label3.TabIndex = 4;
-            label3.Text = "最近開いたファイル：";
+            label3.Text = "最近開いたファイル (エクスプローラー)：";
             // 
             // label4
             // 
@@ -311,7 +311,7 @@
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
-            ClientSize = new System.Drawing.Size(714, 736);
+            ClientSize = new System.Drawing.Size(714, 741);
             Controls.Add(groupBox1);
             Controls.Add(tabControl1);
             DoubleBuffered = true;

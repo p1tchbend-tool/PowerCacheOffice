@@ -100,7 +100,7 @@
             listBox1.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             listBox1.Name = "listBox1";
             listBox1.ScrollAlwaysVisible = true;
-            listBox1.Size = new System.Drawing.Size(652, 112);
+            listBox1.Size = new System.Drawing.Size(665, 112);
             listBox1.TabIndex = 0;
             // 
             // textBox1
@@ -112,7 +112,7 @@
             textBox1.Location = new System.Drawing.Point(8, 43);
             textBox1.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             textBox1.Name = "textBox1";
-            textBox1.Size = new System.Drawing.Size(620, 25);
+            textBox1.Size = new System.Drawing.Size(635, 25);
             textBox1.TabIndex = 5;
             // 
             // label1
@@ -138,7 +138,7 @@
             button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             button1.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             button1.ForeColor = System.Drawing.Color.Black;
-            button1.Location = new System.Drawing.Point(636, 42);
+            button1.Location = new System.Drawing.Point(649, 43);
             button1.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(24, 24);
@@ -206,7 +206,7 @@
             button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             button4.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             button4.ForeColor = System.Drawing.Color.Black;
-            button4.Location = new System.Drawing.Point(428, 25);
+            button4.Location = new System.Drawing.Point(472, 25);
             button4.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             button4.Name = "button4";
             button4.Size = new System.Drawing.Size(200, 24);
@@ -240,7 +240,7 @@
             groupBox1.Controls.Add(panel1);
             groupBox1.Location = new System.Drawing.Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(560, 133);
+            groupBox1.Size = new System.Drawing.Size(570, 133);
             groupBox1.TabIndex = 13;
             groupBox1.TabStop = false;
             groupBox1.Text = "関連付け";
@@ -316,7 +316,7 @@
             groupBox2.Controls.Add(button1);
             groupBox2.Location = new System.Drawing.Point(12, 151);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new System.Drawing.Size(670, 205);
+            groupBox2.Size = new System.Drawing.Size(680, 205);
             groupBox2.TabIndex = 14;
             groupBox2.TabStop = false;
             groupBox2.Text = "キャッシュ対象フォルダ";
@@ -327,7 +327,7 @@
             button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             button3.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             button3.ForeColor = System.Drawing.Color.Black;
-            button3.Location = new System.Drawing.Point(570, 21);
+            button3.Location = new System.Drawing.Point(583, 21);
             button3.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             button3.Name = "button3";
             button3.Size = new System.Drawing.Size(90, 24);
@@ -345,7 +345,7 @@
             textBox3.Location = new System.Drawing.Point(97, 21);
             textBox3.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             textBox3.Name = "textBox3";
-            textBox3.Size = new System.Drawing.Size(463, 25);
+            textBox3.Size = new System.Drawing.Size(477, 25);
             textBox3.TabIndex = 16;
             // 
             // label3
@@ -363,7 +363,7 @@
             // 
             progressBar1.Location = new System.Drawing.Point(8, 53);
             progressBar1.Name = "progressBar1";
-            progressBar1.Size = new System.Drawing.Size(652, 23);
+            progressBar1.Size = new System.Drawing.Size(665, 23);
             progressBar1.TabIndex = 18;
             // 
             // timer1
@@ -392,7 +392,7 @@
             groupBox3.Controls.Add(textBox4);
             groupBox3.Location = new System.Drawing.Point(12, 453);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new System.Drawing.Size(455, 105);
+            groupBox3.Size = new System.Drawing.Size(455, 110);
             groupBox3.TabIndex = 20;
             groupBox3.TabStop = false;
             groupBox3.Text = "ホットキー";
@@ -485,7 +485,7 @@
             // label7
             // 
             label7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            label7.Location = new System.Drawing.Point(582, 20);
+            label7.Location = new System.Drawing.Point(592, 21);
             label7.Name = "label7";
             label7.Size = new System.Drawing.Size(100, 40);
             label7.TabIndex = 26;
@@ -498,7 +498,7 @@
             button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             button8.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             button8.ForeColor = System.Drawing.Color.Black;
-            button8.Location = new System.Drawing.Point(218, 25);
+            button8.Location = new System.Drawing.Point(243, 25);
             button8.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             button8.Name = "button8";
             button8.Size = new System.Drawing.Size(200, 24);
@@ -521,7 +521,7 @@
             // label8
             // 
             label8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            label8.Location = new System.Drawing.Point(582, 72);
+            label8.Location = new System.Drawing.Point(592, 70);
             label8.Name = "label8";
             label8.Size = new System.Drawing.Size(100, 40);
             label8.TabIndex = 29;
@@ -533,7 +533,7 @@
             panel5.BackColor = System.Drawing.Color.Transparent;
             panel5.BackgroundImage = Properties.Resources.update;
             panel5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            panel5.Location = new System.Drawing.Point(650, 80);
+            panel5.Location = new System.Drawing.Point(660, 78);
             panel5.Name = "panel5";
             panel5.Size = new System.Drawing.Size(25, 25);
             panel5.TabIndex = 30;
@@ -543,7 +543,7 @@
             panel4.BackColor = System.Drawing.Color.Transparent;
             panel4.BackgroundImage = Properties.Resources.moon;
             panel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            panel4.Location = new System.Drawing.Point(645, 25);
+            panel4.Location = new System.Drawing.Point(655, 26);
             panel4.Name = "panel4";
             panel4.Size = new System.Drawing.Size(30, 30);
             panel4.TabIndex = 25;
@@ -557,7 +557,7 @@
             groupBox4.Controls.Add(progressBar1);
             groupBox4.Location = new System.Drawing.Point(12, 362);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new System.Drawing.Size(670, 85);
+            groupBox4.Size = new System.Drawing.Size(680, 85);
             groupBox4.TabIndex = 31;
             groupBox4.TabStop = false;
             groupBox4.Text = "キャッシュ事前作成";
@@ -567,9 +567,9 @@
             groupBox5.Controls.Add(button5);
             groupBox5.Controls.Add(button8);
             groupBox5.Controls.Add(button4);
-            groupBox5.Location = new System.Drawing.Point(12, 564);
+            groupBox5.Location = new System.Drawing.Point(12, 569);
             groupBox5.Name = "groupBox5";
-            groupBox5.Size = new System.Drawing.Size(670, 60);
+            groupBox5.Size = new System.Drawing.Size(680, 60);
             groupBox5.TabIndex = 32;
             groupBox5.TabStop = false;
             groupBox5.Text = "クリーンアップ";
@@ -581,7 +581,7 @@
             groupBox6.Controls.Add(checkBox5);
             groupBox6.Location = new System.Drawing.Point(478, 453);
             groupBox6.Name = "groupBox6";
-            groupBox6.Size = new System.Drawing.Size(204, 105);
+            groupBox6.Size = new System.Drawing.Size(214, 110);
             groupBox6.TabIndex = 10;
             groupBox6.TabStop = false;
             groupBox6.Text = "共通設定";
@@ -591,7 +591,7 @@
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             BackColor = System.Drawing.Color.FromArgb(243, 243, 243);
-            ClientSize = new System.Drawing.Size(694, 631);
+            ClientSize = new System.Drawing.Size(704, 641);
             Controls.Add(groupBox6);
             Controls.Add(groupBox5);
             Controls.Add(groupBox4);

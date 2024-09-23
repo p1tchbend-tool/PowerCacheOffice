@@ -18,13 +18,13 @@ namespace PowerCacheOffice
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice");
         private static readonly string powerCacheOfficeLaunchDataFolder = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice\launch");
+        private static readonly int maxItemCount = 1000;
 
         private JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
         {
             Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
             WriteIndented = true
         };
-        private List<string> recentOfficeFiles = new List<string>();
         private List<string> recentFiles = new List<string>();
         private Point mousePosition = new Point();
         private Form1 mainForm = null;
@@ -63,13 +63,6 @@ namespace PowerCacheOffice
             launchView3 = new LaunchView(mainForm, this);
             launchView4 = new LaunchView(mainForm, this);
             launchView5 = new LaunchView(mainForm, this);
-
-            if (!Directory.Exists(powerCacheOfficeLaunchDataFolder)) Directory.CreateDirectory(powerCacheOfficeLaunchDataFolder);
-            try
-            {
-                recentOfficeFiles = JsonSerializer.Deserialize<List<string>>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json")));
-            }
-            catch { recentOfficeFiles = new List<string>(); }
 
             InitializeComponent();
 
@@ -171,28 +164,7 @@ namespace PowerCacheOffice
 
             this.Shown += (s, e) =>
             {
-                mainForm.OnRecentFilesAdded += (sender, eventArgs) =>
-                {
-                    var recentFile = ((Form1.RecentFilesAddedEventArgs)eventArgs).RecentFile;
-                    recentOfficeFiles.RemoveAll(x => x == recentFile);
-                    recentOfficeFiles.Add(recentFile);
-                    if (recentOfficeFiles.Count > 100) recentOfficeFiles.RemoveRange(100, recentOfficeFiles.Count - 100);
-                    try
-                    {
-                        File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json"), JsonSerializer.Serialize(recentOfficeFiles, jsonSerializerOptions));
-                    }
-                    catch { }
-
-                    listBox1.BeginUpdate();
-                    listBox1.Items.Clear();
-                    foreach (var item in recentOfficeFiles.AsEnumerable().Reverse())
-                    {
-                        listBox1.Items.Add(item);
-                    }
-                    listBox1.EndUpdate();
-                };
-
-                listBox1.Focus();
+                textBox1.Focus();
                 NativeMethods.SetForegroundWindow(this.Handle);
             };
 
@@ -259,10 +231,16 @@ namespace PowerCacheOffice
         {
             listBox1.BeginUpdate();
             listBox1.Items.Clear();
-            foreach (var item in recentOfficeFiles.AsEnumerable().Reverse())
+            try
             {
-                listBox1.Items.Add(item);
+                var recentOfficeFiles = JsonSerializer.Deserialize<List<string>>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json")));
+                foreach (var item in recentOfficeFiles.AsEnumerable().Reverse())
+                {
+                    listBox1.Items.Add(item);
+                    if (listBox1.Items.Count > maxItemCount) break;
+                }
             }
+            catch { }
             listBox1.EndUpdate();
         }
 
@@ -270,10 +248,16 @@ namespace PowerCacheOffice
         {
             listBox1.BeginUpdate();
             listBox1.Items.Clear();
-            foreach (var item in recentOfficeFiles.AsEnumerable().Reverse())
+            try
             {
-                if (item.ToLower().Contains(text.ToLower())) listBox1.Items.Add(item);
+                var recentOfficeFiles = JsonSerializer.Deserialize<List<string>>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json")));
+                foreach (var item in recentOfficeFiles.AsEnumerable().Reverse())
+                {
+                    if (item.ToLower().Contains(text.ToLower())) listBox1.Items.Add(item);
+                    if (listBox1.Items.Count > maxItemCount) break;
+                }
             }
+            catch { }
             listBox1.EndUpdate();
         }
 
@@ -284,7 +268,12 @@ namespace PowerCacheOffice
 
             foreach (var file in recentFiles)
             {
-                if (!string.IsNullOrEmpty(file) && !isOfficeFile(file)) listBox2.Items.Add(file);
+                if (string.IsNullOrEmpty(file)) continue;
+                if (isOfficeFile(file)) continue;
+                if (file.ToLower().StartsWith(powerCacheOfficeDataFolder.ToLower())) continue;
+
+                listBox2.Items.Add(file);
+                if (listBox2.Items.Count > maxItemCount) break;
             }
             listBox2.EndUpdate();
         }
@@ -296,8 +285,12 @@ namespace PowerCacheOffice
 
             foreach (var file in recentFiles)
             {
-                if (!string.IsNullOrEmpty(file) && !isOfficeFile(file) &&
-                    file.ToLower().Contains(text.ToLower())) listBox2.Items.Add(file);
+                if (string.IsNullOrEmpty(file)) continue;
+                if (isOfficeFile(file)) continue;
+                if (file.ToLower().StartsWith(powerCacheOfficeDataFolder.ToLower())) continue;
+
+                if (file.ToLower().Contains(text.ToLower())) listBox2.Items.Add(file);
+                if (listBox2.Items.Count > maxItemCount) break;
             }
             listBox2.EndUpdate();
         }
@@ -315,6 +308,7 @@ namespace PowerCacheOffice
                     var listViewItem = new ListViewItem(arr);
                     listViewItem.Tag = item.BackupFilePath;
                     listView1.Items.Add(listViewItem);
+                    if (listView1.Items.Count > maxItemCount) break;
                 }
             }
             catch { }
@@ -337,6 +331,7 @@ namespace PowerCacheOffice
                     var listViewItem = new ListViewItem(arr);
                     listViewItem.Tag = item.BackupFilePath;
                     listView1.Items.Add(listViewItem);
+                    if (listView1.Items.Count > maxItemCount) break;
                 }
             }
             catch { }
@@ -657,8 +652,13 @@ namespace PowerCacheOffice
                 this.Icon = Properties.Resources.PowerCacheOfficeLaunchBlack;
             }
 
+            InitializeListBox1();
             InitializeListBox2();
+            InitializeListView1();
+
+            textBox1.Text = string.Empty;
             textBox1.Focus();
+
             NativeMethods.SetForegroundWindow(this.Handle);
             this.Visible = true;
         }

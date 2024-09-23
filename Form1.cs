@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -15,15 +16,15 @@ namespace PowerCacheOffice
 {
     internal partial class Form1 : Form
     {
-        public event EventHandler OnRecentFilesAdded = delegate { };
-        public class RecentFilesAddedEventArgs : EventArgs
-        {
-            public string RecentFile;
-            public RecentFilesAddedEventArgs(string recentFile)
-            {
-                RecentFile = recentFile;
-            }
-        }
+        // public event EventHandler OnRecentFilesAdded = delegate { };
+        // public class RecentFilesAddedEventArgs : EventArgs
+        // {
+        //     public string RecentFile;
+        //     public RecentFilesAddedEventArgs(string recentFile)
+        //     {
+        //         RecentFile = recentFile;
+        //     }
+        // }
 
         private static readonly string powerCacheOfficeDataFolder = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"PowerCacheOffice");
@@ -36,6 +37,7 @@ namespace PowerCacheOffice
 
         private static readonly int openClipboardPathId = 1;
         private static readonly int openRecentFileId = 2;
+        private static readonly int maxItemCount = 1000;
         private static HotKey hotKey = new HotKey();
         private static Form3 launchForm = null;
 
@@ -49,6 +51,7 @@ namespace PowerCacheOffice
             Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
             WriteIndented = true
         };
+        private List<string> recentOfficeFiles = new List<string>();
         private HttpClient httpClient = new HttpClient();
         private bool isUpdating = false;
         private bool isCacheCreating = false;
@@ -156,6 +159,12 @@ namespace PowerCacheOffice
                     catch { }
                 }
             }
+
+            try
+            {
+                recentOfficeFiles = JsonSerializer.Deserialize<List<string>>(File.ReadAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json")));
+            }
+            catch { recentOfficeFiles = new List<string>(); }
 
             if (checkBox5.Checked) DeleteAllCache();
         }
@@ -546,7 +555,14 @@ namespace PowerCacheOffice
                     extension != ".doc" && extension != ".docx" && extension != ".docm" && extension != ".odt" &&
                     extension != ".ppt" && extension != ".pptx" && extension != ".pptm" && extension != ".odp") continue;
 
-                OnRecentFilesAdded(this, new RecentFilesAddedEventArgs(filePath));
+                recentOfficeFiles.RemoveAll(x => x == filePath);
+                recentOfficeFiles.Add(filePath);
+                if (recentOfficeFiles.Count > maxItemCount) recentOfficeFiles.RemoveRange(maxItemCount, recentOfficeFiles.Count - maxItemCount);
+                try
+                {
+                    File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json"), JsonSerializer.Serialize(recentOfficeFiles, jsonSerializerOptions));
+                }
+                catch { }
 
                 string arguments = string.Empty;
                 if (listBox1.Items.OfType<string>().Any(x => filePath.ToLower().StartsWith(x.ToLower())))
@@ -1206,7 +1222,14 @@ namespace PowerCacheOffice
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
 
-                OnRecentFilesAdded(this, new RecentFilesAddedEventArgs(text));
+                recentOfficeFiles.RemoveAll(x => x == text);
+                recentOfficeFiles.Add(text);
+                if (recentOfficeFiles.Count > maxItemCount) recentOfficeFiles.RemoveRange(maxItemCount, recentOfficeFiles.Count - maxItemCount);
+                try
+                {
+                    File.WriteAllText(Path.Combine(powerCacheOfficeDataFolder, "recentFiles.json"), JsonSerializer.Serialize(recentOfficeFiles, jsonSerializerOptions));
+                }
+                catch { }
             }
             catch { }
         }

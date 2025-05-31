@@ -545,11 +545,6 @@
             "AssemblyAsmDisplayName" = "8:Launcher, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_BCB1C0FD17114321913B6D559A7E7712"
-                    {
-                    "Name" = "8:Launcher.exe"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:..\\bin\\Release\\net8.0-windows10.0.17763.0\\publish\\win-x64\\Launcher.exe"
             "TargetName" = "8:"
@@ -696,15 +691,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PowerCacheOffice"
-        "ProductCode" = "8:{8FA6EEF7-9288-4419-BF5B-E3FF2840BCC0}"
-        "PackageCode" = "8:{F8851041-7922-42C3-8533-1CEE4C98ADC8}"
+        "ProductCode" = "8:{01CA4AAA-8AA3-40B0-99F9-BA0CFFADCFA5}"
+        "PackageCode" = "8:{C73EF10F-0111-47A5-BB04-461EE7896FE1}"
         "UpgradeCode" = "8:{7FAC1AD7-C50E-4C4E-8156-B4888E91910E}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:3.1.4"
+        "ProductVersion" = "8:3.1.5"
         "Manufacturer" = "8:P1tchBend"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

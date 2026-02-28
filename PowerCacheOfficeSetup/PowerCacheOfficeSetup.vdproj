@@ -69,19 +69,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_887F4779A3394C6E9872611C938FC9E3"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_89FC2F1EAE29403E84D634F5969054C7"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_8B9A35732AA648E485EFEA8E4524C975"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -418,50 +406,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_887F4779A3394C6E9872611C938FC9E3"
-            {
-            "SourcePath" = "8:..\\README.pdf"
-            "TargetName" = "8:README.pdf"
-            "Tag" = "8:"
-            "Folder" = "8:_BF11B1AB8E3947F89BBA7969170BCC20"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_89FC2F1EAE29403E84D634F5969054C7"
             {
             "SourcePath" = "8:..\\bin\\Release\\net8.0-windows10.0.17763.0\\publish\\win-x64\\PowerCacheOffice.ico"
             "TargetName" = "8:PowerCacheOffice.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_BF11B1AB8E3947F89BBA7969170BCC20"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8B9A35732AA648E485EFEA8E4524C975"
-            {
-            "SourcePath" = "8:..\\README.html"
-            "TargetName" = "8:README.html"
             "Tag" = "8:"
             "Folder" = "8:_BF11B1AB8E3947F89BBA7969170BCC20"
             "Condition" = "8:"
@@ -545,6 +493,11 @@
             "AssemblyAsmDisplayName" = "8:Launcher, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_BCB1C0FD17114321913B6D559A7E7712"
+                    {
+                    "Name" = "8:Launcher.exe"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:..\\bin\\Release\\net8.0-windows10.0.17763.0\\publish\\win-x64\\Launcher.exe"
             "TargetName" = "8:"
@@ -691,15 +644,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PowerCacheOffice"
-        "ProductCode" = "8:{01CA4AAA-8AA3-40B0-99F9-BA0CFFADCFA5}"
-        "PackageCode" = "8:{C73EF10F-0111-47A5-BB04-461EE7896FE1}"
+        "ProductCode" = "8:{5AFF7EAD-638A-4722-934A-9C2275E30CC7}"
+        "PackageCode" = "8:{3F3840E3-6D09-410E-8039-E394FD444273}"
         "UpgradeCode" = "8:{7FAC1AD7-C50E-4C4E-8156-B4888E91910E}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:3.1.5"
+        "ProductVersion" = "8:3.1.6"
         "Manufacturer" = "8:P1tchBend"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

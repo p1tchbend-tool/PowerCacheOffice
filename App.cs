@@ -22,7 +22,7 @@ namespace PowerCacheOffice
                 catch (Exception ex) { MessageBox.Show(ex.Message, Program.AppName); }
             };
         }
-        
+
         protected override void OnRun()
         {
             try
